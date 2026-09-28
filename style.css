@@ -15,3 +15,34 @@ h1 {
     margin-top: 20px;
     box-sizing: border-box;
 }
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin: 25px 0;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 14px 18px 14px 45px;
+    border: 1px solid #dfe3ea;
+    border-radius: 12px;
+    background: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.search-container input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
+}
+
+.search-icon {
+    position: absolute;
+    left: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8a91a3;
+}
