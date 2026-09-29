@@ -62,6 +62,61 @@ h1 + p {
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
+#employee-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin: 30px 0;
+}
+
+.employee-avatar {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #eceeff;
+    color: #3f43b4;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.employee-department {
+    margin-top: 8px !important;
+    font-weight: 600;
+}
+
+.employee-card a {
+    display: inline-block;
+    margin-top: 14px;
+    color: #3f43b4;
+    overflow-wrap: anywhere;
+}
+
+.employee-card a:focus-visible {
+    outline: 3px solid #6366f1;
+    outline-offset: 3px;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    color: #6b7280;
+}
+
+footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #e8eaf0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+@media (max-width: 520px) {
+    body { margin: 12px auto; padding: 16px; }
+    h1 { font-size: 28px; }
+    #employee-list { grid-template-columns: 1fr; }
+}
+
 .employee-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 14px 35px rgba(0, 0, 0, 0.10);
