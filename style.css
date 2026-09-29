@@ -54,6 +54,39 @@ h1 + p {
     pointer-events: none;
 }
 
+.directory-header {
+    padding: 40px 0 20px;
+}
+
+.header-label {
+    margin: 0 0 8px;
+    color: #6366f1;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.directory-header h1 {
+    margin: 0;
+    color: #171923;
+    font-size: 36px;
+    line-height: 1.15;
+}
+
+.header-description {
+    max-width: 550px;
+    margin-top: 12px;
+    color: #6b7280;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+
+
+
+
+
 .employee-card {
     background: #ffffff;
     border: 1px solid #e8eaf0;
