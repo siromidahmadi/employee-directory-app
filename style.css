@@ -21,11 +21,37 @@ h1 + p {
     line-height: 1.6;
 }
 
-#search {
+.search-container {
+    position: relative;
     width: 100%;
-    padding: 10px;
-    margin-top: 20px;
+    max-width: 520px;
+    margin: 25px 0;
+}
+
+.search-container input {
     box-sizing: border-box;
+    width: 100%;
+    padding: 14px 18px 14px 45px;
+    border: 1px solid #dfe3ea;
+    border-radius: 12px;
+    background: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-container input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
+}
+
+.search-icon {
+    position: absolute;
+    left: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8a91a3;
+    pointer-events: none;
 }
 
 .employee-card {
@@ -33,9 +59,62 @@ h1 + p {
     border: 1px solid #e8eaf0;
     border-radius: 18px;
     padding: 24px;
-    transition: transform 0.25s ease,
-                box-shadow 0.25s ease,
-                border-color 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+#employee-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin: 30px 0;
+}
+
+.employee-avatar {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #eceeff;
+    color: #3f43b4;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.employee-department {
+    margin-top: 8px !important;
+    font-weight: 600;
+}
+
+.employee-card a {
+    display: inline-block;
+    margin-top: 14px;
+    color: #3f43b4;
+    overflow-wrap: anywhere;
+}
+
+.employee-card a:focus-visible {
+    outline: 3px solid #6366f1;
+    outline-offset: 3px;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    color: #6b7280;
+}
+
+footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #e8eaf0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+@media (max-width: 520px) {
+    body { margin: 12px auto; padding: 16px; }
+    h1 { font-size: 28px; }
+    #employee-list { grid-template-columns: 1fr; }
 }
 
 .employee-card:hover {
@@ -63,4 +142,3 @@ h1 + p {
     color: #6b7280;
     font-size: 14px;
 }
-
