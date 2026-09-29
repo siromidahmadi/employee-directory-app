@@ -6,7 +6,19 @@ body {
 }
 
 h1 {
-    margin-bottom: 5px;
+    margin: 0;
+    color: #171923;
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+h1 + p {
+    margin: 10px 0 0;
+    color: #6b7280;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 #search {
@@ -15,3 +27,40 @@ h1 {
     margin-top: 20px;
     box-sizing: border-box;
 }
+
+.employee-card {
+    background: #ffffff;
+    border: 1px solid #e8eaf0;
+    border-radius: 18px;
+    padding: 24px;
+    transition: transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+}
+
+.employee-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.10);
+    border-color: #d8dce8;
+}
+
+.employee-card img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.employee-card h3 {
+    margin: 16px 0 5px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #171923;
+}
+
+.employee-card p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
