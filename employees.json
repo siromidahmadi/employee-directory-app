@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Amina Rahimi",
+    "title": "QA Engineer",
+    "department": "Engineering",
+    "email": "amina.rahimi@example.com"
+  },
+  {
+    "name": "Daniel Kim",
+    "title": "Product Designer",
+    "department": "Design",
+    "email": "daniel.kim@example.com"
+  },
+  {
+    "name": "Sofia Martinez",
+    "title": "Operations Coordinator",
+    "department": "Operations",
+    "email": "sofia.martinez@example.com"
+  },
+  {
+    "name": "Marcus Lee",
+    "title": "Software Developer",
+    "department": "Engineering",
+    "email": "marcus.lee@example.com"
+  },
+  {
+    "name": "Priya Shah",
+    "title": "People Specialist",
+    "department": "People",
+    "email": "priya.shah@example.com"
+  },
+  {
+    "name": "Jamal Carter",
+    "title": "Customer Support Lead",
+    "department": "Support",
+    "email": "jamal.carter@example.com"
+  }
+]
