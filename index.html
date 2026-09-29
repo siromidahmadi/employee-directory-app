@@ -1,37 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Employee Directory</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <h1>Employee Directory</h1>
-
     <p>Find employees and their contact information.</p>
 
     <div class="search-container">
-        <span class="search-icon">⌕</span>
-
+        <span class="search-icon" aria-hidden="true">⌕</span>
         <input
             type="text"
-            id="searchInput"
+            id="search"
             placeholder="Search employees..."
             aria-label="Search employees"
-    >
-</div>
+        >
+    </div>
 
+    <div id="employee-list">
+        <!-- Employee information will appear here -->
+    </div>
+
+    <footer>
+        <p>Employee Directory App © 2026</p>
+    </footer>
     <script src="script.js"></script>
-
 </body>
-
 </html>
-<footer>
-    <p>Employee Directory App © 2026</p>
-</footer>
