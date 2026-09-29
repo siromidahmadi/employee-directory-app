@@ -18,7 +18,7 @@ function makeCard(employee) {
     title.textContent = employee.title;
 
     const department = document.createElement('p');
-    department.className = 'employee-department';
+    department.className = 'department-badge ' + employee.department.toLowerCase();
     department.textContent = employee.department;
 
     const email = document.createElement('a');

@@ -86,6 +86,38 @@ h1 + p {
     font-weight: 600;
 }
 
+.department-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 11px;
+    border-radius: 20px;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.department-badge.engineering {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+.department-badge.design {
+    background: #fdf2f8;
+    color: #be185d;
+}
+.department-badge.marketing {
+    background: #ecfdf5;
+    color: #047857;
+}
+.department-badge.people {
+    background: #fdf5ec;
+    color: #cc6f13;
+}
+.department-badge.support {
+    background: #fdecec;
+    color: #dd2e2e;
+}
+
 .employee-card a {
     display: inline-block;
     margin-top: 14px;
