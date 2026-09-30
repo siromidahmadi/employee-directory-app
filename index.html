@@ -7,17 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Employee Directory</h1>
-    <p>Find employees and their contact information.</p>
+    <header class="directory-header">
+        <p class="header-label">EMPLOYEE DIRECTORY</p>
+        <h1>Meet Our Team</h1>
+        <p class="header-description">Find people, departments, and contact information across our organization.</p>
+    </header>
 
     <div class="search-container">
         <span class="search-icon" aria-hidden="true">⌕</span>
-        <input
-            type="text"
-            id="search"
-            placeholder="Search employees..."
-            aria-label="Search employees"
-        >
+        <input type="text" id="search" placeholder="Search employees..." aria-label="Search employees">
     </div>
 
     <div class=""bade-disply>
@@ -42,6 +40,7 @@
     </div>
 
     <div id="employee-list">
+    <div id="employee-list" class="employee-grid">
         <!-- Employee information will appear here -->
     </div>
 
