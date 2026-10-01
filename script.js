@@ -9,7 +9,12 @@ function makeCard(employee) {
     const avatar = document.createElement('div');
     avatar.className = 'employee-avatar';
     avatar.setAttribute('aria-hidden', 'true');
-    avatar.textContent = employee.name.split(/\s+/).map(part => part[0]).slice(0, 2).join('');
+    
+    if (employee.image) {
+        avatar.style.backgroundImage = `url(${employee.image})`;
+    } else {
+        avatar.textContent = employee.name.split(/\s+/).map(part => part[0]).slice(0, 2).join('');
+    }
 
     const name = document.createElement('h3');
     name.textContent = employee.name;
