@@ -1,38 +1,44 @@
 [
   {
-    "name": "Amina Rahimi",
-    "title": "QA Engineer",
+    "name": "Omid Ahmadi",
+    "title": "Project  Manager",
     "department": "Engineering",
-    "email": "amina.rahimi@example.com"
+    "email": "Aomid6362@gmail.com",
+    "image": "img/1.png"
   },
   {
-    "name": "Daniel Kim",
-    "title": "Product Designer",
-    "department": "Design",
-    "email": "daniel.kim@example.com"
-  },
-  {
-    "name": "Sofia Martinez",
-    "title": "Operations Coordinator",
-    "department": "Operations",
-    "email": "sofia.martinez@example.com"
-  },
-  {
-    "name": "Marcus Lee",
-    "title": "Software Developer",
+    "name": "Napier Jacquese",
+    "title": "Team Lead",
     "department": "Engineering",
-    "email": "marcus.lee@example.com"
+    "email": "napierj352@gmail.com",
+    "image": "img/2.png"
   },
   {
-    "name": "Priya Shah",
-    "title": "People Specialist",
-    "department": "People",
-    "email": "priya.shah@example.com"
+    "name": "Arias Miguel",
+    "title": "co Lead",
+    "department": "Engineering",
+    "email": "sofia.martinez@example.com",
+    "image": "img/3.png"
   },
   {
-    "name": "Jamal Carter",
-    "title": "Customer Support Lead",
-    "department": "Support",
-    "email": "jamal.carter@example.com"
+    "name": "Lubowa Najeeb",
+    "title": "Engineer",
+    "department": "Engineering",
+    "email": "bawalinajib2002@gmail.com",
+    "image": "img/5.png"
+  },
+  {
+    "name": "Joyce Jessy ",
+    "title": "Engineer",
+    "department": "Engineering",
+    "email": "joycejessie45@gmail.com",
+    "image": "img/4.png"
+  },
+  {
+    "name": "Vera Kassandra",
+    "title": "Engineer",
+    "department": "Engineering",
+    "email": "vera826677@gmail.com",
+    "image": "img/6.png"
   }
 ]

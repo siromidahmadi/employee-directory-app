@@ -1,0 +1,16 @@
+
+ <<Date : 9/27/2026>>
+
+>> changes made to the Css folder 
+   * a new portion called employ-avatar img got added. on line 120 -128
+   *  the following info was added to .employ-avatar background-size: cover; background-position: center; background-repeat: no-repeat;
+>> changes made to the script file
+   * Changes from line line 13-17
+       - I added an if stament to either have your avatar as your personal pictures or your personal intials based on the existing info in the json file.
+    * I have include extra spaces because i have outside software configeration that i still have to incoperate.
+>> changes made to the Json files
+
+    * Each employs info has been updated, ie Names, Title,Departmeants, emails, and images. 
+    * I have attached images to each employe file ie : "image": "img/1-6.png" 
+>> summary 
+    
