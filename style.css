@@ -226,3 +226,8 @@ footer {
     color: #6b7280;
     font-size: 14px;
 }
+.omid-avatar {
+    background-size: 75%;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+}
