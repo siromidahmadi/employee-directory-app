@@ -112,10 +112,9 @@ h1 + p {
     color: #3f43b4;
     font-weight: 700;
     font-size: 20px;
-
-    background-size: 85%;
-    background-position: center 30%;
-    background-repeat: no-repeat;
+    background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
 }
     
     
