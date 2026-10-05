@@ -112,7 +112,7 @@ h1 + p {
     color: #3f43b4;
     font-weight: 700;
     font-size: 20px;
--   background-size: 120%; /* zoom in */
+-   background-size: 50%; /* zoom in */
     background-position: center 30%; /* move photo position */
     background-repeat: no-repeat;
     
