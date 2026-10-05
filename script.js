@@ -6,9 +6,12 @@ function makeCard(employee) {
     const card = document.createElement('article');
     card.className = 'employee-card';
 
-    const avatar = document.createElement('div');
-    if (employee.name === 'Omid Ahmadi') {     avatar.classList.add('omid-avatar'); }
-    avatar.setAttribute('aria-hidden', 'true');
+const avatar = document.createElement('div');
+avatar.className = 'employee-avatar';
+
+if (employee.name === 'Omid Ahmadi') {
+    avatar.classList.add('omid-avatar');
+}
     
     if (employee.image) {
         avatar.style.backgroundImage = `url(${employee.image})`;
