@@ -7,7 +7,7 @@ function makeCard(employee) {
     card.className = 'employee-card';
 
     const avatar = document.createElement('div');
-    avatar.className = 'employee-avatar';
+    if (employee.name === 'Omid Ahmadi') {     avatar.classList.add('omid-avatar'); }
     avatar.setAttribute('aria-hidden', 'true');
     
     if (employee.image) {
