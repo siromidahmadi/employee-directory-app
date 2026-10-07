@@ -1,17 +1,26 @@
 const searchInput = document.querySelector('#search');
 const employeeList = document.querySelector('#employee-list');
+const icons = {
+    linkedin : "/img/logo/linkedinLogo.png",
+    github : "/img/logo/gitHubLogo.png",
+    portfolio : "/img/logo/websiteLogo.png"
+}
 let employees = [];
 
 function makeCard(employee) {
     const card = document.createElement('article');
     card.className = 'employee-card';
 
-const avatar = document.createElement('div');
-avatar.className = 'employee-avatar';
+    const avatar = document.createElement('div');
+    avatar.className = 'employee-avatar';
 
-if (employee.name === 'Omid Ahmadi') {
+    const socialLinks = document.createElement('div');
+    socialLinks.className = 'social-links';
+
+
+    if (employee.name === 'Omid Ahmadi') {
     avatar.classList.add('omid-avatar');
-}
+    }
     
     if (employee.image) {
         avatar.style.backgroundImage = `url(${employee.image})`;
@@ -33,7 +42,45 @@ if (employee.name === 'Omid Ahmadi') {
     email.href = 'mailto:' + employee.email;
     email.textContent = employee.email;
 
-    card.append(avatar, name, title, department, email);
+    if (employee.linkedin) {
+        const linkedin = document.createElement('a');
+        linkedin.href = employee.linkedin;
+        linkedin.target = '_blank';
+        linkedin.rel = 'noopener noreferrer';
+        
+        const linkedinImg = document.createElement('img');
+        linkedinImg.src = icons.linkedin;
+        linkedinImg.alt = 'LinkedIn';
+        linkedin.appendChild(linkedinImg);
+        socialLinks.appendChild(linkedin);
+    }
+    if (employee.github) {
+        const github = document.createElement('a');
+        github.href = employee.github;
+        github.target = '_blank';
+        github.rel = 'noopener noreferrer';
+        
+        const githubImg = document.createElement('img');
+        githubImg.src = icons.github;
+        githubImg.alt = 'GitHub';
+
+        github.appendChild(githubImg);
+        socialLinks.appendChild(github);
+    }
+    if (employee.portfolio) {
+        const portfolio = document.createElement('a');
+        portfolio.href = employee.portfolio;
+        portfolio.target = '_blank';
+        portfolio.rel = 'noopener noreferrer';
+
+        const portfolioImg = document.createElement('img');
+        portfolioImg.src = icons.portfolio;
+        portfolioImg.alt = 'Portfolio';
+        portfolio.appendChild(portfolioImg);
+        socialLinks.appendChild(portfolio);
+    }
+
+    card.append(avatar, name, title, department, email, socialLinks);
     return card;
 }
 
