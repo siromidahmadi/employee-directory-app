@@ -1,4 +1,6 @@
 const searchInput = document.querySelector('#search');
+const departmentFilter = document.querySelector('#department-filter');
+//line above connects js to he html
 const employeeList = document.querySelector('#employee-list');
 const icons = {
     linkedin : "img/logo/linkedInLogo.png",
@@ -85,11 +87,25 @@ function makeCard(employee) {
 }
 
 function renderEmployees() {
-    const query = searchInput.value.trim().toLowerCase();
-    const matches = employees.filter(employee =>
-        [employee.name, employee.title, employee.department, employee.email]
-            .some(value => value.toLowerCase().includes(query))
-    );
+   const query = searchInput.value.trim().toLowerCase();
+    const selectedDepartment = departmentFilter.value;
+
+    const matches = employees.filter(employee => {
+        const matchesSearch = [
+            employee.name,
+            employee.title,
+            employee.department,
+            employee.email
+        ].some(value =>
+            value.toLowerCase().includes(query)
+        );
+
+        const matchesDepartment =
+            selectedDepartment === 'all' ||
+            employee.department.toLowerCase() === selectedDepartment;
+
+        return matchesSearch && matchesDepartment;
+    });
 
     employeeList.replaceChildren();
     if (matches.length === 0) {
@@ -104,6 +120,7 @@ function renderEmployees() {
 }
 
 searchInput.addEventListener('input', renderEmployees);
+departmentFilter.addEventListener('change', renderEmployees);
 
 fetch('employees.json')
     .then(response => {
@@ -112,7 +129,21 @@ fetch('employees.json')
     })
     .then(data => {
         if (!Array.isArray(data)) throw new Error('Employee data must be a list');
-        employees = data;
+       employees = data;
+
+        const departments = [
+            ...new Set(employees.map(employee => employee.department))
+        ];
+
+        departments.forEach(department => {
+            const option = document.createElement('option');
+
+            option.value = department.toLowerCase();
+            option.textContent = department;
+
+            departmentFilter.appendChild(option);
+        });
+
         renderEmployees();
     })
     .catch(() => {
