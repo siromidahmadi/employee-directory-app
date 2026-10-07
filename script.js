@@ -2,7 +2,7 @@ const searchInput = document.querySelector('#search');
 const employeeList = document.querySelector('#employee-list');
 const icons = {
     linkedin : "img/logo/linkedInLogo.png",
-    github : "img/logo/githubLogo.png",
+    github : "img/logo/gitHubLogo.png",
     portfolio : "img/logo/websiteLogo.png"
 }
 let employees = [];
