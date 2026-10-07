@@ -333,3 +333,19 @@ footer {
         padding: 28px 20px;
     }
 }
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-container input {
+    flex: 1;
+    min-width: 0;
+}
+
+#department-filter {
+    flex: 0 0 auto;
+    height: 48px;
+    padding: 0 12px;
+}
