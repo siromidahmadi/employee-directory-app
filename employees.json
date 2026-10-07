@@ -4,41 +4,61 @@
     "title": "Project  Manager",
     "department": "Engineering",
     "email": "Aomid6362@gmail.com",
-    "image": "img/1.png"
+    "image": "img/1.png",
+
+    "linkedin": "https://www.linkedin.com/in/ahmadiomid92/",
+    "github": "https://github.com/siromidahmadi"
   },
   {
     "name": "Napier Jacquese",
     "title": "Team Lead",
     "department": "Engineering",
     "email": "napierj352@gmail.com",
-    "image": "img/2.png"
+    "image": "img/2.png",
+
+    "linkedin": "https://www.linkedin.com/in/jacquese-napier/",
+    "github": "https://github.com/bigjacqq"
   },
   {
     "name": "Arias Miguel",
     "title": "Co-Lead",
     "department": "Engineering",
     "email": "sofia.martinez@example.com",
-    "image": "img/3.png"
+    "image": "img/3.png",
+
+    "linkedin": "https://www.linkedin.com/in/miguel-arias-/",
+    "github": "https://github.com/migWRLD"
   },
   {
     "name": "Lubowa Najeeb",
     "title": "Engineer",
     "department": "Engineering",
     "email": "bawalinajib2002@gmail.com",
-    "image": "img/5.png"
+    "image": "img/5.png",
+
+    "linkedin": "https://www.linkedin.com/in/najeeb-lubowa-05858b3b7/",
+    "github": "https://github.com/Nbawali4",
+    "portfolio": "https://nbawali4.github.io/Food-Banks/"
   },
   {
     "name": "Joyce Jessy ",
     "title": "Engineer",
     "department": "Engineering",
     "email": "joycejessie45@gmail.com",
-    "image": "img/4.png"
+    "image": "img/4.png",
+
+    "linkedin": "http://www.linkedin.com/in/jessy-omoroghomwan-6b552b257",
+    "github": "https://github.com/JessyJoyce"
   },
   {
     "name": "Vera Kassandra",
     "title": "Engineer",
     "department": "Engineering",
     "email": "vera826677@gmail.com",
-    "image": "img/6.png"
+    "image": "img/6.png",
+
+    "linkedin": "https://www.linkedin.com/in/kassandra-vera-0999351a2/",
+    "github": "https://github.com/Kass82",
+    "portfolio": "https://kass82.github.io/"
   }
 ]
