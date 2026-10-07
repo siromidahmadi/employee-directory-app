@@ -311,26 +311,25 @@ footer {
 .omid-avatar {
     background-position: center 30%;
     background-repeat: no-repeat;
+    background-size: 75%;
 }
 
+@media (max-width: 520px) {
+    body {
+        margin: 12px auto;
+        padding: 16px;
+    }
 
-.social-links {
-    display: flex;
-    gap: 12px;
-    margin-top: 14px;
-}
+    h1,
+    .directory-header h1 {
+        font-size: 28px;
+    }
 
-.social-links a {
-    display: inline-block;
-    color: #3f43b4;
-    text-decoration: underline;
-}
+    #employee-list {
+        grid-template-columns: 1fr;
+    }
 
-.social-links a:hover {
-    text-decoration: none;
-}
-
-.social-links img {
-    width: 30px;
-    height: 30px;
+    .profile-modal-content {
+        padding: 28px 20px;
+    }
 }
