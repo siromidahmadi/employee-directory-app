@@ -281,7 +281,7 @@ h1 + p {
 
 .social-links {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     gap: 12px;
     margin-top: 18px;
 }
@@ -293,6 +293,11 @@ h1 + p {
 
 .social-links a:hover {
     text-decoration: none;
+}
+
+.social-links img {
+    width: 30px;
+    height: 30px;
 }
 
 .empty-state {
