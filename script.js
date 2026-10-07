@@ -4,7 +4,7 @@ const departmentFilter = document.querySelector('#department-filter');
 const employeeList = document.querySelector('#employee-list');
 const icons = {
     linkedin : "img/logo/linkedInLogo.png",
-    github : "img/logo/githubLogo.png",
+    github : "img/logo/gitHubLogo.png",
     portfolio : "img/logo/websiteLogo.png"
 }
 let employees = [];
