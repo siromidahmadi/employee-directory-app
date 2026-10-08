@@ -44,46 +44,23 @@ function makeCard(employee) {
     const email = document.createElement('a');
     email.href = 'mailto:' + employee.email;
     email.textContent = employee.email;
+    const copyButton = document.createElement('button');
 
-    if (employee.linkedin) {
-        const linkedin = document.createElement('a');
-        linkedin.href = employee.linkedin;
-        linkedin.target = '_blank';
-        linkedin.rel = 'noopener noreferrer';
-        
-        const linkedinImg = document.createElement('img');
-        linkedinImg.src = icons.linkedin;
-        linkedinImg.alt = 'LinkedIn';
-        linkedin.appendChild(linkedinImg);
-        socialLinks.appendChild(linkedin);
-    }
-    if (employee.github) {
-        const github = document.createElement('a');
-        github.href = employee.github;
-        github.target = '_blank';
-        github.rel = 'noopener noreferrer';
-        
-        const githubImg = document.createElement('img');
-        githubImg.src = icons.github;
-        githubImg.alt = 'GitHub';
+copyButton.className = 'copy-email';
+copyButton.textContent = 'Copy Email';
 
-        github.appendChild(githubImg);
-        socialLinks.appendChild(github);
-    }
-    if (employee.portfolio) {
-        const portfolio = document.createElement('a');
-        portfolio.href = employee.portfolio;
-        portfolio.target = '_blank';
-        portfolio.rel = 'noopener noreferrer';
+copyButton.addEventListener('click', async () => {
 
-        const portfolioImg = document.createElement('img');
-        portfolioImg.src = icons.portfolio;
-        portfolioImg.alt = 'Portfolio';
-        portfolio.appendChild(portfolioImg);
-        socialLinks.appendChild(portfolio);
-    }
+    await navigator.clipboard.writeText(employee.email);
 
-    card.append(avatar, name, title, department, email, socialLinks);
+    copyButton.textContent = 'Copied ✓';
+
+    setTimeout(() => {
+        copyButton.textContent = 'Copy Email';
+    }, 1500);
+});
+
+    card.append(avatar, name, title, department, email, copyButton);
     return card;
 }
 
