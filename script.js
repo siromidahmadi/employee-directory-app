@@ -29,8 +29,23 @@ function makeCard(employee) {
     const email = document.createElement('a');
     email.href = 'mailto:' + employee.email;
     email.textContent = employee.email;
+    const copyButton = document.createElement('button');
 
-    card.append(avatar, name, title, department, email);
+copyButton.className = 'copy-email';
+copyButton.textContent = 'Copy Email';
+
+copyButton.addEventListener('click', async () => {
+
+    await navigator.clipboard.writeText(employee.email);
+
+    copyButton.textContent = 'Copied ✓';
+
+    setTimeout(() => {
+        copyButton.textContent = 'Copy Email';
+    }, 1500);
+});
+
+    card.append(avatar, name, title, department, email, copyButton);
     return card;
 }
 
