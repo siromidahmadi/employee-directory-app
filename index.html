@@ -16,15 +16,22 @@
     <div class="search-container">
         <span class="search-icon" aria-hidden="true">⌕</span>
         <input type="text" id="search" placeholder="Search employees..." aria-label="Search employees">
+        
+        <select id="department-filter">
+            <option value="all">All Departments</option>
+        </select>
     </div>
 
+    <p id = "results-count" aria-live="polite"></p>
     <div id="employee-list" class="employee-grid">
         <!-- Employee information will appear here -->
     </div>
 
     <footer>
+
         <p>Employee Directory App © 2026</p>
     </footer>
     <script src="script.js"></script>
 </body>
 </html>
+

@@ -20,51 +20,11 @@ h1 {
     letter-spacing: -0.5px;
 }
 
-.search-container {
-    position: relative;
-    width: 100%;
-    max-width: 520px;
-    margin: 24px 0 0;
-}
-
-.search-container input {
-    width: 100%;
-    padding: 14px 18px 14px 45px;
-    border: 1px solid #dfe3ea;
-    border-radius: 12px;
-    background: #ffffff;
-    font-size: 15px;
-    outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.search-container input:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
-}
-
-.search-icon {
-    position: absolute;
-    left: 17px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #8a91a3;
-    pointer-events: none;
-}
-
-.copy-email {
-    margin-top: 12px;
-    padding: 8px 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    background: white;
-    color: #4f46e5;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.copy-email:hover {
-    background: #f5f6ff;
+h1 + p {
+    margin: 10px 0 0;
+    color: #6b7280;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 .directory-header {
@@ -107,6 +67,36 @@ h1 {
     border-radius: 18px;
     padding: 24px;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin: 25px 0;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 14px 18px 14px 45px;
+    border: 1px solid #dfe3ea;
+    border-radius: 12px;
+    background: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-container input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 17px;
+    color: #8a91a3;
+    pointer-events: none;
+    transform: translateY(-50%);
 }
 
 .employee-card:hover {
@@ -128,18 +118,45 @@ h1 {
     font-size: 14px;
 }
 
-.employee-avatar {
-    display: grid;
-    place-items: center;
+.employee-card {
+    padding: 24px;
+    border: 1px solid #e8eaf0;
+    border-radius: 18px;
+    background: #ffffff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.employee-card:hover {
+    border-color: #d8dce8;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.employee-card img,
+.employee-avatar img {
     width: 72px;
     height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.employee-avatar {
+    display: grid;
+    width: 72px;
+    height: 72px;
+    place-items: center;
     border-radius: 50%;
     background-color: #eceeff;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background: #eceeff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: #3f43b4;
-    font-weight: 700;
     font-size: 20px;
     overflow: hidden;
 }
@@ -151,6 +168,27 @@ h1 {
     object-fit: cover;
     object-position: center top;
     margin: 0;
+}
+
+    font-weight: 700;
+}
+
+.employee-card h3 {
+    margin: 16px 0 5px;
+    color: #171923;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.employee-card p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.employee-department {
+    margin-top: 8px !important;
+    font-weight: 600;
 }
 
 .department-badge {
@@ -198,9 +236,111 @@ h1 {
     overflow-wrap: anywhere;
 }
 
-.employee-card a:focus-visible {
+.employee-card a:focus-visible,
+.profile-modal a:focus-visible,
+.modal-close:focus-visible,
+.profile-button:focus-visible {
     outline: 3px solid #6366f1;
     outline-offset: 3px;
+}
+
+.profile-button {
+    display: block;
+    width: 100%;
+    margin-top: 18px;
+    padding: 11px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: #6366f1;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.profile-button:hover {
+    background: #4f46e5;
+    transform: translateY(-1px);
+}
+
+.profile-modal {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(17, 24, 39, 0.65);
+}
+
+.profile-modal-content {
+    position: relative;
+    width: min(100%, 430px);
+    padding: 32px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.profile-modal-content > img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.profile-modal-content h2 {
+    margin: 18px 0 6px;
+    color: #171923;
+}
+
+.profile-modal-content p {
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.profile-modal-content .department-badge {
+    margin-bottom: 8px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    border: 0;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #171923;
+}
+
+.social-links {
+    display: flex;
+    justify-content: left;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.social-links a {
+    color: #3f43b4;
+    text-decoration: underline;
+}
+
+.social-links a:hover {
+    text-decoration: none;
+}
+
+.social-links img {
+    width: 30px;
+    height: 30px;
 }
 
 .empty-state {
@@ -232,6 +372,21 @@ footer {
     .search-container {
         max-width: none;
         margin-top: 18px;
+.omid-avatar {
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    background-size: 75%;
+}
+
+@media (max-width: 520px) {
+    body {
+        margin: 12px auto;
+        padding: 16px;
+    }
+
+    h1,
+    .directory-header h1 {
+        font-size: 28px;
     }
 
     #employee-list {
@@ -250,3 +405,32 @@ footer {
 }
 
 
+    }
+
+    .profile-modal-content {
+        padding: 28px 20px;
+    }
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-container input {
+    flex: 1;
+    min-width: 0;
+}
+
+#department-filter {
+    flex: 0 0 auto;
+    height: 48px;
+    padding: 0 12px;
+}
+
+#results-count {
+    margin: 12px 0 5px;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 600;
+}

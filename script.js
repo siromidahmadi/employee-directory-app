@@ -1,5 +1,13 @@
 const searchInput = document.querySelector('#search');
+const departmentFilter = document.querySelector('#department-filter');
+//line above connects js to he html
 const employeeList = document.querySelector('#employee-list');
+const resultsCount = document.querySelector('#results-count');
+const icons = {
+    linkedin : "img/logo/linkedInLogo.png",
+    github : "img/logo/gitHubLogo.png",
+    portfolio : "img/logo/websiteLogo.png"
+}
 let employees = [];
 
 function makeCard(employee) {
@@ -8,7 +16,14 @@ function makeCard(employee) {
 
     const avatar = document.createElement('div');
     avatar.className = 'employee-avatar';
-    avatar.setAttribute('aria-hidden', 'true');
+
+    const socialLinks = document.createElement('div');
+    socialLinks.className = 'social-links';
+
+
+    if (employee.name === 'Omid Ahmadi') {
+    avatar.classList.add('omid-avatar');
+    }
     
     if (employee.image) {
         avatar.style.backgroundImage = `url(${employee.image})`;
@@ -50,12 +65,27 @@ copyButton.addEventListener('click', async () => {
 }
 
 function renderEmployees() {
-    const query = searchInput.value.trim().toLowerCase();
-    const matches = employees.filter(employee =>
-        [employee.name, employee.title, employee.department, employee.email]
-            .some(value => value.toLowerCase().includes(query))
-    );
+   const query = searchInput.value.trim().toLowerCase();
+    const selectedDepartment = departmentFilter.value;
 
+    const matches = employees.filter(employee => {
+        const matchesSearch = [
+            employee.name,
+            employee.title,
+            employee.department,
+            employee.email
+        ].some(value =>
+            value.toLowerCase().includes(query)
+        );
+
+        const matchesDepartment =
+            selectedDepartment === 'all' ||
+            employee.department.toLowerCase() === selectedDepartment;
+
+        return matchesSearch && matchesDepartment;
+    });
+
+    resultsCount.textContent = `${matches.length} ${matches.length === 1 ? 'employee' : 'employees'} found.`;
     employeeList.replaceChildren();
     if (matches.length === 0) {
         const message = document.createElement('p');
@@ -66,9 +96,11 @@ function renderEmployees() {
     }
 
     employeeList.append(...matches.map(makeCard));
+
 }
 
 searchInput.addEventListener('input', renderEmployees);
+departmentFilter.addEventListener('change', renderEmployees);
 
 fetch('employees.json')
     .then(response => {
@@ -77,9 +109,24 @@ fetch('employees.json')
     })
     .then(data => {
         if (!Array.isArray(data)) throw new Error('Employee data must be a list');
-        employees = data;
+       employees = data;
+
+        const departments = [
+            ...new Set(employees.map(employee => employee.department))
+        ];
+
+        departments.forEach(department => {
+            const option = document.createElement('option');
+
+            option.value = department.toLowerCase();
+            option.textContent = department;
+
+            departmentFilter.appendChild(option);
+        });
+
         renderEmployees();
     })
     .catch(() => {
+        resultsCount.textContent = ''; 
         employeeList.textContent = 'Employee data could not load. Open this project with Live Server and try again.';
     });
