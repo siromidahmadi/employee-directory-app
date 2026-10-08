@@ -54,6 +54,10 @@ function renderEmployees() {
     }
 
     employeeList.append(...matches.map(makeCard));
+
+    resultsCount.textContent = `${matches.length} 
+            ${matches.length === 1 ? 'employee' : 'employees'
+        } found.`;
 }
 
 searchInput.addEventListener('input', renderEmployees);
@@ -71,3 +75,5 @@ fetch('employees.json')
     .catch(() => {
         employeeList.textContent = 'Employee data could not load. Open this project with Live Server and try again.';
     });
+    
+    const resultsCount = document.querySelector('#results-count');
