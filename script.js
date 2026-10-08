@@ -2,6 +2,7 @@ const searchInput = document.querySelector('#search');
 const departmentFilter = document.querySelector('#department-filter');
 //line above connects js to he html
 const employeeList = document.querySelector('#employee-list');
+const resultsCount = document.querySelector('#results-count');
 const icons = {
     linkedin : "img/logo/linkedInLogo.png",
     github : "img/logo/gitHubLogo.png",
@@ -107,6 +108,7 @@ function renderEmployees() {
         return matchesSearch && matchesDepartment;
     });
 
+    resultsCount.textContent = `${matches.length} ${matches.length === 1 ? 'employee' : 'employees'} found.`;
     employeeList.replaceChildren();
     if (matches.length === 0) {
         const message = document.createElement('p');
@@ -118,9 +120,6 @@ function renderEmployees() {
 
     employeeList.append(...matches.map(makeCard));
 
-    resultsCount.textContent = `${matches.length} 
-            ${matches.length === 1 ? 'employee' : 'employees'
-        } found.`;
 }
 
 searchInput.addEventListener('input', renderEmployees);
@@ -151,7 +150,6 @@ fetch('employees.json')
         renderEmployees();
     })
     .catch(() => {
+        resultsCount.textContent = ''; 
         employeeList.textContent = 'Employee data could not load. Open this project with Live Server and try again.';
     });
-    
-    const resultsCount = document.querySelector('#results-count');
