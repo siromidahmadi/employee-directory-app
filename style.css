@@ -1,8 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: clamp(16px, 4vw, 32px);
     font-family: Arial, sans-serif;
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
+    color: #171923;
+    background: #f8fafc;
 }
 
 h1 {
@@ -14,22 +20,14 @@ h1 {
     letter-spacing: -0.5px;
 }
 
-h1 + p {
-    margin: 10px 0 0;
-    color: #6b7280;
-    font-size: 16px;
-    line-height: 1.6;
-}
-
 .search-container {
     position: relative;
     width: 100%;
     max-width: 520px;
-    margin: 25px 0;
+    margin: 24px 0 0;
 }
 
 .search-container input {
-    box-sizing: border-box;
     width: 100%;
     padding: 14px 18px 14px 45px;
     border: 1px solid #dfe3ea;
@@ -54,8 +52,23 @@ h1 + p {
     pointer-events: none;
 }
 
+.copy-email {
+    margin-top: 12px;
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    color: #4f46e5;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.copy-email:hover {
+    background: #f5f6ff;
+}
+
 .directory-header {
-    padding: 40px 0 20px;
+    padding: 40px 0 12px;
 }
 
 .header-label {
@@ -69,23 +82,24 @@ h1 + p {
 .directory-header h1 {
     margin: 0;
     color: #171923;
-    font-size: 36px;
-    line-height: 1.15;
+    font-size: clamp(28px, 5vw, 42px);
+    line-height: 1.1;
 }
 
 .header-description {
     max-width: 550px;
-    margin-top: 12px;
+    margin: 12px 0 0;
     color: #6b7280;
     font-size: 15px;
     line-height: 1.6;
 }
 
-
-
-
-
-
+#employee-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: 18px;
+    margin: 30px 0;
+}
 
 .employee-card {
     background: #ffffff;
@@ -95,11 +109,23 @@ h1 + p {
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-#employee-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 18px;
-    margin: 30px 0;
+.employee-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.10);
+    border-color: #d8dce8;
+}
+
+.employee-card h3 {
+    margin: 16px 0 5px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #171923;
+}
+
+.employee-card p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
 }
 
 .employee-avatar {
@@ -108,17 +134,17 @@ h1 + p {
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: #eceeff;
+    background-color: #eceeff;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: #3f43b4;
     font-weight: 700;
     font-size: 20px;
-    background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-    
-    
+    overflow: hidden;
 }
-employee-avatar img {
+
+.employee-avatar img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -127,14 +153,9 @@ employee-avatar img {
     margin: 0;
 }
 
-
-.employee-department {
-    margin-top: 8px !important;
-    font-weight: 600;
-}
-
 .department-badge {
     display: inline-block;
+    width: fit-content;
     margin-top: 12px;
     padding: 6px 11px;
     border-radius: 20px;
@@ -148,25 +169,30 @@ employee-avatar img {
     background: #eef2ff;
     color: #4f46e5;
 }
+
 .department-badge.design {
     background: #fdf2f8;
     color: #be185d;
 }
+
 .department-badge.marketing {
     background: #ecfdf5;
     color: #047857;
 }
+
 .department-badge.people {
     background: #fdf5ec;
     color: #cc6f13;
 }
+
 .department-badge.support {
     background: #fdecec;
     color: #dd2e2e;
 }
 
 .employee-card a {
-    display: inline-block;
+    display: block;
+    width: fit-content;
     margin-top: 14px;
     color: #3f43b4;
     overflow-wrap: anywhere;
@@ -190,38 +216,37 @@ footer {
     font-size: 14px;
 }
 
-
-
-
 @media (max-width: 520px) {
-    body { margin: 12px auto; padding: 16px; }
-    h1 { font-size: 28px; }
-    #employee-list { grid-template-columns: 1fr; }
+    body {
+        padding: 16px 14px 24px;
+    }
+
+    .directory-header {
+        padding-top: 20px;
+    }
+
+    .directory-header h1 {
+        font-size: 30px;
+    }
+
+    .search-container {
+        max-width: none;
+        margin-top: 18px;
+    }
+
+    #employee-list {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 22px;
+    }
+
+    .employee-card {
+        padding: 18px;
+    }
+
+    .copy-email {
+        width: 100%;
+    }
 }
 
-.employee-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.10);
-    border-color: #d8dce8;
-}
 
-.employee-card img {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center top;
-}
-
-.employee-card h3 {
-    margin: 16px 0 5px;
-    font-size: 18px;
-    font-weight: 700;
-    color: #171923;
-}
-
-.employee-card p {
-    margin: 0;
-    color: #6b7280;
-    font-size: 14px;
-}
