@@ -354,3 +354,10 @@ footer {
     height: 48px;
     padding: 0 12px;
 }
+
+#results-count {
+    margin: 12px 0 5px;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 600;
+}
