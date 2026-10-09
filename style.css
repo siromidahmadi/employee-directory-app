@@ -6,9 +6,9 @@ body {
     margin: 0 auto;
     max-width: 1200px;
     padding: clamp(16px, 4vw, 32px);
-    font-family: Arial, sans-serif;
-    color: #171923;
     background: #f8fafc;
+    color: #171923;
+    font-family: Arial, sans-serif;
 }
 
 h1 {
@@ -54,28 +54,19 @@ h1 + p {
     line-height: 1.6;
 }
 
-#employee-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
-    gap: 18px;
-    margin: 30px 0;
-}
-
-.employee-card {
-    background: #ffffff;
-    border: 1px solid #e8eaf0;
-    border-radius: 18px;
-    padding: 24px;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 .search-container {
+    display: flex;
     position: relative;
+    align-items: center;
     width: 100%;
     max-width: 520px;
+    gap: 12px;
     margin: 25px 0;
 }
 
 .search-container input {
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     padding: 14px 18px 14px 45px;
     border: 1px solid #dfe3ea;
     border-radius: 12px;
@@ -99,23 +90,22 @@ h1 + p {
     transform: translateY(-50%);
 }
 
-.employee-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.10);
-    border-color: #d8dce8;
-}
-
-.employee-card h3 {
-    margin: 16px 0 5px;
-    font-size: 18px;
-    font-weight: 700;
-    color: #171923;
-}
-
-.employee-card p {
-    margin: 0;
-    color: #6b7280;
+#department-filter {
+    flex: 0 0 auto;
+    height: 48px;
+    padding: 0 12px;
+    border: 1px solid #dfe3ea;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #4b5563;
     font-size: 14px;
+}
+
+#employee-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: 18px;
+    margin: 30px 0;
 }
 
 .employee-card {
@@ -147,30 +137,21 @@ h1 + p {
     width: 72px;
     height: 72px;
     place-items: center;
+    overflow: hidden;
     border-radius: 50%;
-    background-color: #eceeff;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     background: #eceeff;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     color: #3f43b4;
     font-size: 20px;
-    overflow: hidden;
+    font-weight: 700;
 }
 
 .employee-avatar img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center top;
     margin: 0;
-}
-
-    font-weight: 700;
 }
 
 .employee-card h3 {
@@ -324,7 +305,7 @@ h1 + p {
 
 .social-links {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     gap: 12px;
     margin-top: 18px;
 }
@@ -343,6 +324,17 @@ h1 + p {
     height: 30px;
 }
 
+.copy-email {
+    width: fit-content;
+}
+
+#results-count {
+    margin: 12px 0 5px;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .empty-state {
     grid-column: 1 / -1;
     color: #6b7280;
@@ -356,22 +348,6 @@ footer {
     font-size: 14px;
 }
 
-@media (max-width: 520px) {
-    body {
-        padding: 16px 14px 24px;
-    }
-
-    .directory-header {
-        padding-top: 20px;
-    }
-
-    .directory-header h1 {
-        font-size: 30px;
-    }
-
-    .search-container {
-        max-width: none;
-        margin-top: 18px;
 .omid-avatar {
     background-position: center 30%;
     background-repeat: no-repeat;
@@ -389,6 +365,29 @@ footer {
         font-size: 28px;
     }
 
+    .directory-header {
+        padding-top: 20px;
+    }
+
+    .search-container {
+        max-width: none;
+        align-items: stretch;
+        flex-direction: column;
+        margin-top: 18px;
+    }
+
+    .search-container input {
+        width: 100%;
+    }
+
+    .search-icon {
+        top: 24px;
+    }
+
+    #department-filter {
+        width: 100%;
+    }
+
     #employee-list {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -402,35 +401,8 @@ footer {
     .copy-email {
         width: 100%;
     }
-}
-
-
-    }
 
     .profile-modal-content {
         padding: 28px 20px;
     }
-}
-.search-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.search-container input {
-    flex: 1;
-    min-width: 0;
-}
-
-#department-filter {
-    flex: 0 0 auto;
-    height: 48px;
-    padding: 0 12px;
-}
-
-#results-count {
-    margin: 12px 0 5px;
-    color: #6b7280;
-    font-size: 14px;
-    font-weight: 600;
 }
