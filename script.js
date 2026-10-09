@@ -1,7 +1,7 @@
 const searchInput = document.querySelector('#search');
 const icons = {
     linkedin : "img/logo/linkedInLogo.png",
-    github : "img/logo/githubLogo.png",
+    github : "img/logo/gitHubLogo.png",
     portfolio : "img/logo/websiteLogo.png"
 }
 const departmentFilter = document.querySelector('#department-filter');
