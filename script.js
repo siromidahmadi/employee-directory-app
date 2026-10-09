@@ -1,4 +1,9 @@
 const searchInput = document.querySelector('#search');
+const icons = {
+    linkedin : "img/logo/linkedInLogo.png",
+    github : "img/logo/githubLogo.png",
+    portfolio : "img/logo/websiteLogo.png"
+}
 const departmentFilter = document.querySelector('#department-filter');
 const employeeList = document.querySelector('#employee-list');
 const resultsCount = document.querySelector('#results-count');
@@ -11,6 +16,9 @@ function makeCard(employee) {
 
     const avatar = document.createElement('div');
     avatar.className = 'employee-avatar';
+
+    const socialLinks = document.createElement('div');
+    socialLinks.className = 'social-links';
 
     if (employee.name === 'Omid Ahmadi') {
         avatar.classList.add('omid-avatar');
@@ -41,6 +49,44 @@ function makeCard(employee) {
     email.href = 'mailto:' + employee.email;
     email.textContent = employee.email;
 
+    if (employee.linkedin) {
+        const linkedin = document.createElement('a');
+        linkedin.href = employee.linkedin;
+        linkedin.target = '_blank';
+        linkedin.rel = 'noopener noreferrer';
+        
+        const linkedinImg = document.createElement('img');
+        linkedinImg.src = icons.linkedin;
+        linkedinImg.alt = 'LinkedIn';
+        linkedin.appendChild(linkedinImg);
+        socialLinks.appendChild(linkedin);
+    }
+    if (employee.github) {
+        const github = document.createElement('a');
+        github.href = employee.github;
+        github.target = '_blank';
+        github.rel = 'noopener noreferrer';
+        
+        const githubImg = document.createElement('img');
+        githubImg.src = icons.github;
+        githubImg.alt = 'GitHub';
+
+        github.appendChild(githubImg);
+        socialLinks.appendChild(github);
+    }
+    if (employee.portfolio) {
+        const portfolio = document.createElement('a');
+        portfolio.href = employee.portfolio;
+        portfolio.target = '_blank';
+        portfolio.rel = 'noopener noreferrer';
+
+        const portfolioImg = document.createElement('img');
+        portfolioImg.src = icons.portfolio;
+        portfolioImg.alt = 'Portfolio';
+        portfolio.appendChild(portfolioImg);
+        socialLinks.appendChild(portfolio);
+    }
+
     const copyButton = document.createElement('button');
     copyButton.className = 'copy-email';
     copyButton.textContent = 'Copy Email';
@@ -63,14 +109,8 @@ function makeCard(employee) {
         openProfile(employee);
     });
 
-    card.append(
-        avatar,
-        name,
-        title,
-        department,
-        email,
-        copyButton,
-        profileButton
+    card.append(avatar, name, title, department,
+        email, copyButton, profileButton, socialLinks
     );
 
     return card;
@@ -219,7 +259,6 @@ function renderEmployees() {
 }
 
 searchInput.addEventListener('input', renderEmployees);
-departmentFilter.addEventListener('change', renderEmployees);
 
 fetch('employees.json')
     .then(response => {
