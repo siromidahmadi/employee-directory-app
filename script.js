@@ -1,11 +1,8 @@
 const searchInput = document.querySelector('#search');
-const departmentFilter = document.querySelector('#department-filter');
-//line above connects js to he html
 const employeeList = document.querySelector('#employee-list');
-const resultsCount = document.querySelector('#results-count');
 const icons = {
     linkedin : "img/logo/linkedInLogo.png",
-    github : "img/logo/gitHubLogo.png",
+    github : "img/logo/githubLogo.png",
     portfolio : "img/logo/websiteLogo.png"
 }
 let employees = [];
@@ -44,48 +41,56 @@ function makeCard(employee) {
     const email = document.createElement('a');
     email.href = 'mailto:' + employee.email;
     email.textContent = employee.email;
-    const copyButton = document.createElement('button');
 
-copyButton.className = 'copy-email';
-copyButton.textContent = 'Copy Email';
+    if (employee.linkedin) {
+        const linkedin = document.createElement('a');
+        linkedin.href = employee.linkedin;
+        linkedin.target = '_blank';
+        linkedin.rel = 'noopener noreferrer';
+        
+        const linkedinImg = document.createElement('img');
+        linkedinImg.src = icons.linkedin;
+        linkedinImg.alt = 'LinkedIn';
+        linkedin.appendChild(linkedinImg);
+        socialLinks.appendChild(linkedin);
+    }
+    if (employee.github) {
+        const github = document.createElement('a');
+        github.href = employee.github;
+        github.target = '_blank';
+        github.rel = 'noopener noreferrer';
+        
+        const githubImg = document.createElement('img');
+        githubImg.src = icons.github;
+        githubImg.alt = 'GitHub';
 
-copyButton.addEventListener('click', async () => {
+        github.appendChild(githubImg);
+        socialLinks.appendChild(github);
+    }
+    if (employee.portfolio) {
+        const portfolio = document.createElement('a');
+        portfolio.href = employee.portfolio;
+        portfolio.target = '_blank';
+        portfolio.rel = 'noopener noreferrer';
 
-    await navigator.clipboard.writeText(employee.email);
+        const portfolioImg = document.createElement('img');
+        portfolioImg.src = icons.portfolio;
+        portfolioImg.alt = 'Portfolio';
+        portfolio.appendChild(portfolioImg);
+        socialLinks.appendChild(portfolio);
+    }
 
-    copyButton.textContent = 'Copied ✓';
-
-    setTimeout(() => {
-        copyButton.textContent = 'Copy Email';
-    }, 1500);
-});
-
-    card.append(avatar, name, title, department, email, copyButton);
+    card.append(avatar, name, title, department, email, socialLinks);
     return card;
 }
 
 function renderEmployees() {
-   const query = searchInput.value.trim().toLowerCase();
-    const selectedDepartment = departmentFilter.value;
+    const query = searchInput.value.trim().toLowerCase();
+    const matches = employees.filter(employee =>
+        [employee.name, employee.title, employee.department, employee.email]
+            .some(value => value.toLowerCase().includes(query))
+    );
 
-    const matches = employees.filter(employee => {
-        const matchesSearch = [
-            employee.name,
-            employee.title,
-            employee.department,
-            employee.email
-        ].some(value =>
-            value.toLowerCase().includes(query)
-        );
-
-        const matchesDepartment =
-            selectedDepartment === 'all' ||
-            employee.department.toLowerCase() === selectedDepartment;
-
-        return matchesSearch && matchesDepartment;
-    });
-
-    resultsCount.textContent = `${matches.length} ${matches.length === 1 ? 'employee' : 'employees'} found.`;
     employeeList.replaceChildren();
     if (matches.length === 0) {
         const message = document.createElement('p');
@@ -96,11 +101,9 @@ function renderEmployees() {
     }
 
     employeeList.append(...matches.map(makeCard));
-
 }
 
 searchInput.addEventListener('input', renderEmployees);
-departmentFilter.addEventListener('change', renderEmployees);
 
 fetch('employees.json')
     .then(response => {
@@ -109,24 +112,9 @@ fetch('employees.json')
     })
     .then(data => {
         if (!Array.isArray(data)) throw new Error('Employee data must be a list');
-       employees = data;
-
-        const departments = [
-            ...new Set(employees.map(employee => employee.department))
-        ];
-
-        departments.forEach(department => {
-            const option = document.createElement('option');
-
-            option.value = department.toLowerCase();
-            option.textContent = department;
-
-            departmentFilter.appendChild(option);
-        });
-
+        employees = data;
         renderEmployees();
     })
     .catch(() => {
-        resultsCount.textContent = ''; 
         employeeList.textContent = 'Employee data could not load. Open this project with Live Server and try again.';
     });
