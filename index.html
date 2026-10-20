@@ -7,7 +7,7 @@
     <title>Employee Directory</title>
 
     <link rel="icon" type="image/png" href="img/logo/websiteLogo.png">
-    <link rel="stylesheet" href="style.css?v=footer-admin-1">
+    <link rel="stylesheet" href="style.css?v=departments-5">
 </head>
 
 <body>
@@ -35,6 +35,7 @@
                         <a href="#Home">Home</a>
                         <a href="#About">About</a>
                         <a href="#directory">Directory</a>
+                        <a href="#Departments">Departments</a>
                         <a href="#Contact">Contact</a>
                     </nav>
                 </div>
@@ -110,6 +111,34 @@
         </section>
     </main>
 
+    <section
+        id="Departments"
+        class="departments-section"
+        aria-labelledby="departments-heading"
+    >
+        <h2 id="departments-heading">Departments</h2>
+
+        <p>Select a department to see its team members.</p>
+
+        <div
+            id="department-grid"
+            class="department-grid"
+            role="group"
+            aria-label="Departments"
+        >
+            <!-- Department cards appear here -->
+        </div>
+
+        <div
+            id="department-members"
+            class="department-members"
+            aria-live="polite"
+            hidden
+        >
+            <!-- Selected department's employees appear here -->
+        </div>
+    </section>
+
     <footer id="Contact">
         <p>
             Contact team members using the email and social links
@@ -122,6 +151,7 @@
     <script src="supabase-2.118.0.js"></script>
     <script src="supabase-config.js"></script>
     <script src="employee-store.js"></script>
-    <script src="script.js?v=glass-admin-1"></script>
+    <script src="script.js?v=departments-5"></script>
 </body>
 </html>
+
