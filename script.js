@@ -8,7 +8,6 @@ const departmentGrid = document.querySelector('#department-grid');
 const departmentMembers = document.querySelector('#department-members');
 
 let activeDepartment = null;
-
 let employees = [];
 
 function createStatisticsSection() {
@@ -122,8 +121,6 @@ function updateStatistics() {
     document.querySelector('#new-employees').textContent =
         newEmployees.length;
 }
-
-
 
 const iconShapes = {
     code: '<rect x="2" y="3" width="20" height="18" rx="4"/><path d="M9.5 9 6.5 12l3 3M14.5 9l3 3-3 3M12.8 8l-1.6 8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
@@ -308,7 +305,6 @@ function syncDepartmentCards() {
             card.setAttribute('aria-pressed', String(isActive));
         });
 }
-
 function renderDepartmentMembers() {
     if (!departmentMembers) {
         return;
@@ -440,6 +436,7 @@ function buildMemberDetails(employee) {
     profileButton.className = 'profile-button';
     profileButton.type = 'button';
     profileButton.textContent = 'View Full Profile';
+
     profileButton.addEventListener('click', () => {
         openProfile(employee);
     });
@@ -578,18 +575,48 @@ function makeCopyButton(employee) {
     const copyButton = document.createElement('button');
     copyButton.className = 'copy-email';
     copyButton.type = 'button';
-    copyButton.textContent = 'Copy Email';
+    copyButton.setAttribute(
+        'aria-label',
+        `Copy email address for ${employee.name}`
+    );
+    copyButton.title = 'Copy email address';
+
+    copyButton.innerHTML = `
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect x="9" y="9" width="10" height="10" rx="2"></rect>
+            <path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span class="copy-button-label">Copy email</span>
+    `;
+
+    const label = copyButton.querySelector('.copy-button-label');
 
     copyButton.addEventListener('click', async () => {
         try {
             await navigator.clipboard.writeText(employee.email);
-            copyButton.textContent = 'Copied ✓';
+
+            label.textContent = 'Copied';
+
+            copyButton.setAttribute(
+                'aria-label',
+                `Email copied for ${employee.name}`
+            );
 
             setTimeout(() => {
-                copyButton.textContent = 'Copy Email';
+                label.textContent = 'Copy email';
+
+                copyButton.setAttribute(
+                    'aria-label',
+                    `Copy email address for ${employee.name}`
+                );
             }, 1500);
         } catch {
-            copyButton.textContent = 'Copy failed';
+            label.textContent = 'Copy failed';
+
+            copyButton.setAttribute(
+                'aria-label',
+                `Copying email failed for ${employee.name}`
+            );
         }
     });
 
@@ -646,20 +673,130 @@ function makeSocialLinks(employee) {
 
     return socialLinks;
 }
-
 function makeSkillBadges(skills) {
     const container = document.createElement('div');
     container.className = 'skill-badges';
-    const colors = { javascript: 'blue', 'web development': 'red', leadership: 'purple', html: 'yellow', css: 'green', 'team collaboration': 'pink' };
+
+    const colors = {
+        javascript: 'blue',
+        'web development': 'red',
+        leadership: 'purple',
+        html: 'yellow',
+        css: 'green',
+        'team collaboration': 'pink'
+    };
+
     for (const skill of Array.isArray(skills) ? skills : []) {
-        if (typeof skill !== 'string') continue;
+        if (typeof skill !== 'string') {
+            continue;
+        }
+
         const badge = document.createElement('span');
-        badge.className = 'skill-badge skill-' + (colors[skill.toLowerCase()] || 'default');
+        badge.className =
+            'skill-badge skill-' +
+            (colors[skill.toLowerCase()] || 'default');
+
         badge.textContent = skill;
         container.append(badge);
     }
-    if (!container.children.length) container.textContent = 'Skills not listed';
+
+    if (!container.children.length) {
+        container.textContent = 'Skills not listed';
+    }
+
     return container;
+}
+
+function makeProfileSection(label, content, className = '') {
+    const section = document.createElement('section');
+    section.className =
+        `employee-profile-section ${className}`.trim();
+
+    const heading = document.createElement('h4');
+    heading.textContent = label;
+
+    section.appendChild(heading);
+
+    if (content instanceof Node) {
+        section.appendChild(content);
+    } else if (
+        typeof content === 'string' &&
+        content.trim()
+    ) {
+        const text = document.createElement('p');
+        text.textContent = content;
+        section.appendChild(text);
+    }
+
+    return section;
+}
+
+function makeContactSection(employee) {
+    const section = makeProfileSection(
+        'Contact',
+        null,
+        'employee-contact-section'
+    );
+
+    const contactContent = document.createElement('div');
+    contactContent.className = 'employee-contact-content';
+
+    if (
+        typeof employee.email === 'string' &&
+        employee.email.trim()
+    ) {
+        const emailRow = document.createElement('div');
+        emailRow.className = 'employee-email-row';
+
+        const email = document.createElement('a');
+        email.href = `mailto:${employee.email}`;
+        email.textContent = employee.email;
+        email.className = 'employee-email-link';
+
+        emailRow.append(
+            email,
+            makeCopyButton(employee)
+        );
+
+        contactContent.appendChild(emailRow);
+    }
+
+    const socialLinks = makeSocialLinks(employee);
+
+    if (socialLinks.children.length) {
+        contactContent.appendChild(socialLinks);
+    }
+
+    section.appendChild(contactContent);
+
+    return section;
+}
+
+function makeProjectsList(projects) {
+    const projectList = document.createElement('ul');
+    projectList.className = 'employee-project-list';
+
+    const validProjects = Array.isArray(projects)
+        ? projects.filter(project =>
+            typeof project === 'string' &&
+            project.trim() &&
+            project.trim().toLowerCase() !== 'tbd'
+        )
+        : [];
+
+    validProjects.forEach(project => {
+        const item = document.createElement('li');
+        item.textContent = project;
+        projectList.appendChild(item);
+    });
+
+    if (!validProjects.length) {
+        const item = document.createElement('li');
+        item.textContent = 'No projects listed.';
+        projectList.appendChild(item);
+    }
+
+    return projectList;
 }
 
 function makeCard(employee) {
@@ -692,12 +829,6 @@ function makeCard(employee) {
     department.className = 'department-badge';
     department.textContent = employee.department;
 
-    const email = document.createElement('a');
-    email.href = `mailto:${employee.email}`;
-    email.textContent = employee.email;
-
-    const copyButton = makeCopyButton(employee);
-
     const profileButton = document.createElement('button');
     profileButton.className = 'profile-button';
     profileButton.type = 'button';
@@ -707,31 +838,60 @@ function makeCard(employee) {
         openProfile(employee);
     });
 
-    const socialLinks = makeSocialLinks(employee);
+    const overview = makeProfileSection(
+        'Overview',
+        employee.bio || ''
+    );
+
+    const contact = makeContactSection(employee);
+
+    const skills = makeProfileSection(
+        'Skills',
+        makeSkillBadges(employee.skills)
+    );
+
+    const projects = makeProfileSection(
+        'Projects',
+        makeProjectsList(employee.projects)
+    );
+
+    const profileSections = document.createElement('div');
+    profileSections.className = 'employee-profile-sections';
+
+    profileSections.append(
+        overview,
+        contact,
+        skills,
+        projects
+    );
 
     card.append(
         avatar,
         name,
         title,
         department,
-        makeSkillBadges(employee.skills),
-        email,
-        copyButton,
-        profileButton,
-        socialLinks
+        profileSections,
+        profileButton
     );
 
     return card;
 }
 
 function openProfile(employee) {
-    document.querySelector('.profile-modal .modal-close')?.click();
+    document
+        .querySelector('.profile-modal .modal-close')
+        ?.click();
+
     const previousFocus = document.activeElement;
+
     const modal = document.createElement('div');
     modal.className = 'profile-modal';
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
-    modal.setAttribute('aria-labelledby', 'employee-profile-name');
+    modal.setAttribute(
+        'aria-labelledby',
+        'employee-profile-name'
+    );
 
     const content = document.createElement('div');
     content.className = 'profile-modal-content';
@@ -740,7 +900,10 @@ function openProfile(employee) {
     closeButton.className = 'modal-close';
     closeButton.type = 'button';
     closeButton.textContent = '×';
-    closeButton.setAttribute('aria-label', 'Close profile');
+    closeButton.setAttribute(
+        'aria-label',
+        'Close profile'
+    );
 
     const image = document.createElement('img');
     image.src = employee.image || '';
@@ -813,90 +976,216 @@ function openProfile(employee) {
 
     const header = document.createElement('div');
     header.className = 'profile-header';
+
     const details = document.createElement('div');
     details.append(name, title, department);
-    if (employee.image) header.append(image);
+
+    if (employee.image) {
+        header.append(image);
+    }
+
     header.append(details);
+
     const tabs = document.createElement('div');
     tabs.className = 'profile-tabs';
     tabs.setAttribute('role', 'tablist');
-    tabs.setAttribute('aria-label', 'Profile details');
+    tabs.setAttribute(
+        'aria-label',
+        'Profile details'
+    );
+
     const panels = document.createElement('div');
     const buttons = [];
     const sections = [];
+
     function activate(index, focus = false) {
         buttons.forEach((button, i) => {
-            button.classList.toggle('active', i === index);
-            button.setAttribute('aria-selected', String(i === index));
-            button.tabIndex = i === index ? 0 : -1;
-            sections[i].hidden = i !== index;
+            button.classList.toggle(
+                'active',
+                i === index
+            );
+
+            button.setAttribute(
+                'aria-selected',
+                String(i === index)
+            );
+
+            button.tabIndex =
+                i === index ? 0 : -1;
+
+            sections[i].hidden =
+                i !== index;
         });
-        if (focus) buttons[index].focus();
+
+        if (focus) {
+            buttons[index].focus();
+        }
     }
-    ['Overview', 'Contact', 'Skills', 'Projects'].forEach((label, index) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'profile-tab';
-        button.id = 'profile-tab-' + index;
-        button.textContent = label;
-        button.setAttribute('role', 'tab');
-        button.setAttribute('aria-controls', 'profile-panel-' + index);
-        const panel = document.createElement('section');
-        panel.className = 'profile-panel';
-        panel.id = 'profile-panel-' + index;
-        panel.tabIndex = 0;
-        panel.setAttribute('role', 'tabpanel');
-        panel.setAttribute('aria-labelledby', button.id);
-        button.addEventListener('click', () => activate(index));
-        button.addEventListener('keydown', event => {
-            let next;
-            if (event.key === 'ArrowRight') next = (index + 1) % 4;
-            if (event.key === 'ArrowLeft') next = (index + 3) % 4;
-            if (event.key === 'Home') next = 0;
-            if (event.key === 'End') next = 3;
-            if (next !== undefined) { event.preventDefault(); activate(next, true); }
+
+    ['Overview', 'Contact', 'Skills', 'Projects']
+        .forEach((label, index) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'profile-tab';
+            button.id = 'profile-tab-' + index;
+            button.textContent = label;
+            button.setAttribute('role', 'tab');
+            button.setAttribute(
+                'aria-controls',
+                'profile-panel-' + index
+            );
+
+            const panel = document.createElement('section');
+            panel.className = 'profile-panel';
+            panel.id = 'profile-panel-' + index;
+            panel.tabIndex = 0;
+            panel.setAttribute('role', 'tabpanel');
+            panel.setAttribute(
+                'aria-labelledby',
+                button.id
+            );
+
+            button.addEventListener(
+                'click',
+                () => activate(index)
+            );
+
+            button.addEventListener(
+                'keydown',
+                event => {
+                    let next;
+
+                    if (event.key === 'ArrowRight') {
+                        next = (index + 1) % 4;
+                    }
+
+                    if (event.key === 'ArrowLeft') {
+                        next = (index + 3) % 4;
+                    }
+
+                    if (event.key === 'Home') {
+                        next = 0;
+                    }
+
+                    if (event.key === 'End') {
+                        next = 3;
+                    }
+
+                    if (next !== undefined) {
+                        event.preventDefault();
+                        activate(next, true);
+                    }
+                }
+            );
+
+            buttons.push(button);
+            sections.push(panel);
+            tabs.append(button);
+            panels.append(panel);
         });
-        buttons.push(button); sections.push(panel); tabs.append(button); panels.append(panel);
-    });
+
     sections[0].append(bio);
     sections[1].append(email, socialLinks);
     sections[2].append(skillsHeading, skills);
+
     const projectList = document.createElement('ul');
-    const projects = Array.isArray(employee.projects) ? employee.projects.filter(p => typeof p === 'string' && p.trim() && p.trim().toLowerCase() !== 'tbd') : [];
-    for (const project of projects) { const item = document.createElement('li'); item.textContent = project; projectList.append(item); }
-    if (!projects.length) { const item = document.createElement('li'); item.textContent = 'No projects listed.'; projectList.append(item); }
+
+    const projects = Array.isArray(employee.projects)
+        ? employee.projects.filter(project =>
+            typeof project === 'string' &&
+            project.trim() &&
+            project.trim().toLowerCase() !== 'tbd'
+        )
+        : [];
+
+    for (const project of projects) {
+        const item = document.createElement('li');
+        item.textContent = project;
+        projectList.append(item);
+    }
+
+    if (!projects.length) {
+        const item = document.createElement('li');
+        item.textContent = 'No projects listed.';
+        projectList.append(item);
+    }
+
     sections[3].append(projectList);
+
     activate(0);
-    content.append(closeButton, header, tabs, panels);
+
+    content.append(
+        closeButton,
+        header,
+        tabs,
+        panels
+    );
 
     modal.appendChild(content);
     document.body.appendChild(modal);
 
     const oldOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
     function closeProfile() {
         modal.remove();
         document.body.style.overflow = oldOverflow;
-        document.removeEventListener('keydown', closeWithEscape);
-        if (previousFocus?.isConnected) previousFocus.focus();
-    }
-    closeButton.addEventListener('click', closeProfile);
+        document.removeEventListener(
+            'keydown',
+            closeWithEscape
+        );
 
-    modal.addEventListener('click', event => {
-        if (event.target === modal) {
-            closeProfile();
+        if (previousFocus?.isConnected) {
+            previousFocus.focus();
         }
-    });
+    }
+
+    closeButton.addEventListener(
+        'click',
+        closeProfile
+    );
+
+    modal.addEventListener(
+        'click',
+        event => {
+            if (event.target === modal) {
+                closeProfile();
+            }
+        }
+    );
 
     function closeWithEscape(event) {
         if (event.key === 'Escape') {
             closeProfile();
         }
+
         if (event.key === 'Tab') {
-            const focusable = [...content.querySelectorAll('button,a[href],[tabindex="0"]')].filter(el => !el.closest('[hidden]') && !el.disabled && el.tabIndex >= 0);
-            const first = focusable[0], last = focusable[focusable.length - 1];
-            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+            const focusable = [
+                ...content.querySelectorAll(
+                    'button,a[href],[tabindex="0"]'
+                )
+            ].filter(element =>
+                !element.closest('[hidden]') &&
+                !element.disabled &&
+                element.tabIndex >= 0
+            );
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (
+                event.shiftKey &&
+                document.activeElement === first
+            ) {
+                event.preventDefault();
+                last.focus();
+            } else if (
+                !event.shiftKey &&
+                document.activeElement === last
+            ) {
+                event.preventDefault();
+                first.focus();
+            }
         }
     }
 
@@ -904,9 +1193,9 @@ function openProfile(employee) {
         'keydown',
         closeWithEscape
     );
+
     closeButton.focus();
 }
-
 function renderEmployees() {
     const query =
         searchInput.value.trim().toLowerCase();
@@ -996,48 +1285,101 @@ sortFilter.addEventListener(
 );
 
 if (clearButton) {
-    clearButton.addEventListener('click', () => {
-        searchInput.value = '';
-        departmentFilter.value = 'all';
-        sortFilter.value = 'az';
-        renderEmployees();
-    });
+    clearButton.addEventListener(
+        'click',
+        () => {
+            searchInput.value = '';
+            departmentFilter.value = 'all';
+            sortFilter.value = 'az';
+            renderEmployees();
+        }
+    );
 }
 
 let directoryRequest = 0;
+
 async function loadEmployees() {
     const request = ++directoryRequest;
-    const status = document.querySelector('#directory-status');
+    const status =
+        document.querySelector('#directory-status');
+
     status.hidden = true;
+
     try {
-        if (!window.EmployeeStore) throw new Error('Connection unavailable');
-        const data = await window.EmployeeStore.list();
-        if (request !== directoryRequest) return;
+        if (!window.EmployeeStore) {
+            throw new Error('Connection unavailable');
+        }
+
+        const data =
+            await window.EmployeeStore.list();
+
+        if (request !== directoryRequest) {
+            return;
+        }
+
         employees = data;
+
         updateStatistics();
         renderDepartments();
-        const selected = departmentFilter.value;
+
+        const selected =
+            departmentFilter.value;
+
         departmentFilter.replaceChildren();
-        const all = document.createElement('option');
-        all.value = 'all'; all.textContent = 'All Departments';
+
+        const all =
+            document.createElement('option');
+
+        all.value = 'all';
+        all.textContent = 'All Departments';
         departmentFilter.append(all);
-        const departments = [...new Set(employees.map(e => e.department).filter(Boolean))].sort();
+
+        const departments = [
+            ...new Set(
+                employees
+                    .map(employee => employee.department)
+                    .filter(Boolean)
+            )
+        ].sort();
+
         for (const department of departments) {
-            const option = document.createElement('option');
-            option.value = department.toLowerCase(); option.textContent = department;
+            const option =
+                document.createElement('option');
+
+            option.value =
+                department.toLowerCase();
+
+            option.textContent = department;
             departmentFilter.append(option);
         }
-        departmentFilter.value = [...departmentFilter.options].some(o => o.value === selected) ? selected : 'all';
+
+        departmentFilter.value =
+            [...departmentFilter.options]
+                .some(option =>
+                    option.value === selected
+                )
+                ? selected
+                : 'all';
+
         renderEmployees();
     } catch {
-        if (request !== directoryRequest) return;
+        if (request !== directoryRequest) {
+            return;
+        }
+
         status.textContent = employees.length
             ? 'Could not refresh. Showing previously loaded employees. Please try again.'
             : 'The directory is temporarily unavailable. Please reload the page to try again.';
+
         status.hidden = false;
-        if (!employees.length) { resultsCount.textContent = ''; employeeList.replaceChildren(); }
+
+        if (!employees.length) {
+            resultsCount.textContent = '';
+            employeeList.replaceChildren();
+        }
     }
 }
+
 loadEmployees();
 
 const menuButton =
@@ -1063,25 +1405,28 @@ if (menuButton && navigation) {
         menuButton.textContent = '☰';
     }
 
-    menuButton.addEventListener('click', () => {
-        const isOpen =
-            navigation.classList.toggle('open');
+    menuButton.addEventListener(
+        'click',
+        () => {
+            const isOpen =
+                navigation.classList.toggle('open');
 
-        menuButton.setAttribute(
-            'aria-expanded',
-            String(isOpen)
-        );
+            menuButton.setAttribute(
+                'aria-expanded',
+                String(isOpen)
+            );
 
-        menuButton.setAttribute(
-            'aria-label',
-            isOpen
-                ? 'Close navigation menu'
-                : 'Open navigation menu'
-        );
+            menuButton.setAttribute(
+                'aria-label',
+                isOpen
+                    ? 'Close navigation menu'
+                    : 'Open navigation menu'
+            );
 
-        menuButton.textContent =
-            isOpen ? '×' : '☰';
-    });
+            menuButton.textContent =
+                isOpen ? '×' : '☰';
+        }
+    );
 
     navigation.querySelectorAll('a')
         .forEach(link => {
@@ -1136,25 +1481,42 @@ if (menuButton && navigation) {
     updateActiveLink();
 }
 
+let darkMode =
+    localStorage.getItem('darkMode');
 
-// Toggle DarkMode
-let darkMode = localStorage.getItem("darkMode");
-const darkModeToggle = document.querySelector('#darkModeToggle');
+const darkModeToggle =
+    document.querySelector('#darkModeToggle');
 
 const enableDarkMode = () => {
     document.body.classList.add('darkMode');
-    localStorage.setItem('darkMode', 'enabled');
-}
+    localStorage.setItem(
+        'darkMode',
+        'enabled'
+    );
+};
+
 const disableDarkMode = () => {
     document.body.classList.remove('darkMode');
-    localStorage.setItem('darkMode', 'null');
+    localStorage.setItem(
+        'darkMode',
+        'null'
+    );
+};
+
+darkMode === 'enabled'
+    ? enableDarkMode()
+    : disableDarkMode();
+
+if (darkModeToggle) {
+    darkModeToggle.addEventListener(
+        'click',
+        () => {
+            darkMode =
+                localStorage.getItem('darkMode');
+
+            darkMode !== 'enabled'
+                ? enableDarkMode()
+                : disableDarkMode();
+        }
+    );
 }
-
-darkMode === "enabled" ? enableDarkMode() : disableDarkMode();
-
-darkModeToggle.addEventListener('click', () => {
-    darkMode = localStorage.getItem("darkMode");
-    darkMode !== "enabled" ? enableDarkMode() : disableDarkMode()
-    console.log('Dark mode toggle clicked');
-
-});
