@@ -1,90 +1,517 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="The People: find team members, explore departments, and connect with the team.">
-  <title>The People | Employee Directory</title>
-  <link rel="icon" type="image/png" href="the-people-logo.png">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap">
-  <link rel="stylesheet" href="directory.css?v=separate-views-6">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+        name="description"
+        content="The People: find team members, explore departments, and connect with the team."
+    >
+    <title>The People | Employee Directory</title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="the-people-logo.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap"
+    >
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="directory-page">
-  <a class="skip-link" href="#directory">Skip to employee directory</a>
-  <header class="directory-header" id="Home">
-    <div class="header-container">
-      <a class="logo people-logo" href="#directory" aria-label="The People directory"><img src="the-people-logo.png" alt="The People" width="1960" height="816"></a>
-      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="primary-navigation" aria-expanded="false">☰</button>
-      <nav class="nav-links" id="primary-navigation" aria-label="Main navigation">
-        <a href="#directory">Directory</a><a href="#Departments">Departments</a><a href="#About">About</a><a href="#Contact">Contact</a>
-      </nav>
-      <button id="darkModeToggle" class="theme-toggle day-night-toggle" type="button" aria-label="Night mode" aria-pressed="false" title="Switch to night mode">
-        <span class="theme-label theme-day" aria-hidden="true">DAY MODE</span>
-        <span class="theme-label theme-night" aria-hidden="true">NIGHT MODE</span>
-        <span class="theme-thumb" aria-hidden="true">
-          <svg class="theme-sun" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="20" cy="20" r="8"/><path d="M20 2v6m0 24v6M2 20h6m24 0h6M7.3 7.3l4.2 4.2m17 17 4.2 4.2M7.3 32.7l4.2-4.2m17-17 4.2-4.2"/></svg>
-          <svg class="theme-moon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M24 5a15 15 0 1 0 9 26A16 16 0 0 1 24 5Z"/><path d="m31 3 1.2 3.8L36 8l-3.8 1.2L31 13l-1.2-3.8L26 8l3.8-1.2Zm5 12 .8 2.2L39 18l-2.2.8L36 21l-.8-2.2L33 18l2.2-.8Z"/></svg>
-        </span>
-      </button>
-    </div>
-  </header>
-  <main class="page-shell" id="page-content">
-    <section data-page="directory" class="hero-section" aria-labelledby="page-title">
-      <div><p class="hero-label">THE PEOPLE · OUR TEAM</p><h1 id="page-title">People Directory</h1><p class="hero-description">Discover our team, explore departments, and find the right person to connect with.</p></div>
-      <a class="hero-link" href="#Departments">Explore departments <span aria-hidden="true">→</span></a>
-    </section>
-    <section data-page="directory" class="statistics-section" aria-label="Employee statistics">
-      <article class="stat-card"><div><p>Total employees</p><h2 id="total-employees">—</h2></div><span class="stat-icon" aria-hidden="true"><span class="material-symbols-outlined">group</span></span></article>
-      <article class="stat-card"><div><p>Departments</p><h2 id="total-departments">—</h2></div><span class="stat-icon" aria-hidden="true"><span class="material-symbols-outlined">grid_view</span></span></article>
-      <article class="stat-card"><div><p>Roles</p><h2 id="total-roles">—</h2></div><span class="stat-icon" aria-hidden="true"><span class="material-symbols-outlined">badge</span></span></article>
-      <article class="stat-card"><div><p>New this month</p><h2 id="new-employees">—</h2></div><span class="stat-icon" aria-hidden="true"><span class="material-symbols-outlined">person_add</span></span></article>
-    </section>
-    <section data-page="directory" id="directory" class="directory-section">
-      <div class="section-heading">
-        <div><h2>Team Members</h2><p>Find colleagues by name, role, email, department, or skill.</p></div>
-        <div class="directory-toolbar">
-        <div class="view-switch" role="group" aria-label="Directory view">
-          <button id="viewGridBtn" type="button" aria-pressed="true" aria-controls="employee-list"><span class="material-symbols-outlined" aria-hidden="true">grid_view</span> Grid</button>
-          <button id="viewTableBtn" type="button" aria-pressed="false" aria-controls="employee-table-view"><span class="material-symbols-outlined" aria-hidden="true">table_rows</span> Table</button>
+    <a class="skip-link" href="#directory">
+        Skip to employee directory
+    </a>
+
+    <header class="directory-header" id="Home">
+        <div class="header-container">
+            <a
+                class="logo people-logo"
+                href="#directory"
+                aria-label="The People directory"
+            >
+                <img
+                    src="the-people-logo.png"
+                    alt="The People"
+                    width="1960"
+                    height="816"
+                >
+            </a>
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-controls="primary-navigation"
+                aria-expanded="false"
+            >
+                ☰
+            </button>
+
+            <nav
+                class="nav-links"
+                id="primary-navigation"
+                aria-label="Main navigation"
+            >
+                <a href="#directory">Directory</a>
+                <a href="#Departments">Departments</a>
+                <a href="#About">About</a>
+                <a href="#Contact">Contact</a>
+            </nav>
+
+            <button
+                id="darkModeToggle"
+                class="theme-toggle day-night-toggle"
+                type="button"
+                aria-label="Night mode"
+                aria-pressed="false"
+                title="Switch to night mode"
+            >
+                <span
+                    class="theme-label theme-day"
+                    aria-hidden="true"
+                >
+                    DAY MODE
+                </span>
+
+                <span
+                    class="theme-label theme-night"
+                    aria-hidden="true"
+                >
+                    NIGHT MODE
+                </span>
+
+                <span
+                    class="theme-thumb"
+                    aria-hidden="true"
+                >
+                    <svg
+                        class="theme-sun"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    >
+                        <circle cx="20" cy="20" r="8"/>
+                        <path d="M20 2v6m0 24v6M2 20h6m24 0h6"/>
+                        <path d="M7.3 7.3l4.2 4.2m17 17 4.2 4.2"/>
+                        <path d="M7.3 32.7l4.2-4.2m17-17 4.2-4.2"/>
+                    </svg>
+
+                    <svg
+                        class="theme-moon"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M24 5a15 15 0 1 0 9 26A16 16 0 0 1 24 5Z"/>
+                        <path d="m31 3 1.2 3.8L36 8l-3.8 1.2L31 13l-1.2-3.8L26 8l3.8-1.2Z"/>
+                        <path d="m36 15 .8 2.2L39 18l-2.2.8L36 21l-.8-2.2L33 18l2.2-.8Z"/>
+                    </svg>
+                </span>
+            </button>
         </div>
-        <a class="add-teammate" href="admin.html">+ Add Teammate</a>
-        </div>
-      </div>
-      <p id="directory-status" role="status" aria-live="polite" hidden></p>
-      <section class="filter-panel" aria-label="Find employees">
-        <div class="search-container">
-          <div class="search-field"><label for="search">Search employees</label><div class="input-wrap"><span class="search-icon material-symbols-outlined" aria-hidden="true">search</span><input id="search" type="search" placeholder="Search name, role, email, or skill…" aria-keyshortcuts="/"><kbd aria-hidden="true">/</kbd></div></div>
-          <div class="filter-field"><label for="department-filter">Department</label><select id="department-filter"><option value="all">All Departments</option></select></div>
-          <div class="filter-field"><label for="sort-filter">Sort employees</label><select id="sort-filter"><option value="az">Name: A–Z</option><option value="za">Name: Z–A</option></select></div>
-          <button id="clearSearch" class="clear-button" type="button" aria-label="Clear search and filters">Clear all</button>
-        </div>
-        <div id="department-pills" class="department-pills" role="group" aria-label="Quick department filters"></div>
-      </section>
-      <p id="results-count" aria-live="polite"></p>
-      <section id="employee-list" class="employee-grid" aria-label="Employee profiles"></section>
-      <div id="employee-table-view" class="table-wrap" hidden>
-        <table class="employee-table"><caption class="visually-hidden">Team members matching your search and department filter</caption><thead><tr><th scope="col">Employee</th><th scope="col">Department</th><th scope="col">Email</th><th scope="col">Skills</th><th scope="col">Actions</th></tr></thead><tbody id="employee-table-body"></tbody></table>
-      </div>
-    </section>
-    <section data-page="Departments" hidden id="Departments" class="departments-section" aria-labelledby="departments-heading">
-      <div class="section-heading"><div><h2 id="departments-heading">Departments</h2><p>Select a department to meet its team.</p></div></div>
-      <div id="department-grid" class="department-grid" role="group" aria-label="Departments"></div>
-      <div id="department-members" class="department-members" aria-live="polite" hidden></div>
-    </section>
-      <section data-page="About" hidden id="About" class="about-section" aria-label="About Our Team"><p class="eyebrow">BUILT TOGETHER</p><h2>About Our Team</h2><p>We built this Employee Directory App through the LA Tech Rising internship program. Our team uses HTML, CSS, and JavaScript to help people find colleagues, explore departments, and connect.</p><div class="team-values"><span>Collaboration</span><span>Learning</span><span>Teamwork</span></div></section>
-      <section data-page="Contact" hidden id="Contact" class="contact-section" aria-label="Contact Us"><p class="eyebrow">LET’S CONNECT</p><h2>Contact Us</h2><dl><div><dt>Email</dt><dd><a href="mailto:Aomid6362@gmail.com">Aomid6362@gmail.com</a></dd></div><div><dt>Location</dt><dd>Los Angeles, CA</dd></div><div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/ahmadiomid92/" target="_blank" rel="noopener noreferrer">Omid Ahmadi ↗</a></dd></div></dl></section>
-    <footer id="site-footer"><p>The People © 2026 · Built through LA Tech Rising</p></footer>
-  </main>
-  <!-- Keep this order: library, configuration, shared store, directory UI. -->
-  <script src="supabase-2.118.0.js"></script>
-  <script src="supabase-config.js"></script>
-  <script src="employee-store.js"></script>
-  <script src="directory.js?v=separate-views-6"></script>
+    </header>
+
+    <main class="page-shell" id="page-content">
+        <section
+            data-page="directory"
+            class="hero-section"
+            aria-labelledby="page-title"
+        >
+            <div>
+                <p class="hero-label">
+                    THE PEOPLE · OUR TEAM
+                </p>
+
+                <h1 id="page-title">
+                    People Directory
+                </h1>
+
+                <p class="hero-description">
+                    Discover our team, explore departments,
+                    and find the right person to connect with.
+                </p>
+            </div>
+
+            <a
+                class="hero-link"
+                href="#Departments"
+            >
+                Explore departments
+                <span aria-hidden="true">→</span>
+            </a>
+        </section>
+
+        <section
+            data-page="directory"
+            class="statistics-section"
+            aria-label="Employee statistics"
+        >
+            <article class="stat-card stat-blue">
+                <div>
+                    <p>Total employees</p>
+                    <h2 id="total-employees">—</h2>
+                </div>
+
+                <span
+                    class="stat-icon"
+                    aria-hidden="true"
+                >
+                    <span class="material-symbols-outlined">
+                        group
+                    </span>
+                </span>
+            </article>
+
+            <article class="stat-card stat-purple">
+                <div>
+                    <p>Departments</p>
+                    <h2 id="total-departments">—</h2>
+                </div>
+
+                <span
+                    class="stat-icon"
+                    aria-hidden="true"
+                >
+                    <span class="material-symbols-outlined">
+                        grid_view
+                    </span>
+                </span>
+            </article>
+
+            <article class="stat-card stat-orange">
+                <div>
+                    <p>Roles</p>
+                    <h2 id="total-roles">—</h2>
+                </div>
+
+                <span
+                    class="stat-icon"
+                    aria-hidden="true"
+                >
+                    <span class="material-symbols-outlined">
+                        badge
+                    </span>
+                </span>
+            </article>
+
+            <article class="stat-card stat-teal">
+                <div>
+                    <p>New this month</p>
+                    <h2 id="new-employees">—</h2>
+                </div>
+
+                <span
+                    class="stat-icon"
+                    aria-hidden="true"
+                >
+                    <span class="material-symbols-outlined">
+                        person_add
+                    </span>
+                </span>
+            </article>
+        </section>
+
+        <section
+            data-page="directory"
+            id="directory"
+            class="directory-section"
+        >
+            <div class="section-heading">
+                <div>
+                    <h2>Team Members</h2>
+                    <p>
+                        Find colleagues by name, role,
+                        email, department, or skill.
+                    </p>
+                </div>
+
+                <div class="directory-toolbar">
+                    <div
+                        class="view-switch"
+                        role="group"
+                        aria-label="Directory view"
+                    >
+                        <button
+                            id="viewGridBtn"
+                            type="button"
+                            aria-pressed="true"
+                            aria-controls="employee-list"
+                        >
+                            <span
+                                class="material-symbols-outlined"
+                                aria-hidden="true"
+                            >
+                                grid_view
+                            </span>
+                            Grid
+                        </button>
+
+                        <button
+                            id="viewTableBtn"
+                            type="button"
+                            aria-pressed="false"
+                            aria-controls="employee-table-view"
+                        >
+                            <span
+                                class="material-symbols-outlined"
+                                aria-hidden="true"
+                            >
+                                table_rows
+                            </span>
+                            Table
+                        </button>
+                    </div>
+
+                    <a
+                        class="add-teammate"
+                        href="admin.html"
+                    >
+                        + Add Teammate
+                    </a>
+                </div>
+            </div>
+
+            <p
+                id="directory-status"
+                role="status"
+                aria-live="polite"
+                hidden
+            ></p>
+
+            <section
+                class="filter-panel"
+                aria-label="Find employees"
+            >
+                <div class="search-container">
+                    <div class="search-field">
+                        <label for="search">
+                            Search employees
+                        </label>
+
+                        <div class="input-wrap">
+                            <span
+                                class="search-icon material-symbols-outlined"
+                                aria-hidden="true"
+                            >
+                                search
+                            </span>
+
+                            <input
+                                id="search"
+                                type="search"
+                                placeholder="Search name, role, email, or skill…"
+                                aria-keyshortcuts="/"
+                            >
+
+                            <kbd aria-hidden="true">/</kbd>
+                        </div>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="department-filter">
+                            Department
+                        </label>
+
+                        <select id="department-filter">
+                            <option value="all">
+                                All Departments
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="sort-filter">
+                            Sort employees
+                        </label>
+
+                        <select id="sort-filter">
+                            <option value="az">
+                                Name: A–Z
+                            </option>
+
+                            <option value="za">
+                                Name: Z–A
+                            </option>
+                        </select>
+                    </div>
+
+                    <button
+                        id="clearSearch"
+                        class="clear-button"
+                        type="button"
+                        aria-label="Clear search and filters"
+                    >
+                        Clear all
+                    </button>
+                </div>
+
+                <div
+                    id="department-pills"
+                    class="department-pills"
+                    role="group"
+                    aria-label="Quick department filters"
+                ></div>
+            </section>
+
+            <p id="results-count" aria-live="polite"></p>
+
+            <section
+                id="employee-list"
+                class="employee-grid"
+                aria-label="Employee profiles"
+            ></section>
+
+            <div
+                id="employee-table-view"
+                class="table-wrap"
+                hidden
+            >
+                <table class="employee-table">
+                    <caption class="visually-hidden">
+                        Team members matching your search
+                        and department filter
+                    </caption>
+
+                    <thead>
+                        <tr>
+                            <th scope="col">Employee</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Skills</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="employee-table-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section
+            data-page="Departments"
+            hidden
+            id="Departments"
+            class="departments-section"
+            aria-labelledby="departments-heading"
+        >
+            <div class="section-heading">
+                <div>
+                    <h2 id="departments-heading">
+                        Departments
+                    </h2>
+
+                    <p>
+                        Select a department to meet its team.
+                    </p>
+                </div>
+            </div>
+
+            <div
+                id="department-grid"
+                class="department-grid"
+                role="group"
+                aria-label="Departments"
+            ></div>
+
+            <div
+                id="department-members"
+                class="department-members"
+                aria-live="polite"
+                hidden
+            ></div>
+        </section>
+
+        <section
+            data-page="About"
+            hidden
+            id="About"
+            class="about-section"
+            aria-label="About Our Team"
+        >
+            <p class="eyebrow">BUILT TOGETHER</p>
+
+            <h2>About Our Team</h2>
+
+            <p>
+                We built this Employee Directory App through
+                the LA Tech Rising internship program. Our team
+                uses HTML, CSS, and JavaScript to help people
+                find colleagues, explore departments, and connect.
+            </p>
+
+            <div class="team-values">
+                <span>Collaboration</span>
+                <span>Learning</span>
+                <span>Teamwork</span>
+            </div>
+        </section>
+
+        <section
+            data-page="Contact"
+            hidden
+            id="Contact"
+            class="contact-section"
+            aria-label="Contact Us"
+        >
+            <p class="eyebrow">LET’S CONNECT</p>
+
+            <h2>Contact Us</h2>
+
+            <dl>
+                <div>
+                    <dt>Email</dt>
+                    <dd>
+                        <a href="mailto:Aomid6362@gmail.com">
+                            Aomid6362@gmail.com
+                        </a>
+                    </dd>
+                </div>
+
+                <div>
+                    <dt>Location</dt>
+                    <dd>Los Angeles, CA</dd>
+                </div>
+
+                <div>
+                    <dt>LinkedIn</dt>
+                    <dd>
+                        <a
+                            href="https://www.linkedin.com/in/ahmadiomid92/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Omid Ahmadi ↗
+                        </a>
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <footer id="site-footer">
+            <p>
+                The People © 2026 · Built through LA Tech Rising
+            </p>
+        </footer>
+    </main>
+
+    <script src="supabase-2.118.0.js"></script>
+    <script src="supabase-config.js"></script>
+    <script src="employee-store.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
