@@ -218,9 +218,11 @@ function getInitials(name) {
         .toUpperCase();
 }
 
-function makeDepartmentCard(department, members) {
+function makeDepartmentCard(department, members, totalHeadcount = members.length) {
     const key = department.toLowerCase();
     const count = members.length;
+    const percent = totalHeadcount > 0 ? (count / totalHeadcount) * 100 : 0;
+    const percentText = `${percent.toFixed(1)}%`;
 
     const card = document.createElement('button');
     card.className = 'department-card';
@@ -229,7 +231,7 @@ function makeDepartmentCard(department, members) {
     card.setAttribute('aria-pressed', 'false');
     card.setAttribute(
         'aria-label',
-        `${department}, ${count} ${count === 1 ? 'employee' : 'employees'}`
+        `${department}, ${count} ${count === 1 ? 'employee' : 'employees'}, ${percentText} of headcount`
     );
 
     const style = getDepartmentStyle(department);
@@ -248,6 +250,18 @@ function makeDepartmentCard(department, members) {
     total.className = 'department-count';
     total.textContent =
         `${count} ${count === 1 ? 'Employee' : 'Employees'}`;
+
+    const share = document.createElement('span');
+    share.className = 'department-share';
+    share.textContent = `${percentText} of headcount`;
+
+    const bar = document.createElement('span');
+    bar.className = 'department-bar';
+    bar.setAttribute('aria-hidden', 'true');
+    const fill = document.createElement('span');
+    fill.className = 'department-bar-fill';
+    fill.style.width = `${Math.min(100, Math.max(percent, count ? 2 : 0))}%`;
+    bar.appendChild(fill);
 
     const faces = document.createElement('span');
     faces.className = 'department-faces';
@@ -289,13 +303,47 @@ function makeDepartmentCard(department, members) {
     footer.className = 'department-footer';
     footer.append(faces, arrow);
 
-    card.append(icon, name, total, footer);
+    card.append(icon, name, total, share, bar, footer);
 
     card.addEventListener('click', () => {
         selectDepartment(key);
     });
 
     return card;
+}
+
+function viewDirectoryFor(key) {
+    const hasOption = [...departmentFilter.options].some(option => option.value === key);
+
+    searchInput.value = '';
+    departmentFilter.value = hasOption ? key : 'all';
+    renderEmployees();
+
+    if (window.location.hash === '#directory') {
+        window.dispatchEvent(new HashChangeEvent('hashchange'));
+    } else {
+        window.location.hash = '#directory';
+    }
+}
+
+function makeDepartmentTile(card, name) {
+    const key = card.dataset.department;
+
+    const link = document.createElement('a');
+    link.className = 'department-directory-link';
+    link.href = '#directory';
+    link.textContent = 'View Directory \u2192';
+    link.setAttribute('aria-label', `View ${name} in the directory`);
+    link.addEventListener('click', event => {
+        event.preventDefault();
+        viewDirectoryFor(key);
+    });
+
+    const tile = document.createElement('div');
+    tile.className = 'department-tile';
+    tile.append(card, link);
+
+    return tile;
 }
 
 function renderDepartments() {
@@ -321,9 +369,15 @@ function renderDepartments() {
         groups.get(key).members.push(employee);
     });
 
+    const totalHeadcount = [...groups.values()]
+        .reduce((sum, group) => sum + group.members.length, 0);
+
     const cards = [...groups.values()]
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map(group => makeDepartmentCard(group.name, group.members));
+        .map(group => makeDepartmentTile(
+            makeDepartmentCard(group.name, group.members, totalHeadcount),
+            group.name
+        ));
 
     departmentGrid.replaceChildren(...cards);
 
@@ -1434,8 +1488,3 @@ window.addEventListener('keydown', event => {
     if (searchInput.closest('[hidden]')) return;
     event.preventDefault(); searchInput.focus();
 });
-
-
-
-
-
