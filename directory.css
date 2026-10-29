@@ -88,3 +88,13 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
 /* Local time uses the same compact typography and icon alignment as location. */
 .card-details .card-time-row{font:inherit;font-size:13px;line-height:1.35;margin:0}
 .card-local-time{font:inherit;color:inherit;font-variant-numeric:tabular-nums}
+
+/* Week 6 D2/D3: headcount share, bar, and filtered View Directory link */
+.department-tile{display:flex;flex-direction:column;gap:6px;min-width:0}
+.department-tile .department-card{width:100%;flex:1}
+.department-share{font-size:12px;font-weight:600;color:var(--ink);margin-top:6px}
+.department-bar{display:block;width:100%;height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+.department-bar-fill{display:block;height:100%;border-radius:999px;background:var(--primary)}
+.department-directory-link{align-self:flex-start;padding:4px 2px;color:var(--primary);font-size:12px;font-weight:600;text-decoration:none;border-radius:4px}
+.department-directory-link:hover{text-decoration:underline}
+.department-directory-link:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
