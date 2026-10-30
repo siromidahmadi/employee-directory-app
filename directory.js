@@ -227,22 +227,22 @@ const iconShapes = {
 };
 
 const departmentStyles = [
-    { match: /develop|software|\bweb\b|front|back/, icon: 'code', tone: 'blue' },
-    { match: /product/, icon: 'cube', tone: 'amber' },
-    { match: /design|\bux\b|\bui\b|creative/, icon: 'palette', tone: 'pink' },
-    { match: /engineer/, icon: 'gear', tone: 'sky' },
-    { match: /\bhr\b|human|people|recruit/, icon: 'people', tone: 'orange' },
-    { match: /analytic|data/, icon: 'bars', tone: 'violet' },
-    { match: /market|sales|growth/, icon: 'briefcase', tone: 'teal' },
-    { match: /operation/, icon: 'gear', tone: 'slate' },
-    { match: /quality|\bqa\b|test/, icon: 'check', tone: 'green' }
+    { match: /develop|software|\bweb\b|front|back/, icon: 'code', tone: 'blue', code: 'SWE', tags:['Frontend','Backend']},
+    { match: /product/, icon: 'cube', tone: 'amber', code: 'PROD', tags:['Strategy','Roadmap','Planning']},
+    { match: /design|\bux\b|\bui\b|creative/, icon: 'palette', tone: 'pink', code: 'DSN', tags:['UI/UX','Visuals']},
+    { match: /engineer/, icon: 'gear', tone: 'sky', code: 'ENG', tags:['Core API','Security','DevOps'] },
+    { match: /\bhr\b|human|people|recruit/, icon: 'people', tone: 'orange', code: 'PEO', tags:['Recruitment','Onboarding'] },
+    { match: /analytic|data/, icon: 'bars', tone: 'violet', code:'DATA', tags:['Analytics','BI','Data Science'] },
+    { match: /market|sales|growth/, icon: 'briefcase', tone: 'teal', code: 'MKT', tags:['Sales','Growth'] },
+    { match: /operation/, icon: 'gear', tone: 'slate', code: 'OPS', tags:['Logistics','Administration']},
+    { match: /quality|\bqa\b|test/, icon: 'check', tone: 'green', code:'QA', tags:['Testing','Automation']}
 ];
 
 function getDepartmentStyle(department) {
     const name = String(department || '').toLowerCase();
     const found = departmentStyles.find(item => item.match.test(name));
 
-    return found || { icon: 'briefcase', tone: 'blue' };
+    return found || { icon: 'briefcase', tone: 'blue', code: getInitials(department), tags: [] };
 }
 
 function svgMarkup(shapes, extra = '') {
@@ -286,6 +286,21 @@ function makeDepartmentCard(department, members, totalHeadcount = members.length
     const name = document.createElement('span');
     name.className = 'department-name';
     name.textContent = department;
+
+    const abbr = document.createElement('span');
+    abbr.className = 'department-code';
+    abbr.textContent = style.code;
+    abbr.setAttribute('aria-label', `Department code: ${style.code}`);
+
+    const tags = document.createElement('span');
+    tags.className = 'department-tags';
+    for (const label of style.tags) {
+        const tag = document.createElement('span');
+        tag.className = 'department-tag';
+        tag.textContent = label;
+        tags.appendChild(tag);
+    }
+    tags.hidden = !style.tags.length;
 
     const total = document.createElement('span');
     total.className = 'department-count';
@@ -344,7 +359,7 @@ function makeDepartmentCard(department, members, totalHeadcount = members.length
     footer.className = 'department-footer';
     footer.append(faces, arrow);
 
-    card.append(icon, name, total, share, bar, footer);
+    card.append(icon, name, abbr, total, share, bar, tags, footer);
 
     card.addEventListener('click', () => {
         selectDepartment(key);
