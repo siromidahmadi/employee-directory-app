@@ -404,27 +404,33 @@
             voiceStatus.textContent = 'Voice search stopped.';
         }
     }).observe(root);
-    function schedulePrompt() {
+    // One shared clock: hold 4.4s, fade out 0.2s, swap, fade in 0.2s.
+    // Each prompt gets the same 4.8s cycle and one shine, in a fixed order.
+    function stopPrompt() {
         if (promptTimer !== null) window.clearTimeout(promptTimer);
         promptTimer = null;
+        placeholder.classList.remove('is-prompt-fading', 'is-prompt-shining');
+    }
+    function schedulePrompt() {
+        stopPrompt();
         if (motion.matches || document.hidden || !promptVisible || input.value) return;
+        placeholder.classList.add('is-prompt-shining');
         promptTimer = window.setTimeout(() => {
-            if (motion.matches || document.hidden || !promptVisible || input.value) { schedulePrompt(); return; }
-            const choices = searchPrompts.filter(text => text !== currentPrompt);
-            currentPrompt = choices[Math.floor(Math.random() * choices.length)];
-            // Replace the complete two-word prompt at once; keep the shine effect.
-            setPlaceholder();
-            placeholder.classList.add('is-prompt-blinking');
-            schedulePrompt();
-        }, 4800);
+            placeholder.classList.remove('is-prompt-shining');
+            placeholder.classList.add('is-prompt-fading');
+            promptTimer = window.setTimeout(() => {
+                currentPrompt = searchPrompts[(searchPrompts.indexOf(currentPrompt) + 1) % searchPrompts.length];
+                // Swap while fully faded, so old and new words never flash together.
+                setPlaceholder();
+                placeholder.classList.remove('is-prompt-fading');
+                promptTimer = window.setTimeout(schedulePrompt, 200);
+            }, 200);
+        }, 4400);
     }
     input.addEventListener('input', () => { if (voiceActive) stopVoice(); schedulePrompt(); });
-    placeholder.addEventListener('animationend', event => {
-        if (event.animationName === 'spotlight-prompt-blink') placeholder.classList.remove('is-prompt-blinking');
-    });
     motion.addEventListener?.('change', schedulePrompt);
     document.addEventListener('visibilitychange', schedulePrompt);
-    window.addEventListener('pagehide', () => { window.clearTimeout(promptTimer); promptTimer = null; });
+    window.addEventListener('pagehide', stopPrompt);
     window.addEventListener('pageshow', schedulePrompt);
     if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
         promptVisible = entries[0].isIntersecting;
