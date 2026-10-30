@@ -227,3 +227,25 @@ test('D3: the link is not nested inside the card button', async () => {
     assert.equal(link.closest('button'), null);
   } finally { w.close(); }
 });
+
+test('Groups lives at the end of Departments and old group links open that page', async () => {
+  const w = await setup();
+  try {
+    const d = w.document, groups = d.getElementById('Groups'), departments = d.getElementById('Departments');
+    assert.equal(groups.parentElement, departments);
+    assert.equal(departments.lastElementChild, groups);
+    assert.equal(d.querySelector('#primary-navigation a[href="#Groups"]'), null);
+    assert.equal(departments.hidden, true);
+    w.location.hash = '#Departments';
+    w.dispatchEvent(new w.HashChangeEvent('hashchange'));
+    assert.equal(departments.hidden, false);
+    assert.equal(groups.hidden, false);
+    w.location.hash = '#Groups';
+    w.dispatchEvent(new w.HashChangeEvent('hashchange'));
+    assert.equal(departments.hidden, false);
+    assert.equal(d.querySelector('#primary-navigation a[href="#Departments"]').getAttribute('aria-current'), 'location');
+    w.location.hash = '#directory';
+    w.dispatchEvent(new w.HashChangeEvent('hashchange'));
+    assert.equal(departments.hidden, true);
+  } finally { w.close(); }
+});
