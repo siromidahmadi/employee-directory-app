@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="theme-changer.css?v=theme-11">
   <link rel="stylesheet" href="kinetic-nav.css?v=kinetic-sentence-14">
   <link rel="stylesheet" href="liquid-navigation.css?v=liquid-nav-15">
+  <link rel="stylesheet" href="departments-page.css?v=1">
 </head>
 
 <body class="directory-page">
@@ -21,6 +22,15 @@
     <div class="header-container">
       <a class="logo people-logo" href="#directory" aria-label="The People directory"><img src="the-people-logo.png"
           alt="The People" width="1960" height="816"></a>
+      <div class="department-header-tools" hidden>
+        <form id="header-directory-form" role="search" aria-label="Search the People Directory">
+          <label class="visually-hidden" for="header-directory-search">Search people, skills, roles, or locations</label>
+          <input id="header-directory-search" type="search" placeholder="Search people, skills, or titles…" maxlength="200" autocomplete="off" aria-controls="header-directory-results" aria-expanded="false">
+          <button type="submit" aria-label="Search Directory"><span class="material-symbols-outlined" aria-hidden="true">search</span></button>
+          <div id="header-directory-results" hidden></div>
+        </form>
+        <a class="department-quick-invite" href="admin.html">+ Quick Invite</a>
+      </div>
       <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="primary-navigation"
         aria-expanded="false">☰</button>
       <nav class="nav-links liquid-navigation" id="primary-navigation" aria-label="Main navigation">
@@ -146,7 +156,7 @@
       </div>
     </section>
     <section data-page="Departments" hidden id="Departments" class="departments-section" aria-labelledby="departments-heading">
-      <div class="section-heading"><div><h2 id="departments-heading">Departments</h2><p>Select a department to meet its team.</p></div></div>
+      <div class="section-heading"><div><h2 id="departments-heading">Departments &amp; Teams</h2><p>Explore teams, headcount distribution, and the people in each department.</p></div></div>
 
 <div class="teams-toolbar">
     <label
@@ -196,6 +206,18 @@
     </button>
 </div>
 
+      <section class="department-summary" aria-label="Department statistics">
+        <article><span class="material-symbols-outlined" aria-hidden="true">account_tree</span><p>Total Departments</p><strong id="department-summary-count">—</strong><small>Departments in the directory</small></article>
+        <article><span class="material-symbols-outlined" aria-hidden="true">groups</span><p>Total Headcount</p><strong id="department-summary-headcount">—</strong><small>People in the directory</small></article>
+        <article><span class="material-symbols-outlined" aria-hidden="true">work_outline</span><p>Open Requisitions</p><strong id="department-summary-openings">Not listed</strong><small id="department-openings-note">Openings information has not been provided.</small><button id="department-view-openings" type="button">View openings →</button></article>
+      </section>
+      <div class="section-heading department-divisions-heading">
+        <div><h3>Core Operational Divisions</h3><p>Explore departments and their teams.</p></div>
+        <div class="department-view-switch" role="group" aria-label="Department view">
+          <button id="department-view-grid" type="button" aria-pressed="true" aria-controls="department-grid"><span class="material-symbols-outlined" aria-hidden="true">grid_view</span> Grid</button>
+          <button id="department-view-list" type="button" aria-pressed="false" aria-controls="department-grid"><span class="material-symbols-outlined" aria-hidden="true">view_list</span> List</button>
+        </div>
+      </div>
       <div id="department-grid" class="department-grid" role="group" aria-label="Departments"></div>
 
 <p
@@ -207,6 +229,11 @@
 </p>
 
       <div id="department-members" class="department-members" aria-live="polite" hidden></div>
+    <dialog id="department-openings-dialog" aria-labelledby="department-openings-title">
+      <form method="dialog"><button class="department-openings-close" aria-label="Close openings">×</button></form>
+      <h2 id="department-openings-title">Department openings</h2>
+      <div id="department-openings-content"></div>
+    </dialog>
     <section id="Groups" class="guilds-section" aria-labelledby="guilds-heading">
       <div class="section-heading guilds-heading">
         <div>
@@ -299,7 +326,8 @@
   <script src="supabase-config.js"></script>
   <script src="employee-store.js?v=world-location-17"></script>
   <script src="card-local-time.js?v=world-location-17"></script>
-  <script src="directory.js?v=vera-week6-3-full-profile-najeeb-d2d3-spotlight-profile-18"></script>
+  <script src="departments-page.js?v=1"></script>
+  <script src="directory.js?v=departments-summary-19"></script>
   <script src="kinetic-text.js?v=kinetic-sentence-14"></script>
   <script src="liquid-navigation.js?v=liquid-nav-15"></script>
   <script src="guild.js?v=groups-1"></script>

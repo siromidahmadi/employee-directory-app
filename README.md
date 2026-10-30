@@ -52,6 +52,22 @@ Country choices cover 249 ISO countries/territories. City suggestions are a cura
 
 Saved profiles are shared through Supabase. Other visitors see updates when they load or refresh the directory. Drafts, bookmarks, view preferences, and theme preferences stay in the current browser.
 
+### Departments summary and openings
+
+The Departments page shows live department and employee totals, a separate Grid/List preference, header people search, Quick Invite (the existing approved-admin Add Teammate flow), and department openings details. The department toolbar and card contents remain independent of these additions.
+
+Open roles are maintained in `department-openings.json`, keyed by department name (case insensitive). An absent department means its openings are **not provided**, while an empty array means **no open roles listed**. The file starts empty; it does not contain the reference screenshot's sample vacancies. To add actual approved roles, use this structure:
+
+```json
+{
+  "your department name": [
+    { "title": "Your approved role title", "location": "Your role location" }
+  ]
+}
+```
+
+The overall openings total is marked incomplete when some departments have no openings data. Updating this file requires a normal reviewed code change; it is not part of the employee Admin form. Guild membership requests and proposals continue to use their existing browser-local behavior.
+
 ## Technology
 
 - HTML, CSS, and vanilla JavaScript.

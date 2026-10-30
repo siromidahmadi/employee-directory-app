@@ -503,6 +503,7 @@ function renderDepartments() {
 
     syncDepartmentCards();
     renderDepartmentMembers();
+    document.dispatchEvent(new CustomEvent('departments-rendered', { detail: { employees } }));
 }
 
 function syncDepartmentCards() {
@@ -1254,7 +1255,7 @@ function openProfile(employee) {
 
 function renderEmployees() {
     const query =
-        searchInput.value.trim().toLowerCase();
+        searchInput.value.trim().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
     const selectedDepartment =
         departmentFilter.value;
@@ -1263,17 +1264,17 @@ function renderEmployees() {
         sortFilter.value;
 
     const matchingEmployees = employees.filter(employee => {
-        const matchesSearch = [
+        const searchableText = [
             employee.name,
             employee.title,
             employee.department,
             employee.email,
+            employee.location,
+            employee.region,
+            employee.country,
             ...(Array.isArray(employee.skills) ? employee.skills : [])
-        ].some(value =>
-            String(value || '')
-                .toLowerCase()
-                .includes(query)
-        );
+        ].map(value => String(value || '')).join(' ').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        const matchesSearch = query.split(/\s+/).every(term => searchableText.includes(term));
 
         const matchesDepartment =
             selectedDepartment === 'all' ||
