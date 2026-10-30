@@ -46,7 +46,7 @@
         { label: 'Professional links', description: 'LinkedIn, GitHub, and portfolio', href: '#links-heading', focus: 'employee-linkedin', icon: 'link', keywords: 'social website profile' },
         { label: 'Manage teammates', description: 'Search the roster and edit existing profiles', href: '#roster-heading', focus: 'admin-search', icon: 'teams', keywords: 'employees list edit delete remove roster' }
     ];
-    const searchPrompts = ['Search people', 'Search departments', 'Search positions', 'Search skills', 'Search countries', 'Search cities', 'Search email'];
+    const searchPrompts = ['Search by name', 'Search by role', 'Search by skill', 'Search by department', 'Search by location'];
     let currentPrompt = searchPrompts[0];
     let promptTimer = null;
     let promptVisible = true;

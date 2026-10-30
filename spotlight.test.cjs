@@ -187,7 +187,7 @@ test('random search prompts stay together and pause while a person types', async
         const [timer, rotate] = scheduled.entries().next().value;
         scheduled.delete(timer); rotate();
         assert.notEqual(prompt.textContent, initial);
-        assert.match(prompt.textContent, /^Search (people|departments|positions|skills|countries|cities|email)$/);
+        assert.match(prompt.textContent, /^Search by (name|role|skill|department|location)$/);
         const input = search(w, 'Canada'); await tick();
         assert.equal(prompt.hidden, true);
         assert.equal(input.value, 'Canada');
