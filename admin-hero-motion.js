@@ -97,7 +97,7 @@
     function clearPrism() { for (const char of characters) { char.style.transform = ''; char.style.textShadow = ''; } }
     function draw(now) {
         frame = null;
-        if (motion.matches || !visible || document.hidden) return;
+        if (motion.matches || !visible || document.hidden || hero.hidden) return;
         const dt = last === null ? 0 : Math.min(now - last, 100);
         last = now;
         elapsed += dt;
@@ -129,7 +129,7 @@
     function sync() {
         if (frame !== null) cancelAnimationFrame(frame);
         frame = null; last = null;
-        hero.dataset.motionPaused = String(motion.matches || !visible || document.hidden);
+        hero.dataset.motionPaused = String(motion.matches || !visible || document.hidden || hero.hidden);
         cursor.hidden = motion.matches;
         if (motion.matches) {
             clearPrism(); typed.textContent = sentence;
@@ -138,10 +138,11 @@
             morphTo.style.opacity = '0';
             return;
         }
-        if (visible && !document.hidden) frame = requestAnimationFrame(draw);
+        if (visible && !document.hidden && !hero.hidden) frame = requestAnimationFrame(draw);
     }
     motion.addEventListener('change', sync);
     document.addEventListener('visibilitychange', sync);
+    hero.addEventListener('hero-visibility-change', sync);
     if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
         visible = entries[0].isIntersecting;
         sync();

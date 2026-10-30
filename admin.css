@@ -32,3 +32,11 @@ body.darkMode{color-scheme:dark;--page:#101522;--panel:#1a2233;--soft:#232d43;--
 .people-hero-action {
   display: none !important;
 }
+
+/* Hidden until the server authorizes the public reveal; prevents a first-paint flash. */
+.people-hero[hidden],#hero-owner-controls[hidden]{display:none!important}
+#hero-owner-controls{margin:20px 0;display:grid;gap:12px;max-width:640px}
+#hero-owner-controls h2{font-size:20px}
+#hero-owner-controls p{font-size:13px;line-height:1.6;color:var(--muted,#64748b)}
+#hero-visibility-toggle{justify-self:start;min-height:44px}
+#hero-visibility-toggle[aria-checked=true]{background:#7c5cff;color:#fff;border-color:#7c5cff}
