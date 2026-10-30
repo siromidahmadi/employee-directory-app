@@ -59,10 +59,10 @@
         async setHeroVisibility(enabled) {
             return check(await client.from('directory_site_features').update({ enabled: Boolean(enabled) }).eq('key', 'search_hero').select('enabled').single()).enabled;
         },
-        async createSharedInternLogin(password) {
-            const result = await client.functions.invoke('provision-shared-intern', { body: { password } });
+        async createSharedInternLogin(password, action = 'create') {
+            const result = await client.functions.invoke('provision-shared-intern', { body: { password, action } });
             const data = check(result);
-            if (!data?.created) throw new Error(data?.error || 'Shared account setup failed.');
+            if (!data?.created && !data?.reset) throw new Error(data?.error || 'Shared account setup failed.');
             return data;
         },
         async getAdmin() {

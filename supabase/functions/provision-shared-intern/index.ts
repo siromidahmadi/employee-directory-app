@@ -19,6 +19,20 @@ Deno.serve(async req => {
   if(typeof body.password!=='string'||body.password.length<8||body.password.length>128)return reply({error:'Use a password between 8 and 128 characters'},400);
   const key=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const headers={apikey:key,Authorization:'Bearer '+key,'Content-Type':'application/json'};
+  const action=body.action || 'create';
+  if(!['create','reset'].includes(action))return reply({error:'Invalid action'},400);
+  if(action==='reset'){
+    const lookup=await fetch(url+'/auth/v1/admin/users?page=1&per_page=1000',{headers});
+    if(!lookup.ok)return reply({error:'Could not locate shared account'},502);
+    const listing=await lookup.json();
+    const target=(listing.users || []).find((account:{id:string,email?:string})=>account.email?.toLowerCase()==='interns.thepeople@example.com');
+    if(!target)return reply({error:'Create THE-PEOPLE first'},404);
+    const ownerCheck=await fetch(url+'/rest/v1/directory_site_owners?select=user_id&user_id=eq.'+encodeURIComponent(target.id),{headers});
+    if(!ownerCheck.ok || (await ownerCheck.json()).length || target.id===user.id)return reply({error:'Owner accounts cannot be reset here'},403);
+    const changed=await fetch(url+'/auth/v1/admin/users/'+encodeURIComponent(target.id),{method:'PUT',headers,body:JSON.stringify({password:body.password})});
+    if(!changed.ok)return reply({error:'Shared password could not be reset'},502);
+    return reply({reset:true});
+  }
   const created=await fetch(url+'/auth/v1/admin/users',{method:'POST',headers,body:JSON.stringify({email:'interns.thepeople@example.com',password:body.password,email_confirm:true,user_metadata:{display_name:'THE-PEOPLE interns'}})});
   if(!created.ok)return reply({error:'Account could not be created. It may already exist.'},409);
   const createdUser=await created.json();
