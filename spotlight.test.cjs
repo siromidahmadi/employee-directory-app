@@ -172,29 +172,47 @@ test('reduced-motion hero keeps complete accessible copy and does not start anim
     } finally { w.close(); }
 });
 
-test('random search prompts stay together and pause while a person types', async () => {
+test('prompts rotate once in order with equal timing and swap only while faded', async () => {
     const dom = new JSDOM(fs.readFileSync('admin.html', 'utf8'), { runScripts: 'outside-only', url: 'https://example.com/admin.html', pretendToBeVisual: true });
     const w = dom.window;
     try {
         const scheduled = new Map(); let id = 0;
         w.matchMedia = () => ({ matches: false, addEventListener() {} });
-        w.setTimeout = callback => { scheduled.set(++id, callback); return id; };
+        w.setTimeout = (callback, delay) => { scheduled.set(++id, { callback, delay }); return id; };
         w.clearTimeout = timer => scheduled.delete(timer);
+        const advance = delay => {
+            assert.equal(scheduled.size, 1, 'exactly one timer owns the transition');
+            const [timer, task] = scheduled.entries().next().value;
+            assert.equal(task.delay, delay);
+            scheduled.delete(timer); task.callback();
+        };
         w.EmployeeStore = { list: async () => people };
         w.eval(fs.readFileSync('apple-spotlight.js', 'utf8'));
         const d = w.document, prompt = d.querySelector('.spotlight-placeholder');
-        const initial = prompt.textContent;
-        const [timer, rotate] = scheduled.entries().next().value;
-        scheduled.delete(timer); rotate();
-        assert.notEqual(prompt.textContent, initial);
-        assert.match(prompt.textContent, /^Search by (name|role|skill|department|location)$/);
+        assert.equal(prompt.textContent, 'Search by name');
+        for (const next of ['role', 'skill', 'department', 'location', 'name']) {
+            const previous = prompt.textContent;
+            advance(4400);
+            assert.equal(prompt.textContent, previous, 'keep old words during fade-out');
+            assert.equal(prompt.classList.contains('is-prompt-fading'), true);
+            advance(200);
+            assert.equal(prompt.textContent, 'Search by ' + next);
+            assert.equal(prompt.classList.contains('is-prompt-fading'), false);
+            advance(200);
+            assert.equal(prompt.classList.contains('is-prompt-shining'), true);
+        }
+        // Typing mid-transition cancels the pending swap as well as the hold timer.
+        advance(4400);
         const input = search(w, 'Canada'); await tick();
         assert.equal(prompt.hidden, true);
         assert.equal(input.value, 'Canada');
         assert.equal(scheduled.size, 0);
+        assert.equal(prompt.classList.contains('is-prompt-fading'), false);
         input.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
         assert.equal(prompt.hidden, false);
         assert.equal(scheduled.size, 1);
+        w.dispatchEvent(new w.Event('pagehide'));
+        assert.equal(scheduled.size, 0);
     } finally { w.close(); }
 });
 
