@@ -93,7 +93,7 @@
                 message('Sign in to manage employees. Only approved admin accounts can make changes.');
                 return;
             }
-            $('signed-in-as').textContent = 'Signed in as ' + admin.email;
+            $('signed-in-as').textContent = 'Signed in as ' + (admin.email === 'interns.thepeople@example.com' ? 'THE-PEOPLE (shared intern account)' : admin.email);
             if (activeAdminId !== admin.id) {
                 clearEditor();
                 await reloadEmployees();
