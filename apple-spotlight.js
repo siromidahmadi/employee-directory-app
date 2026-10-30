@@ -413,7 +413,7 @@
     }
     function schedulePrompt() {
         stopPrompt();
-        if (motion.matches || document.hidden || !promptVisible || input.value) return;
+        if (motion.matches || document.hidden || !promptVisible || input.value || root.closest('.people-hero')?.hidden) return;
         placeholder.classList.add('is-prompt-shining');
         promptTimer = window.setTimeout(() => {
             placeholder.classList.remove('is-prompt-shining');
@@ -429,6 +429,10 @@
     }
     input.addEventListener('input', () => { if (voiceActive) stopVoice(); schedulePrompt(); });
     motion.addEventListener?.('change', schedulePrompt);
+    root.closest('.people-hero')?.addEventListener('hero-visibility-change', () => {
+        if (root.closest('.people-hero').hidden) stopVoice();
+        schedulePrompt();
+    });
     document.addEventListener('visibilitychange', schedulePrompt);
     window.addEventListener('pagehide', stopPrompt);
     window.addEventListener('pageshow', schedulePrompt);

@@ -47,6 +47,18 @@
         async list() {
             return check(await client.from('employees').select(columns).order('name')).map(mapEmployee);
         },
+        async getHeroVisibility() {
+            return check(await client.from('directory_site_features').select('enabled').eq('key', 'search_hero').single()).enabled;
+        },
+        async isSiteOwner() {
+            const { data, error } = await client.auth.getUser();
+            if (error || !data.user) return false;
+            const rows = check(await client.from('directory_site_owners').select('user_id').eq('user_id', data.user.id));
+            return rows.length === 1;
+        },
+        async setHeroVisibility(enabled) {
+            return check(await client.from('directory_site_features').update({ enabled: Boolean(enabled) }).eq('key', 'search_hero').select('enabled').single()).enabled;
+        },
         async getAdmin() {
             const { data, error } = await client.auth.getUser();
             if (error || !data.user) return null;

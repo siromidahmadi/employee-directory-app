@@ -7,14 +7,14 @@
   <title>Add Teammate | The People</title>
   <link rel="icon" type="image/png" href="the-people-logo.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="admin.css?v=aether-flow-5">
+  <link rel="stylesheet" href="admin.css?v=hero-owner-1">
   <link rel="stylesheet" href="theme-changer.css?v=theme-11">
 <link rel="stylesheet" href="location-picker.css?v=world-location-17">
   <link rel="stylesheet" href="apple-spotlight.css?v=spotlight-9">
 </head>
 <body class="admin-page">
   <a class="skip-link" href="#page-content">Skip to main content</a>
-    <section class="people-hero" aria-labelledby="people-hero-title">
+    <section class="people-hero" hidden aria-labelledby="people-hero-title">
       <canvas id="people-particles" aria-hidden="true"></canvas>
       <div class="people-hero-content">
         <p class="people-hero-eyebrow">THE PEOPLE · BETTER TOGETHER</p>
@@ -51,6 +51,12 @@
     <div id="teammate-workspace" tabindex="-1">
     <div class="breadcrumb"><a href="index.html#directory">Directory</a><span aria-hidden="true">/</span><span>Add Teammate</span></div>
     <div class="admin-intro"><div><p class="admin-eyebrow">THE PEOPLE · TEAM MANAGEMENT</p><h2>Add New Teammate</h2><p>Introduce someone new to the team. Build their profile and preview it as you go.</p></div><a class="back-link" href="index.html#directory">← Back to directory</a></div>
+    <section id="hero-owner-controls" class="admin-panel" hidden aria-labelledby="hero-owner-title">
+      <h2 id="hero-owner-title">Final reveal</h2>
+      <p>Only your owner account can change the search hero's public visibility.</p>
+      <button id="hero-visibility-toggle" type="button" role="switch" aria-checked="false" disabled>Show search hero</button>
+      <p id="hero-visibility-status" role="status" aria-live="polite"></p>
+    </section>
     <p id="admin-status" class="admin-status" role="status" aria-live="polite">Connecting…</p>
     <section id="login-panel" class="admin-panel login-panel" hidden aria-labelledby="login-title">
       <div class="section-icon" aria-hidden="true">↗</div><h2 id="login-title">Admin login</h2><p>Sign in with your approved admin account to add or manage teammates.</p>
@@ -183,7 +189,7 @@
         if (frame !== null) cancelAnimationFrame(frame);
         frame = null;
         previousTime = null;
-        if (!paused && !document.hidden && visible) frame = requestAnimationFrame(animate);
+        if (!paused && !document.hidden && visible && !hero.hidden) frame = requestAnimationFrame(animate);
         else draw();
         updateToggle();
     }
@@ -217,6 +223,7 @@
     toggle.addEventListener('click', () => { paused = !paused; syncAnimation(); });
     motion.addEventListener('change', () => { paused = motion.matches; syncAnimation(); });
     document.addEventListener('visibilitychange', syncAnimation);
+    hero.addEventListener('hero-visibility-change', () => { resize(); syncAnimation(); });
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(hero);
     else window.addEventListener('resize', resize);
     if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
@@ -227,8 +234,9 @@
     syncAnimation();
 })();
   </script>
-  <script src="supabase-2.118.0.js"></script><script src="supabase-config.js"></script><script src="employee-store.js?v=world-location-17"></script><script src="location-picker.js?v=world-location-17"></script><script src="admin.js?v=world-location-17"></script>
-  <script src="apple-spotlight.js?v=spotlight-9"></script>
-  <script src="admin-hero-motion.js?v=prism-typing-morph-3"></script>
+  <script src="supabase-2.118.0.js"></script><script src="supabase-config.js"></script><script src="employee-store.js?v=hero-owner-1"></script><script src="location-picker.js?v=world-location-17"></script><script src="admin.js?v=world-location-17"></script>
+  <script src="apple-spotlight.js?v=hero-owner-1"></script>
+  <script src="admin-hero-motion.js?v=hero-owner-1"></script>
+  <script src="hero-visibility.js?v=1"></script>
 </body>
 </html>

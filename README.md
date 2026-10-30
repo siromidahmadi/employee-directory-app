@@ -176,3 +176,11 @@ Avoid committing passwords, local environment files, editor metadata, or another
 The detailed Week 6 Departments & Teams design remains an implementation target. Its expanded team search, division filter, Create Team flow, openings details, guild proposals/membership, and Quick Invite are not all implemented in the current page. Treat task images and planning notes as design references, not a list of completed features.
 
 GitHub Pages deployment success confirms publishing completed; it does not replace functional or visual testing.
+
+### Owner-only search hero reveal
+
+The Add Teammate search hero starts hidden, including before JavaScript loads. Its public visibility is read from `directory_site_features`; an unavailable setting keeps it hidden. The existing sign-in and employee-management form stay available.
+
+Omid's existing approved account is the sole member of `directory_site_owners`. After signing in on `admin.html`, the owner sees **Final reveal → Show search hero / Hide search hero**. Saving changes visibility for visitors opening or refreshing the page. Other admins and anonymous visitors cannot update the setting: RLS checks owner membership, and clients cannot grant themselves ownership. There is no local-storage or URL override.
+
+`hero-visibility.sql` records the applied database setup. This is a visibility switch, not confidential hosting: the repository is public, and collaborators with deployment permissions can modify frontend code. Control GitHub write/deployment access separately if that also needs to be restricted.

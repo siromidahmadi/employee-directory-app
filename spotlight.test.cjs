@@ -12,6 +12,7 @@ function setup(list = async () => people) {
         runScripts: 'outside-only', url: 'https://example.com/admin.html'
     });
     const w = dom.window;
+    if (w.document.querySelector('.people-hero')) w.document.querySelector('.people-hero').hidden = false;
     w.matchMedia = () => ({ matches: true, addEventListener() {} });
     w.EmployeeStore = { list };
     w.HTMLElement.prototype.scrollIntoView = function () {};
@@ -85,6 +86,7 @@ test('default appearance is small, long width and lightly glassy at 0 percent', 
 async function directory(url) {
     const dom = new JSDOM(fs.readFileSync('index.html', 'utf8'), { runScripts: 'outside-only', url, pretendToBeVisual: true });
     const w = dom.window;
+    if (w.document.querySelector('.people-hero')) w.document.querySelector('.people-hero').hidden = false;
     w.matchMedia = () => ({ matches: true, addEventListener() {} });
     w.EmployeeStore = { list: async () => people };
     w.HTMLElement.prototype.scrollIntoView = function () {};
@@ -175,6 +177,7 @@ test('reduced-motion hero keeps complete accessible copy and does not start anim
 test('prompts rotate once in order with equal timing and swap only while faded', async () => {
     const dom = new JSDOM(fs.readFileSync('admin.html', 'utf8'), { runScripts: 'outside-only', url: 'https://example.com/admin.html', pretendToBeVisual: true });
     const w = dom.window;
+    if (w.document.querySelector('.people-hero')) w.document.querySelector('.people-hero').hidden = false;
     try {
         const scheduled = new Map(); let id = 0;
         w.matchMedia = () => ({ matches: false, addEventListener() {} });
