@@ -7,7 +7,7 @@
   <title>Add Teammate | The People</title>
   <link rel="icon" type="image/png" href="the-people-logo.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="admin.css?v=hero-owner-1">
+  <link rel="stylesheet" href="admin.css?v=shared-intern-1">
   <link rel="stylesheet" href="theme-changer.css?v=theme-11">
 <link rel="stylesheet" href="location-picker.css?v=world-location-17">
   <link rel="stylesheet" href="apple-spotlight.css?v=spotlight-9">
@@ -56,11 +56,19 @@
       <p>Only your owner account can change the search hero's public visibility.</p>
       <button id="hero-visibility-toggle" type="button" role="switch" aria-checked="false" disabled>Show search hero</button>
       <p id="hero-visibility-status" role="status" aria-live="polite"></p>
+      <h3>Shared intern login</h3>
+      <p>Create THE-PEOPLE once for the interns. It can manage teammates but cannot use your owner reveal switch. Each person using it shares the same account.</p>
+      <form id="shared-intern-form">
+        <label for="shared-intern-password">Set the shared intern password</label>
+        <input id="shared-intern-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required>
+        <button id="shared-intern-create" type="submit">Create THE-PEOPLE login</button>
+      </form>
+      <p id="shared-intern-status" role="status" aria-live="polite"></p>
     </section>
     <p id="admin-status" class="admin-status" role="status" aria-live="polite">Connecting…</p>
     <section id="login-panel" class="admin-panel login-panel" hidden aria-labelledby="login-title">
       <div class="section-icon" aria-hidden="true">↗</div><h2 id="login-title">Admin login</h2><p>Sign in with your approved admin account to add or manage teammates.</p>
-      <form id="login-form"><label for="login-email">Email</label><input id="login-email" type="email" autocomplete="username" required maxlength="254"><label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password" required><button class="admin-primary" type="submit" id="sign-in">Sign in</button></form>
+      <form id="login-form"><label for="login-email">Email or username</label><input id="login-email" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required maxlength="254" placeholder="Your email or THE-PEOPLE"><label for="login-password">Password</label><input id="login-password" type="password" autocomplete="current-password" required><button class="admin-primary" type="submit" id="sign-in">Sign in</button></form>
     </section>
     <div id="session-bar" class="session-bar" hidden><span><span class="session-dot" aria-hidden="true"></span><span id="signed-in-as"></span></span><button id="sign-out" type="button">Sign out</button></div>
     <section id="manager-panel" aria-label="Manage employees" hidden>
@@ -234,9 +242,10 @@
     syncAnimation();
 })();
   </script>
-  <script src="supabase-2.118.0.js"></script><script src="supabase-config.js"></script><script src="employee-store.js?v=hero-owner-1"></script><script src="location-picker.js?v=world-location-17"></script><script src="admin.js?v=world-location-17"></script>
+  <script src="supabase-2.118.0.js"></script><script src="supabase-config.js"></script><script src="employee-store.js?v=shared-intern-1"></script><script src="location-picker.js?v=world-location-17"></script><script src="admin.js?v=shared-intern-1"></script>
   <script src="apple-spotlight.js?v=hero-owner-1"></script>
   <script src="admin-hero-motion.js?v=hero-owner-1"></script>
   <script src="hero-visibility.js?v=1"></script>
+  <script src="shared-intern-setup.js?v=1"></script>
 </body>
 </html>
