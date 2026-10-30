@@ -98,3 +98,20 @@
 .spotlight-placeholder.is-prompt-blinking{animation:spotlight-shine 2.2s linear infinite,spotlight-prompt-blink .4s ease-out both}
 @keyframes spotlight-prompt-blink{0%{opacity:0}100%{opacity:1}}
 @media(prefers-reduced-motion:reduce){.spotlight-placeholder.is-prompt-blinking{animation:none!important;opacity:1}}
+
+/* Quiet search polish, scoped to this hero. Small / Long appearance is retained. */
+#teammate-spotlight .spotlight-panel{transition:border-color .2s ease,box-shadow .2s ease}
+#teammate-spotlight .spotlight-panel:focus-within{border-color:#a78bfa;box-shadow:0 0 0 3px #a78bfa30,0 0 32px #7c5cff25,0 12px 40px #0003}
+.spotlight-suggestions,.spotlight-skill-options{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:16px}
+.spotlight-suggestions[hidden],.spotlight-skill-options[hidden]{display:none}
+#teammate-spotlight :is(.spotlight-suggestions,.spotlight-skill-options)>:is(button,a){display:inline-flex;align-items:center;justify-content:center;min-height:44px;max-width:100%;padding:8px 15px;border:1px solid #c4b5fd38;border-radius:999px;background:#ffffff08;color:#e7e1f5;font:500 13px/1.4 Inter,sans-serif;text-align:center;text-decoration:none;overflow-wrap:anywhere;box-shadow:none;transition:background .2s ease,border-color .2s ease}
+#teammate-spotlight :is(.spotlight-suggestions,.spotlight-skill-options)>:is(button,a):hover{background:#a78bfa20;border-color:#c4b5fd80}
+#teammate-spotlight :is(.spotlight-suggestions,.spotlight-skill-options) button[aria-expanded="true"]{background:#a78bfa20;border-color:#c4b5fd80}
+.spotlight-skill-note{color:#d9d0e9;font-size:13px;line-height:1.6;text-align:center}
+.spotlight-avatar{position:relative;display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:50%;overflow:hidden;background:#e6ddfb;color:#493378;font:600 12px/1 Inter,sans-serif}
+.spotlight-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#teammate-spotlight .spotlight-result-copy small{color:#45414d}
+#teammate-spotlight .spotlight-result{transition:background .15s ease,box-shadow .15s ease}
+#teammate-spotlight .spotlight-reset{margin:0 16px 12px;min-height:44px;padding:8px 16px;border:1px solid #c4b5fd;border-radius:999px;background:#ede9fe;color:#493378;font-size:13px}
+.people-hero .apple-spotlight button:focus-visible{outline:3px solid #9276f5;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){#teammate-spotlight .spotlight-panel,#teammate-spotlight .spotlight-result,#teammate-spotlight :is(.spotlight-suggestions,.spotlight-skill-options)>:is(button,a){transition:none}}

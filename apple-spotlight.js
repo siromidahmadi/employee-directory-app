@@ -96,9 +96,70 @@
         return link;
     }
     [entries[0], entries[1], entries[2], entries[4]].forEach(entry => shortcuts.append(makeLink(entry, true)));
+    const suggestions = document.createElement('nav');
+    suggestions.className = 'spotlight-suggestions';
+    suggestions.setAttribute('aria-label', 'Ways to find people');
+    const find = document.createElement('button');
+    find.type = 'button';
+    find.textContent = 'Find a teammate';
+    find.addEventListener('click', () => input.focus({ preventScroll: true }));
+    const browse = document.createElement('button');
+    browse.type = 'button';
+    browse.textContent = 'Browse skills';
+    browse.setAttribute('aria-expanded', 'false');
+    browse.setAttribute('aria-controls', 'spotlight-skills');
+    const departments = document.createElement('a');
+    departments.href = 'index.html#Departments';
+    departments.textContent = 'Explore departments';
+    suggestions.append(find, browse, departments);
+    const skillPanel = document.createElement('div');
+    skillPanel.id = 'spotlight-skills';
+    skillPanel.className = 'spotlight-skill-options';
+    skillPanel.setAttribute('role', 'group');
+    skillPanel.setAttribute('aria-label', 'Search by a directory skill');
+    skillPanel.hidden = true;
+    root.querySelector('.spotlight-row').after(suggestions, skillPanel);
+    browse.addEventListener('click', () => {
+        skillPanel.hidden = !skillPanel.hidden;
+        browse.setAttribute('aria-expanded', String(!skillPanel.hidden));
+        if (!skillPanel.hidden) {
+            if (loadState === 'idle' || loadState === 'error' || Date.now() - loadedAt > 30000) loadPeople();
+            else renderSkills();
+        }
+    });
     let people = [];
     let loadState = 'idle';
     let loadedAt = 0;
+    function renderSkills() {
+        if (skillPanel.hidden) return;
+        skillPanel.replaceChildren();
+        const note = document.createElement('span');
+        note.className = 'spotlight-skill-note';
+        if (loadState !== 'ready') {
+            note.textContent = loadState === 'error' ? 'Skills unavailable. Try typing a search or reopen Browse skills.' : 'Loading directory skills…';
+            skillPanel.append(note);
+            return;
+        }
+        const skills = new Map();
+        people.forEach(employee => (Array.isArray(employee.skills) ? employee.skills : []).forEach(skill => {
+            if (typeof skill === 'string' && skill.trim()) skills.set(normalize(skill.trim()), skill.trim());
+        }));
+        [...skills.values()].sort((a, b) => a.localeCompare(b)).slice(0, 8).forEach(skill => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.textContent = skill;
+            button.addEventListener('click', () => {
+                input.value = skill.slice(0, input.maxLength);
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.focus({ preventScroll: true });
+            });
+            skillPanel.append(button);
+        });
+        if (!skills.size) {
+            note.textContent = 'No skills listed yet. Search by name, role, or location instead.';
+            skillPanel.append(note);
+        }
+    }
     function normalize(value) {
         return String(value ?? '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
     }
@@ -113,6 +174,7 @@
     async function loadPeople() {
         if (loadState === 'loading') return;
         loadState = 'loading';
+        renderSkills();
         render();
         try {
             if (!window.EmployeeStore) throw new Error('Directory unavailable');
@@ -125,6 +187,7 @@
             loadState = 'error';
         }
         // Always render the latest input, even if it changed during the request.
+        renderSkills();
         render();
     }
     function feedback(text) {
@@ -137,6 +200,11 @@
     function render() {
         const query = normalize(input.value.trim());
         root.dataset.searching = String(Boolean(query));
+        suggestions.hidden = Boolean(query);
+        if (query) {
+            skillPanel.hidden = true;
+            browse.setAttribute('aria-expanded', 'false');
+        }
         results.replaceChildren();
         results.hidden = !query;
         results.setAttribute('aria-busy', String(loadState === 'loading'));
@@ -168,11 +236,44 @@
                 icon: 'person'
             };
             const link = makeLink(entry);
+            const avatar = document.createElement('span');
+            avatar.className = 'spotlight-avatar';
+            avatar.setAttribute('aria-hidden', 'true');
+            const initials = document.createElement('span');
+            initials.textContent = entry.label.trim().split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+            avatar.append(initials);
+            if (employee.image) {
+                try {
+                    const url = new URL(employee.image, document.baseURI);
+                    if (['https:', 'http:'].includes(url.protocol)) {
+                        const photo = document.createElement('img');
+                        photo.alt = '';
+                        photo.loading = 'lazy';
+                        photo.decoding = 'async';
+                        photo.addEventListener('error', () => photo.remove(), { once: true });
+                        photo.src = url.href;
+                        avatar.append(photo);
+                    }
+                } catch { /* Keep initials when a photo URL is invalid. */ }
+            }
+            link.firstElementChild.replaceWith(avatar);
             link.setAttribute('aria-label', `View profile for ${entry.label}`);
             link.style.setProperty('--result-delay', `${Math.min(i, 6) * 35}ms`);
             results.append(link);
         });
-        if (!matches.length) feedback('No people found. Try a name, skill, role, city, or country.');
+        if (!matches.length) {
+            feedback('No people found. Try a name, skill, role, city, or country.');
+            const reset = document.createElement('button');
+            reset.type = 'button';
+            reset.className = 'spotlight-reset';
+            reset.textContent = 'Clear search';
+            reset.addEventListener('click', () => {
+                input.value = '';
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.focus({ preventScroll: true });
+            });
+            results.append(reset);
+        }
         else status.textContent = `${matches.length} matching ${matches.length === 1 ? 'person' : 'people'}. Choose a result to open their profile.`;
     }
     input.addEventListener('input', render);
@@ -180,6 +281,8 @@
         if (event.key === 'Escape') {
             event.preventDefault();
             input.value = '';
+            skillPanel.hidden = true;
+            browse.setAttribute('aria-expanded', 'false');
             render();
             input.focus({ preventScroll: true });
             return;

@@ -197,3 +197,46 @@ test('random search prompts stay together and pause while a person types', async
         assert.equal(scheduled.size, 1);
     } finally { w.close(); }
 });
+
+test('skill suggestions use directory data and searching then resetting restores shortcuts', async () => {
+    const w = setup();
+    try {
+        const d = w.document;
+        const browse = [...d.querySelectorAll('.spotlight-suggestions button')].find(button => button.textContent === 'Browse skills');
+        browse.click();
+        assert.match(d.getElementById('spotlight-skills').textContent, /Loading/);
+        await tick();
+        const skills = [...d.querySelectorAll('#spotlight-skills button')];
+        assert.deepEqual(skills.map(button => button.textContent).sort(), ['CSS', 'Figma', 'JavaScript']);
+        skills.find(button => button.textContent === 'Figma').click();
+        assert.equal(d.getElementById('spotlight-search').value, 'Figma');
+        assert.match(d.querySelector('.spotlight-result').textContent, /Alex Sample/);
+        assert.equal(d.querySelector('.spotlight-suggestions').hidden, true);
+        assert.equal(browse.getAttribute('aria-expanded'), 'false');
+        search(w, 'no-such-person');
+        d.querySelector('.spotlight-reset').click();
+        assert.equal(d.getElementById('spotlight-search').value, '');
+        assert.equal(d.querySelector('.spotlight-suggestions').hidden, false);
+        assert.equal(d.activeElement, d.getElementById('spotlight-search'));
+        assert.equal(d.getElementById('spotlight-results').hidden, true);
+    } finally { w.close(); }
+});
+
+test('result photos fall back to initials and reject unsafe image URLs', async () => {
+    const w = setup(async () => [
+        { ...people[0], image: 'https://example.com/photo.jpg' },
+        { ...people[1], image: 'javascript:alert(1)' }
+    ]);
+    try {
+        const d = w.document;
+        search(w, 'example.com'); await tick();
+        const avatars = d.querySelectorAll('.spotlight-avatar');
+        assert.equal(avatars.length, 2);
+        assert.equal(avatars[0].textContent, 'ZE');
+        assert.equal(avatars[1].querySelector('img'), null);
+        const image = avatars[0].querySelector('img');
+        image.dispatchEvent(new w.Event('error'));
+        assert.equal(avatars[0].querySelector('img'), null);
+        assert.equal(avatars[0].textContent, 'ZE');
+    } finally { w.close(); }
+});

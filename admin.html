@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="admin.css?v=aether-flow-5">
   <link rel="stylesheet" href="theme-changer.css?v=theme-11">
 <link rel="stylesheet" href="location-picker.css?v=world-location-17">
-  <link rel="stylesheet" href="apple-spotlight.css?v=spotlight-6">
+  <link rel="stylesheet" href="apple-spotlight.css?v=spotlight-7">
 </head>
 <body class="admin-page">
   <a class="skip-link" href="#page-content">Skip to main content</a>
@@ -196,7 +196,7 @@
         context.setTransform(ratio, 0, 0, ratio, 0, 0);
         particles = Array.from({ length: Math.min(180, Math.max(30, Math.ceil(width * height / 9000))) }, () => ({
             x: Math.random() * width, y: Math.random() * height,
-            vx: Math.random() * 0.4 - 0.2, vy: Math.random() * 0.4 - 0.2,
+            vx: Math.random() * 0.2 - 0.1, vy: Math.random() * 0.2 - 0.1,
             radius: Math.random() * 2 + 1
         }));
         draw();
@@ -228,7 +228,7 @@
 })();
   </script>
   <script src="supabase-2.118.0.js"></script><script src="supabase-config.js"></script><script src="employee-store.js?v=world-location-17"></script><script src="location-picker.js?v=world-location-17"></script><script src="admin.js?v=world-location-17"></script>
-  <script src="apple-spotlight.js?v=spotlight-6"></script>
+  <script src="apple-spotlight.js?v=spotlight-7"></script>
   <script src="admin-hero-motion.js?v=prism-typing-morph-3"></script>
 </body>
 </html>
