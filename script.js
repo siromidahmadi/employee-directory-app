@@ -138,16 +138,17 @@ const iconShapes = {
 };
 
 const departmentStyles = [
-    { match: /develop|software|\bweb\b|front|back/, icon: 'code', tone: 'blue' },
-    { match: /product/, icon: 'cube', tone: 'amber' },
-    { match: /design|\bux\b|\bui\b|creative/, icon: 'palette', tone: 'pink' },
-    { match: /engineer/, icon: 'gear', tone: 'sky' },
-    { match: /\bhr\b|human|people|recruit/, icon: 'people', tone: 'orange' },
-    { match: /analytic|data/, icon: 'bars', tone: 'violet' },
-    { match: /market|sales|growth/, icon: 'briefcase', tone: 'teal' },
-    { match: /operation/, icon: 'gear', tone: 'slate' },
-    { match: /quality|\bqa\b|test/, icon: 'check', tone: 'green' }
+    { match: /develop|software|\bweb\b|front|back/, icon: 'code', tone: 'blue', code: 'SWE', tags:['Frontend','Backend']},
+    { match: /product/, icon: 'cube', tone: 'amber', code: 'PROD', tags:['Strategy','Roadmap','Planning']},
+    { match: /design|\bux\b|\bui\b|creative/, icon: 'palette', tone: 'pink', code: 'DSN', tags:['UI/UX','Visuals']},
+    { match: /engineer/, icon: 'gear', tone: 'sky', code: 'ENG', tags:['Core API','Security','DevOps'] },
+    { match: /\bhr\b|human|people|recruit/, icon: 'people', tone: 'orange', code: 'PEO', tags:['Recruitment','Onboarding'] },
+    { match: /analytic|data/, icon: 'bars', tone: 'violet', code:'DATA', tags:['Analytics','BI','Data Science'] },
+    { match: /market|sales|growth/, icon: 'briefcase', tone: 'teal', code: 'MKT', tags:['Sales','Growth'] },
+    { match: /operation/, icon: 'gear', tone: 'slate', code: 'OPS', tags:['Logistics','Administration']},
+    { match: /quality|\bqa\b|test/, icon: 'check', tone: 'green', code:'QA', tags:['Testing','Automation']}
 ];
+
 
 function getDepartmentStyle(department) {
     const name = String(department || '').toLowerCase();
@@ -196,6 +197,10 @@ function makeDepartmentCard(department, members) {
     name.className = 'department-name';
     name.textContent = department;
 
+    const abbr = document.createElement('span');
+    abbr.className = 'abbr';
+    abbr.textContent = department.code;
+
     const total = document.createElement('span');
     total.className = 'department-count';
     total.textContent =
@@ -240,7 +245,7 @@ function makeDepartmentCard(department, members) {
     footer.className = 'department-footer';
     footer.append(faces, arrow);
 
-    card.append(icon, name, total, footer);
+    card.append(icon, name, abbr, total, footer);
 
     card.addEventListener('click', () => {
         selectDepartment(key);
