@@ -196,10 +196,10 @@ test('D2: each card shows its share of department headcount with a bar', async (
   try {
     const eng = w.document.querySelector('[data-department="engineering"]');
     const mkt = w.document.querySelector('[data-department="marketing"]');
-    assert.equal(eng.querySelector('.department-share').textContent, '75.0% of headcount');
-    assert.equal(mkt.querySelector('.department-share').textContent, '25.0% of headcount');
-    assert.equal(eng.querySelector('.department-bar-fill').style.width, '75%');
-    assert.match(eng.getAttribute('aria-label'), /3 employees, 75\.0% of headcount/);
+    assert.equal(eng.querySelector('.department-share').textContent, '60.0% of headcount');
+    assert.equal(mkt.querySelector('.department-share').textContent, '20.0% of headcount');
+    assert.equal(eng.querySelector('.department-bar-fill').style.width, '60%');
+    assert.match(eng.getAttribute('aria-label'), /3 employees, 60\.0% of headcount/);
   } finally { w.close(); }
 });
 

@@ -1476,14 +1476,19 @@ if (menuButton && navigation) {
 
     function updateActiveLink() {
         const requested = window.location.hash.slice(1);
-        const page = ['directory', 'Departments', 'About', 'Contact'].includes(requested)
+        const page = ['directory', 'Departments', 'Groups', 'About', 'Contact'].includes(requested)
             ? requested : 'directory';
         const current = '#' + page;
 
         document.querySelectorAll('[data-page]').forEach(section => {
             section.hidden = section.dataset.page !== page;
         });
-        const titles = { directory: 'Employee Directory', Departments: 'Departments', About: 'About Our Team', Contact: 'Contact Us' };
+        const titles = { 
+            directory: 'Employee Directory', 
+            Departments: 'Departments',
+            Groups: 'Guilds & Affinity Groups',
+            About: 'About Our Team', 
+            Contact: 'Contact Us' };
         document.title = 'The People | ' + titles[page];
 
         navigation.querySelectorAll('a')
