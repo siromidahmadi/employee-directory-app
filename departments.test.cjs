@@ -21,9 +21,9 @@ async function setup(list = sample) {
   });
   const w = dom.window;
   w.EmployeeStore = { list: async () => list };
-  w.matchMedia = w.matchMedia || (() => ({ matches: false }));
+  w.matchMedia = () => ({ matches: false, addEventListener() {} });
   w.HTMLElement.prototype.scrollIntoView = function () { w.__scrolled = this.id; };
-  w.eval(fs.readFileSync('script.js', 'utf8'));
+  w.eval(fs.readFileSync('directory.js', 'utf8'));
   await tick();
   return w;
 }
@@ -109,14 +109,13 @@ test('every department card has an arrow, and it is hidden from screen readers',
   w.close();
 });
 
-test('a social icon that fails to load falls back to a text link', async () => {
+test('social links are readable text in the current profile', async () => {
   const w = await setup([{ id: '1', name: 'X', title: 'T', department: 'Design', email: 'x@example.com', linkedin: 'https://www.linkedin.com/in/x' }]);
   const d = w.document;
-  const img = d.querySelector('#employee-list .social-links img');
-  assert.ok(img);
-  img.dispatchEvent(new w.Event('error'));
-  const link = d.querySelector('#employee-list .social-links a');
-  assert.equal(d.querySelector('#employee-list .social-links img'), null);
+  d.querySelector('#employee-list .profile-button').click();
+  const link = d.querySelector('.profile-modal .social-links a');
+  assert.ok(link);
+  assert.equal(d.querySelector('.profile-modal .social-links img'), null);
   assert.equal(link.textContent, 'LinkedIn');
   assert.equal(link.getAttribute('href'), 'https://www.linkedin.com/in/x');
   w.close();
@@ -190,4 +189,41 @@ test('View Full Profile in the info box opens the existing profile popup', async
   assert.ok(modal);
   assert.match(modal.textContent, /Don Draper/);
   w.close();
+});
+
+test('D2: each card shows its share of department headcount with a bar', async () => {
+  const w = await setup();
+  try {
+    const eng = w.document.querySelector('[data-department="engineering"]');
+    const mkt = w.document.querySelector('[data-department="marketing"]');
+    assert.equal(eng.querySelector('.department-share').textContent, '60.0% of headcount');
+    assert.equal(mkt.querySelector('.department-share').textContent, '20.0% of headcount');
+    assert.equal(eng.querySelector('.department-bar-fill').style.width, '60%');
+    assert.match(eng.getAttribute('aria-label'), /3 employees, 60\.0% of headcount/);
+  } finally { w.close(); }
+});
+
+test('D3: View Directory opens the directory filtered to that department', async () => {
+  const w = await setup();
+  try {
+    const d = w.document;
+    d.querySelector('#search').value = 'leftover search';
+    const links = [...d.querySelectorAll('.department-directory-link')];
+    assert.equal(links.length, 2);
+    links.find(l => /Marketing/.test(l.getAttribute('aria-label'))).click();
+    assert.equal(w.location.hash, '#directory');
+    assert.equal(d.querySelector('#department-filter').value, 'marketing');
+    assert.equal(d.querySelector('#search').value, '');
+    const cards = d.querySelectorAll('#employee-list .employee-card');
+    assert.equal(cards.length, 1);
+    assert.match(cards[0].textContent, /Don Draper/);
+  } finally { w.close(); }
+});
+
+test('D3: the link is not nested inside the card button', async () => {
+  const w = await setup();
+  try {
+    const link = w.document.querySelector('.department-directory-link');
+    assert.equal(link.closest('button'), null);
+  } finally { w.close(); }
 });
