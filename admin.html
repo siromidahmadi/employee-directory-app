@@ -57,11 +57,12 @@
       <button id="hero-visibility-toggle" type="button" role="switch" aria-checked="false" disabled>Show search hero</button>
       <p id="hero-visibility-status" role="status" aria-live="polite"></p>
       <h3>Shared intern login</h3>
-      <p>Create THE-PEOPLE once for the interns. It can manage teammates but cannot use your owner reveal switch. Each person using it shares the same account.</p>
+      <p>Create or reset THE-PEOPLE for the interns. It can manage teammates but cannot use your owner reveal switch. Reset changes only the shared intern password, not your owner password.</p>
       <form id="shared-intern-form">
         <label for="shared-intern-password">Set the shared intern password</label>
         <input id="shared-intern-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required>
         <button id="shared-intern-create" type="submit">Create THE-PEOPLE login</button>
+        <button id="shared-intern-reset" type="submit">Reset THE-PEOPLE password</button>
       </form>
       <p id="shared-intern-status" role="status" aria-live="polite"></p>
     </section>
@@ -242,10 +243,10 @@
     syncAnimation();
 })();
   </script>
-  <script src="supabase-2.118.0.js"></script><script src="supabase-config.js"></script><script src="employee-store.js?v=shared-intern-1"></script><script src="location-picker.js?v=world-location-17"></script><script src="admin.js?v=shared-intern-1"></script>
+  <script src="supabase-2.118.0.js"></script><script src="supabase-config.js"></script><script src="employee-store.js?v=shared-intern-reset-2"></script><script src="location-picker.js?v=world-location-17"></script><script src="admin.js?v=shared-intern-1"></script>
   <script src="apple-spotlight.js?v=hero-owner-1"></script>
   <script src="admin-hero-motion.js?v=hero-owner-1"></script>
   <script src="hero-visibility.js?v=1"></script>
-  <script src="shared-intern-setup.js?v=1"></script>
+  <script src="shared-intern-setup.js?v=2"></script>
 </body>
 </html>
