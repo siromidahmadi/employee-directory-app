@@ -163,3 +163,8 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
 #guild-status:not(:empty){padding:12px;margin-top:16px;border-radius:8px;background:var(--soft);color:var(--ink);overflow-wrap:anywhere}
 @media(max-width:760px){.guild-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.guild-card{padding:12px}.guilds-heading{align-items:flex-start}}
 @media(max-width:380px){.guild-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* Vera's department codes and focus tags. */
+.department-code{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.department-tags{display:flex;flex-wrap:wrap;gap:5px;max-width:100%;margin-top:6px}
+.department-tag{font-size:10px;line-height:1.5;padding:3px 6px;border-radius:5px;background:var(--panel);color:var(--ink);overflow-wrap:anywhere;max-width:100%}

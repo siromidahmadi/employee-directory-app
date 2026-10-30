@@ -249,3 +249,25 @@ test('Groups lives at the end of Departments and old group links open that page'
     assert.equal(departments.hidden, true);
   } finally { w.close(); }
 });
+
+test('Vera department codes and focus tags appear in the active directory cards', async () => {
+  const w = await setup();
+  try {
+    const d = w.document, engineering = d.querySelector('[data-department="engineering"]');
+    assert.equal(engineering.querySelector('.department-code').textContent, 'ENG');
+    assert.deepEqual([...engineering.querySelectorAll('.department-tag')].map(tag => tag.textContent), ['Core API', 'Security', 'DevOps']);
+    assert.equal(d.querySelector('[data-department="marketing"] .department-code').textContent, 'MKT');
+    assert.match(engineering.querySelector('.department-share').textContent, /60.0%/);
+    engineering.click();
+    assert.equal(d.getElementById('department-members').hidden, false);
+  } finally { w.close(); }
+});
+test('unknown departments get a safe code and no invented tags', async () => {
+  const w = await setup([{id:'test', name:'Example Person', department:'Research Lab', title:'Researcher', email:'example@example.com'}]);
+  try {
+    const card = w.document.querySelector('.department-card');
+    assert.equal(card.querySelector('.department-code').textContent, 'RL');
+    assert.equal(card.querySelectorAll('.department-tag').length, 0);
+    assert.equal(card.querySelector('.department-tags').hidden, true);
+  } finally { w.close(); }
+});
