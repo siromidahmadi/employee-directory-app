@@ -3,7 +3,7 @@
   "private": true,
   "description": "Plain HTML, CSS and JavaScript directory with Supabase employee management",
   "scripts": {
-    "check": "node --check script.js && node --check employee-store.js && node --check admin.js",
+    "check": "node --check directory.js && node --check employee-store.js && node --check admin.js",
     "test": "node --test *.test.cjs"
   },
   "dependencies": {

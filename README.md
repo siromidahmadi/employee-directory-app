@@ -101,7 +101,6 @@ The public directory needs access to the configured Supabase project. Local chan
 | `employee-directory.sql` | Database setup, constraints, access policies, and storage configuration. |
 | `add-employee-location.sql`, `employee-worldwide-location.sql` | Records of the applied location-related database changes. |
 | `admin.test.cjs`, `departments.test.cjs` | Existing admin and department tests. |
-| `script.js` | Legacy code retained because the department tests and check command still reference it. The public page loads `directory.js`. |
 | `docs/CHANGELOG.md` | Earlier development notes. |
 
 The duplicate project-copy folder and identified unused assets have been removed. Earlier versions remain in Git history.
@@ -140,7 +139,7 @@ npm run check
 npm test
 ```
 
-**Current coverage limitation:** the department tests execute legacy `script.js`, while the deployed page uses `directory.js`. The syntax-check command also covers only its listed files. Passing these commands does not verify every current feature; update their targets before relying on them for release readiness.
+The department and profile tests execute the active `directory.js`. The syntax-check command checks `directory.js`, `employee-store.js`, and `admin.js`. Automated tests do not replace browser checks for visual layout and real backend interactions.
 
 Before merging, also review the current Directory search/filter combinations, profile links, empty states, navigation, phone layout, keyboard interactions, themes, clocks, and admin form behavior. Use an isolated backend for disposable test records.
 
