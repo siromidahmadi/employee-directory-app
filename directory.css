@@ -131,323 +131,35 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
 .full-profile .modal-close{width:44px;height:44px;z-index:1}
 @media(max-width:640px){.profile-modal-content.full-profile{padding:22px 18px}.full-profile .profile-header{gap:14px;padding:0 32px 20px 0;align-items:flex-start}.full-profile .profile-header .profile-avatar{width:70px;height:70px;flex-basis:70px;font-size:24px}.full-profile .profile-header h2{font-size:24px}.full-profile .profile-header p{font-size:15px}.full-profile-grid{grid-template-columns:1fr}.full-profile-section,.full-profile-section:nth-child(even),.full-profile-section:nth-child(n+3){min-height:0;padding:22px 0;border-left:0;border-top:1px solid var(--line)}.full-profile-section:first-child{border-top:0}}
 
-/* Cross-functional guilds and affinity groups */
-.guilds-section {
-  padding: 48px 0;
-  scroll-margin-top: 90px;
-}
-
-.guilds-heading {
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 24px;
-}
-
-.guild-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-}
-
-.guild-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 0;
-  padding: 24px;
-  border: 1px solid var(--border-color, #e2e8f0);
-  border-radius: 16px;
-  background: var(--card-background, var(--surface, #fff));
-  box-shadow: 0 4px 18px rgb(15 23 42 / 5%);
-}
-
-.guild-icon {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 16px;
-  border-radius: 12px;
-  background: var(--surface-muted, #f1f5f9);
-  font-size: 25px;
-}
-
-.guild-card h3 {
-  margin: 0 0 10px;
-  font-size: 1.15rem;
-  line-height: 1.4;
-}
-
-.guild-description {
-  flex: 1;
-  margin: 0 0 18px;
-  line-height: 1.65;
-  color: var(--text-secondary, #64748b);
-}
-
-.guild-lead {
-  margin: 0 0 8px;
-  font-size: 0.92rem;
-  font-weight: 600;
-}
-
-.guild-member-count {
-  margin: 0 0 18px;
-  font-size: 0.9rem;
-  color: var(--text-secondary, #64748b);
-}
-
-.guild-join-button,
-.guild-dialog-actions button {
-  min-height: 42px;
-  padding: 10px 16px;
-  border: 1px solid var(--border-color, #cbd5e1);
-  border-radius: 9px;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.guild-join-button:hover,
-.guild-dialog-actions button:hover {
-  background: var(--surface-muted, #f1f5f9);
-}
-
-.guild-dialog {
-  width: min(92vw, 520px);
-  max-height: 85vh;
-  overflow-y: auto;
-  padding: 28px;
-  border: 1px solid var(--border-color, #e2e8f0);
-  border-radius: 16px;
-  color: var(--text-color, #0f172a);
-  background: var(--card-background, #fff);
-}
-
-.guild-dialog::backdrop {
-  background: rgb(15 23 42 / 55%);
-}
-
-.guild-dialog form {
-  display: grid;
-  gap: 12px;
-}
-
-.guild-dialog h2,
-.guild-dialog p {
-  margin-top: 0;
-}
-
-.guild-dialog input,
-.guild-dialog textarea {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 11px 12px;
-  border: 1px solid var(--border-color, #cbd5e1);
-  border-radius: 8px;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-}
-
-.guild-dialog textarea {
-  resize: vertical;
-}
-
-.guild-dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-@media (max-width: 900px) {
-  .guild-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 600px) {
-  .guild-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .guilds-heading {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
-/* Cross-functional guild cards */
-.guild-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 1.25rem;
-  margin-block: 1.5rem;
-}
-
-.guild-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1.5rem;
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 1rem;
-  background: var(--card-bg, #fff);
-  color: var(--text-color, #1f2937);
-}
-
-.guild-icon {
-  font-size: 2rem;
-}
-
-.guild-name,
-.guild-description,
-.guild-lead,
-.guild-member-count {
-  margin: 0;
-}
-
-.guild-description {
-  line-height: 1.6;
-}
-
-.guild-member-count {
-  font-weight: 600;
-}
-
-.guild-action {
-  margin-top: auto;
-  padding: 0.7rem 1rem;
-  border: 1px solid var(--border-color, #d1d5db);
-  border-radius: 0.65rem;
-  cursor: pointer;
-}
-
-.guild-action:disabled {
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-/* Membership and proposal dialogs */
-.guild-dialog {
-  width: min(92vw, 480px);
-  max-height: 85vh;
-  overflow-y: auto;
-  padding: 1.5rem;
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 1rem;
-  background: var(--card-bg, #fff);
-  color: var(--text-color, #1f2937);
-}
-
-.guild-dialog::backdrop {
-  background: rgb(15 23 42 / 55%);
-  backdrop-filter: blur(3px);
-}
-
-.guild-dialog form {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.guild-dialog form h2,
-.guild-dialog form p {
-  margin-block: 0 0.5rem;
-}
-
-.guild-dialog input,
-.guild-dialog textarea {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--border-color, #d1d5db);
-  border-radius: 0.5rem;
-  font: inherit;
-}
-
-.guild-dialog-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 0.75rem;
-}
-
-.guild-dialog-actions button {
-  padding: 0.65rem 1rem;
-  border: 1px solid var(--border-color, #d1d5db);
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-
-.guild-dialog .add-teammate {
-  cursor: pointer;
-}
-
-/* Demo admin review panel */
-.guild-admin-panel {
-  margin-block: 2rem;
-  padding: 1.25rem;
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 1rem;
-  background: var(--card-bg, #fff);
-  color: var(--text-color, #1f2937);
-}
-
-.guild-admin-panel > h3 {
-  margin-top: 0;
-}
-
-.guild-admin-note {
-  line-height: 1.5;
-  opacity: 0.8;
-}
-
-.guild-admin-requests {
-  display: grid;
-  gap: 1rem;
-}
-
-.guild-request-item {
-  padding: 1rem;
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 0.75rem;
-}
-
-.guild-request-item h4 {
-  margin-top: 0;
-}
-
-.guild-request-item p {
-  overflow-wrap: anywhere;
-}
-
-.guild-no-requests {
-  margin-bottom: 0;
-}
-
-#guild-status:empty {
-  display: none;
-}
-
-#guild-status:not(:empty) {
-  margin-block: 1rem;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  background: var(--card-bg, #f3f4f6);
-}
-
-@media (max-width: 480px) {
-  .guild-card,
-  .guild-admin-panel {
-    padding: 1rem;
-  }
-
-  .guild-dialog-actions button {
-    flex: 1;
-  }
-}
+/* Jessie's groups share the Departments page and its compact card system. */
+.guilds-section{margin-top:32px;padding-top:28px;border-top:1px solid var(--line);min-width:0;scroll-margin-top:24px}
+.guilds-heading{gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.guilds-heading h2{font-size:20px;line-height:1.35}
+.guilds-heading .eyebrow{font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--primary);margin-bottom:6px}
+.guilds-heading>div{min-width:0;flex:1 1 260px}
+.guilds-heading p:last-child{font-size:13px;color:var(--muted);margin-top:6px}
+.guild-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,220px));gap:12px}
+.guild-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;gap:10px;padding:16px;background:var(--soft);color:var(--ink);border:1px solid transparent;border-radius:10px;overflow-wrap:anywhere}
+.guild-card:hover,.guild-card:focus-within{border-color:var(--primary)}
+.guild-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--primary-soft);font-size:20px}
+.guild-card h3{font-size:14px;line-height:1.4}
+.guild-description{flex:1;font-size:12px;line-height:1.6;color:var(--muted)}
+.guild-lead,.guild-member-count{font-size:12px;color:var(--muted)}
+.guild-action{margin-top:auto;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--primary);font:inherit;font-size:12px;font-weight:600;max-width:100%}
+.guild-action:hover{background:var(--primary-soft)}
+.guild-action:disabled{cursor:default;opacity:.65}
+.guild-dialog{width:min(480px,calc(100% - 32px));max-height:85svh;overflow:auto;padding:24px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink)}
+.guild-dialog::backdrop{background:#10204099}
+.guild-dialog form{display:grid;gap:12px}
+.guild-dialog h2{font-size:20px}
+.guild-dialog p{font-size:13px;color:var(--muted)}
+.guild-dialog label{font-size:12px;font-weight:600}
+.guild-dialog input,.guild-dialog textarea{width:100%;min-height:44px;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--page);color:var(--ink);font:inherit}
+.guild-dialog textarea{resize:vertical}
+.guild-dialog textarea:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.guild-dialog-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;margin-top:8px}
+.guild-dialog-actions button{min-height:44px;padding:10px 16px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit}
+#guild-status:empty{display:none}
+#guild-status:not(:empty){padding:12px;margin-top:16px;border-radius:8px;background:var(--soft);color:var(--ink);overflow-wrap:anywhere}
+@media(max-width:760px){.guild-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.guild-card{padding:12px}.guilds-heading{align-items:flex-start}}
+@media(max-width:380px){.guild-grid{grid-template-columns:minmax(0,1fr)}}
