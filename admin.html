@@ -196,7 +196,7 @@
         context.setTransform(ratio, 0, 0, ratio, 0, 0);
         particles = Array.from({ length: Math.min(180, Math.max(30, Math.ceil(width * height / 9000))) }, () => ({
             x: Math.random() * width, y: Math.random() * height,
-            vx: Math.random() * 0.2 - 0.1, vy: Math.random() * 0.2 - 0.1,
+            vx: Math.random() * 0.4 - 0.2, vy: Math.random() * 0.4 - 0.2,
             radius: Math.random() * 2 + 1
         }));
         draw();
