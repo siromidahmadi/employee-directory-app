@@ -68,7 +68,65 @@
     </section>
     <section data-page="Departments" hidden id="Departments" class="departments-section" aria-labelledby="departments-heading">
       <div class="section-heading"><div><h2 id="departments-heading">Departments</h2><p>Select a department to meet its team.</p></div></div>
+
+<div class="teams-toolbar">
+    <label
+        for="team-search"
+        class="visually-hidden"
+    >
+        Search teams, squads, and leaders
+    </label>
+
+    <input
+        id="team-search"
+        type="search"
+        placeholder="Search teams, squads, and leaders..."
+    >
+
+    <label
+        for="division-filter"
+        class="visually-hidden"
+    >
+        Filter by division
+    </label>
+
+    <select id="division-filter">
+        <option value="all">All Divisions</option>
+    </select>
+
+    <button
+        id="clear-all-teams"
+        type="button"
+    >
+        Clear All
+    </button>
+
+    <p
+        id="team-results-count"
+        aria-live="polite"
+    >
+        0 results
+    </p>
+
+    <button
+        id="create-team-button"
+        type="button"
+        hidden
+    >
+        + Create New Team
+    </button>
+</div>
+
       <div id="department-grid" class="department-grid" role="group" aria-label="Departments"></div>
+
+<p
+    id="team-empty-state"
+    class="empty-state"
+    hidden
+>
+    No teams found. Try another search or clear your filters.
+</p>
+
       <div id="department-members" class="department-members" aria-live="polite" hidden></div>
     </section>
       <section data-page="About" hidden id="About" class="about-section" aria-label="About Our Team"><p class="eyebrow">BUILT TOGETHER</p><h2>About Our Team</h2><p>We built this Employee Directory App through the LA Tech Rising internship program. Our team uses HTML, CSS, and JavaScript to help people find colleagues, explore departments, and connect.</p><div class="team-values"><span>Collaboration</span><span>Learning</span><span>Teamwork</span></div></section>

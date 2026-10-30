@@ -1,10 +1,50 @@
 const searchInput = document.querySelector('#search');
 const departmentFilter = document.querySelector('#department-filter');
+
+const teamSearchInput =
+    document.querySelector('#team-search');
+
+const divisionFilter =
+    document.querySelector('#division-filter');
+
+const clearAllTeams =
+    document.querySelector('#clear-all-teams');
+
+const departmentGrid =
+    document.querySelector('#department-grid');
+
+const teamResultsCount =
+    document.querySelector('#team-results-count');
+
+const teamEmptyState =
+    document.querySelector('#team-empty-state');
+
+const createTeamButton =
+    document.querySelector('#create-team-button');
+
+const createTeamPanel =
+    document.querySelector('#create-team-panel');
+
+const createTeamForm =
+    document.querySelector('#create-team-form');
+
+const cancelCreateTeam =
+    document.querySelector('#cancel-create-team');
+
+const teamSaveMessage =
+    document.querySelector('#team-save-message');
+
+function normalizeText(value = '') {
+    return String(value)
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
 const sortFilter = document.querySelector('#sort-filter');
 const clearButton = document.querySelector('#clear-button, #clearSearch');
 const resultsCount = document.querySelector('#results-count');
 const employeeList = document.querySelector('#employee-list');
-const departmentGrid = document.querySelector('#department-grid');
 const departmentMembers = document.querySelector('#department-members');
 
 // Keep the existing logo image and directory link, with a small pointer tilt.
@@ -32,6 +72,7 @@ if (peopleLogo) {
 let activeDepartment = null;
 
 let employees = [];
+let filteredDepartmentEmployees = [];
 let directoryView = 'grid';
 try { directoryView = localStorage.getItem('directoryView') === 'table' ? 'table' : 'grid'; } catch {}
 
@@ -351,10 +392,44 @@ function renderDepartments() {
         return;
     }
 
+    const searchQuery = normalizeText(
+        teamSearchInput?.value || ''
+    );
+
+    const selectedDivision =
+        divisionFilter?.value || 'all';
+
+    filteredDepartmentEmployees =
+        employees.filter(employee => {
+            const searchableText = normalizeText([
+                employee.name,
+                employee.title,
+                employee.department,
+                employee.division,
+                employee.team,
+                employee.squad,
+                employee.leader
+            ].join(' '));
+
+            const matchesSearch =
+                searchableText.includes(searchQuery);
+
+            const matchesDivision =
+                selectedDivision === 'all' ||
+                normalizeText(employee.division) ===
+                    selectedDivision;
+
+            return (
+                matchesSearch &&
+                matchesDivision
+            );
+        });
+
     const groups = new Map();
 
-    employees.forEach(employee => {
-        const department = String(employee.department || '').trim();
+    filteredDepartmentEmployees.forEach(employee => {
+        const department =
+            String(employee.department || '').trim();
 
         if (!department) {
             return;
@@ -363,33 +438,52 @@ function renderDepartments() {
         const key = department.toLowerCase();
 
         if (!groups.has(key)) {
-            groups.set(key, { name: department, members: [] });
+            groups.set(key, {
+                name: department,
+                members: []
+            });
         }
 
         groups.get(key).members.push(employee);
     });
 
-    const totalHeadcount = [...groups.values()]
-        .reduce((sum, group) => sum + group.members.length, 0);
+    const totalHeadcount =
+        filteredDepartmentEmployees.length;
 
     const cards = [...groups.values()]
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map(group => makeDepartmentTile(
-            makeDepartmentCard(group.name, group.members, totalHeadcount),
-            group.name
-        ));
+        .sort((a, b) =>
+            a.name.localeCompare(b.name)
+        )
+        .map(group =>
+            makeDepartmentTile(
+                makeDepartmentCard(
+                    group.name,
+                    group.members,
+                    totalHeadcount
+                ),
+                group.name
+            )
+        );
 
     departmentGrid.replaceChildren(...cards);
 
-    if (activeDepartment && !groups.has(activeDepartment)) {
-        activeDepartment = null;
+    if (teamResultsCount) {
+        teamResultsCount.textContent =
+            `${cards.length} result${
+                cards.length === 1 ? '' : 's'
+            }`;
     }
 
-    if (!cards.length) {
-        const message = document.createElement('p');
-        message.className = 'empty-state';
-        message.textContent = 'No departments to show yet.';
-        departmentGrid.appendChild(message);
+    if (teamEmptyState) {
+        teamEmptyState.hidden =
+            cards.length !== 0;
+    }
+
+    if (
+        activeDepartment &&
+        !groups.has(activeDepartment)
+    ) {
+        activeDepartment = null;
     }
 
     syncDepartmentCards();
@@ -420,7 +514,7 @@ function renderDepartmentMembers() {
     departmentMembers.replaceChildren();
 
     const members = activeDepartment
-        ? employees
+        ? filteredDepartmentEmployees
             .filter(employee =>
                 String(employee.department || '')
                     .trim()
@@ -1265,8 +1359,16 @@ async function loadEmployees() {
         const data = await window.EmployeeStore.list();
         if (request !== directoryRequest) return;
         if (!Array.isArray(data)) throw new Error('Invalid directory response');
-        employees = data;
+    
+    employees = data.map(employee => ({
+    ...employee,
+    division: employee.division || 'TBD',
+    team: employee.team || 'TBD',
+    squad: employee.squad || 'TBD',
+    leader: employee.leader || 'TBD'
+}));
         updateStatistics();
+        populateDivisionFilter();
         renderDepartments();
         const selected = departmentFilter.value;
         departmentFilter.replaceChildren();
@@ -1463,3 +1565,58 @@ window.addEventListener('keydown', event => {
     if (searchInput.closest('[hidden]')) return;
     event.preventDefault(); searchInput.focus();
 });
+
+function populateDivisionFilter() {
+    const divisions = [
+        ...new Set(
+            employees
+                .map(employee =>
+                    String(employee.division || '').trim()
+                )
+                .filter(Boolean)
+        )
+    ].sort((a, b) =>
+        a.localeCompare(b)
+    );
+
+    divisionFilter.replaceChildren();
+
+    const allOption =
+        document.createElement('option');
+
+    allOption.value = 'all';
+    allOption.textContent = 'All Divisions';
+
+    divisionFilter.appendChild(allOption);
+
+    divisions.forEach(division => {
+        const option =
+            document.createElement('option');
+
+        option.value = normalizeText(division);
+        option.textContent = division;
+
+        divisionFilter.appendChild(option);
+    });
+}
+
+teamSearchInput.addEventListener(
+    'input',
+    renderDepartments
+);
+
+divisionFilter.addEventListener(
+    'change',
+    renderDepartments
+);
+
+clearAllTeams.addEventListener(
+    'click',
+    () => {
+        teamSearchInput.value = '';
+        divisionFilter.value = 'all';
+
+        renderDepartments();
+    }
+);
+
