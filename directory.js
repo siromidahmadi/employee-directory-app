@@ -1288,9 +1288,24 @@ messageButton.className = 'profile-message-button';
 messageButton.textContent = 'Send Direct Message';
 
 messageButton.addEventListener('click', () => {
-    if (!employee.chat_user_id) {
+    const employeeEmail =
+        String(employee.email || '')
+            .trim()
+            .toLowerCase();
+
+    const employeeName =
+        String(employee.name || '')
+            .trim()
+            .toLowerCase();
+
+    const chatRecipientId =
+        employee.chat_user_id ||
+        chatUserIdsByEmail[employeeEmail] ||
+        chatUserIdsByName[employeeName];
+
+    if (!chatRecipientId) {
         console.error(
-            'This employee is missing chat_user_id:',
+            'No chat account mapping found:',
             employee
         );
 
@@ -1303,7 +1318,7 @@ messageButton.addEventListener('click', () => {
 
     window.location.href =
         `messaging.html?recipient=${encodeURIComponent(
-            employee.chat_user_id
+            chatRecipientId
         )}`;
 });
 
@@ -1484,7 +1499,7 @@ const chatUserIdsByEmail = {
     'najeeb916@latech.com':
         '6c5c1df1-7a3b-49ba-96ee-7ccd784f592e',
 
-    'omid@latech.com':
+    'aomid6362@gmail.com':
         '37faf8a4-fae2-4bfb-8690-b60d01966179'
 };
 const chatUserIdsByName = {
@@ -1500,7 +1515,7 @@ const chatUserIdsByName = {
     'najeeb916@latech.com':
         '6c5c1df1-7a3b-49ba-96ee-7ccd784f592e',
 
-    'omid@latech.com':
+    'omid ahmadi':
         '37faf8a4-fae2-4bfb-8690-b60d01966179',
 };
 
