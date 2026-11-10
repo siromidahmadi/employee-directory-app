@@ -47,11 +47,19 @@ function showMessageNotification(message) {
     openButton.textContent = 'Open chat';
 
     openButton.addEventListener('click', () => {
-        window.location.href =
-            `messaging.html?recipient=${encodeURIComponent(
-                message.sender_id
-            )}`;
-    });
+    const pendingKey =
+        `pending-message-${message.sender_id}`;
+
+    sessionStorage.setItem(
+        pendingKey,
+        message.body
+    );
+
+    window.location.href =
+        `messaging.html?recipient=${encodeURIComponent(
+            message.sender_id
+        )}`;
+});
 
     const closeButton =
         document.createElement('button');
