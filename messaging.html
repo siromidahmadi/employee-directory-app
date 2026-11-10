@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Messages | Employee Directory</title>
+    <link rel="icon" type="image/png" href="img/logo/pictionary.png">
+
 
     <link rel="stylesheet" href="directory.css?v=chat-profile-actions-20">
 </head>
@@ -66,23 +68,31 @@
             </button>
         </form>
 
-        <section class="meeting-tools" hidden>
-            <h2>Schedule a 1:1</h2>
+        <div>
+            <section class="meeting-tools">
+                 <h2>Schedule a 1:1</h2>
 
-            <label for="meeting-date">Date</label>
-            <input id="meeting-date" type="date">
+                <label for="meeting-date">Date</label>
+                <input id="meeting-date" type="date">
 
-            <label for="meeting-time">Time</label>
-            <input id="meeting-time" type="time">
+                <label for="meeting-time">Time</label>
+                <input id="meeting-time" type="time">
 
-            <button id="schedule-button" type="button">
-                Schedule 1:1
-            </button>
-        </section>
+                <button id="schedule-button" type="button">
+                    Schedule 1:1
+                </button>
+
+                <p id="meeting-message"></p>
+                <h3>Meetings with this person</h3>
+                <ul id="meeting-list"></ul>
+            </section>
+        </div>
     </main>
 
     <script src="supabase-2.118.0.js"></script>
     <script src="miguel-supabase-config.js"></script>
+    <script src="veraSupabaseConfig.js"></script>
     <script src="messaging.js"></script>
+    <script src="messaging.css"></script>
 </body>
 </html>
