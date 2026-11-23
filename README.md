@@ -4,6 +4,12 @@ An employee directory built by LA Tech Rising interns with project guidance from
 
 [Open the live website](https://siromidahmadi.github.io/employee-directory-app/)
 
+## Directory preview
+
+Searching for **engineer** and filtering by **Engineering** narrows the directory to four matching profiles.
+
+![Employee Directory showing search and the Engineering department filter](docs/directory-search-preview.jpg)
+
 ## Pages
 
 | Page | What it provides |
