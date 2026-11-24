@@ -1281,49 +1281,8 @@ function openProfile(employee) {
         projectList.append(item);
     }
     projectsSection.append(projectList);
-    const messageButton = document.createElement('button');
-
-messageButton.type = 'button';
-messageButton.className = 'profile-message-button';
-messageButton.textContent = 'Send Direct Message';
-
-messageButton.addEventListener('click', () => {
-    const employeeEmail =
-        String(employee.email || '')
-            .trim()
-            .toLowerCase();
-
-    const employeeName =
-        String(employee.name || '')
-            .trim()
-            .toLowerCase();
-
-    const chatRecipientId =
-        employee.chat_user_id ||
-        chatUserIdsByEmail[employeeEmail] ||
-        chatUserIdsByName[employeeName];
-
-    if (!chatRecipientId) {
-        console.error(
-            'No chat account mapping found:',
-            employee
-        );
-
-        alert(
-            'This employee is not connected to a chat account yet.'
-        );
-
-        return;
-    }
-
-    window.location.href =
-        `messaging.html?recipient=${encodeURIComponent(
-            chatRecipientId
-        )}`;
-});
-
     profileActions.append(shareButton, printButton, returnButton);
-    content.append(closeButton, header, profileActions, messageButton, grid);
+    content.append(closeButton, header, profileActions, grid);
 
     modal.appendChild(content);
     document.body.appendChild(modal);
@@ -1486,39 +1445,6 @@ if (clearButton) {
 // Spotlight links select a profile by its stable directory ID after data loads.
 let requestedProfileId = new URLSearchParams(window.location.search).get('employee');
 let directoryRequest = 0;
-const chatUserIdsByEmail = {
-    'miguel@latech.com':
-        '00cc93be-2610-404a-9a1b-7d50fb413407',
-
-    'kassandra@latech.com':
-        '7d6e0964-e69d-44bb-9a60-96986f05b8a2',
-        
-    'jessy@latech.com':
-        '1e26788e-08cd-4a7c-a1be-7c5a91f9593b',
-
-    'najeeb916@latech.com':
-        '6c5c1df1-7a3b-49ba-96ee-7ccd784f592e',
-
-    'aomid6362@gmail.com':
-        '37faf8a4-fae2-4bfb-8690-b60d01966179'
-};
-const chatUserIdsByName = {
-    'arias miguel':
-        '00cc93be-2610-404a-9a1b-7d50fb413407',
-
-    'vera kassandra':
-        '7d6e0964-e69d-44bb-9a60-96986f05b8a2',
-
-     'jessy@latech.com' : 
-        '1e26788e-08cd-4a7c-a1be-7c5a91f9593b',
-
-    'najeeb916@latech.com':
-        '6c5c1df1-7a3b-49ba-96ee-7ccd784f592e',
-
-    'omid ahmadi':
-        '37faf8a4-fae2-4bfb-8690-b60d01966179',
-};
-
 async function loadEmployees() {
     const request = ++directoryRequest;
     const status = document.querySelector('#directory-status');
@@ -1537,15 +1463,7 @@ async function loadEmployees() {
     division: employee.division || 'TBD',
     team: employee.team || 'TBD',
     squad: employee.squad || 'TBD',
-    leader: employee.leader || 'TBD',
-    chat_user_id:
-        employee.chat_user_id ||
-        chatUserIdsByEmail[
-            String(employee.email || '').trim().toLowerCase()
-        ] ||
-        chatUserIdsByName[
-            String(employee.name || '').trim().toLowerCase()
-        ]
+    leader: employee.leader || 'TBD'
 }));
         updateStatistics();
         populateDivisionFilter();

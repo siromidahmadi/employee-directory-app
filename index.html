@@ -31,7 +31,7 @@
 
         <input type="search" id="header-search-input" placeholder="Search people...." autoComplete="off">
       </div>
-      <a class="add-teammate header-quick-invite" href="admin.html">
+      <a class="add-teammate header-quick-invite" href="admin.html" hidden>
         + Quick Invite
       </a>
 
@@ -44,7 +44,7 @@
           <button type="submit" aria-label="Search Directory"><span class="material-symbols-outlined" aria-hidden="true">search</span></button>
           <div id="header-directory-results" hidden></div>
         </form>
-        <a class="department-quick-invite" href="admin.html">+ Quick Invite</a>
+        <a class="department-quick-invite" href="admin.html" hidden>+ Quick Invite</a>
       </div>
       <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="primary-navigation"
         aria-expanded="false">☰</button>
@@ -61,13 +61,8 @@
         <a href="#Departments">Departments</a>
         <a href="#About">About</a>
         <a href="#Contact">Contact</a>
-        <button
-    id="logout-button"
-    class="logout-button"
-    type="button"
->
-    Log Out
-</button>
+        <a id="admin-login-link" href="admin.html#login-title">Owner sign in</a>
+        <button id="logout-button" class="logout-button" type="button" hidden>Sign out</button>
         <span class="liquid-divider" aria-hidden="true"></span>
         <button id="darkModeToggle" class="theme-changer" type="button" aria-label="Switch to dark mode"
           aria-pressed="false" title="Switch to dark mode"><svg class="changer-sun" viewBox="0 0 24 24"
@@ -135,7 +130,7 @@
             <button id="viewTableBtn" type="button" aria-pressed="false" aria-controls="employee-table-view"><span
                 class="material-symbols-outlined" aria-hidden="true">table_rows</span> Table</button>
           </div>
-          <a class="add-teammate" href="admin.html">+ Add Teammate</a>
+          <a class="add-teammate" href="admin.html" hidden>+ Add Teammate</a>
         </div>
       </div>
       <p id="directory-status" role="status" aria-live="polite" hidden></p>
@@ -346,17 +341,14 @@
   <!-- Keep this order: library, configuration, shared store, directory UI. -->
   <script src="supabase-2.118.0.js"></script>
   <script src="supabase-config.js"></script>
-  <script src="miguel-supabase-config.js"></script>
-  <script src="employee-store.js?v=world-location-17"></script>
+  <script src="employee-store.js?v=owner-only-1"></script>
   <script src="card-local-time.js?v=world-location-17"></script>
   <script src="departments-page.js?v=1"></script>
-  <script src="directory.js?v=chat-profile-actions-20"></script>
-  <script src="directory-auth.js"></script>
+  <script src="directory.js?v=owner-only-1"></script>
+  <script src="directory-auth.js?v=owner-only-1"></script>
   <script src="kinetic-text.js?v=kinetic-sentence-14"></script>
   <script src="liquid-navigation.js?v=liquid-nav-15"></script>
   <script src="guild.js?v=groups-1"></script>
-  <div id="message-notification-root"></div>
-  <script src="notifications.js"></script>
 </body>
 
 </html>

@@ -188,3 +188,9 @@ GitHub Pages deployment success confirms publishing completed; it does not repla
 Maintained by Omid Ahmadi. Reuse of materials he owns requires written permission unless otherwise permitted by law or an applicable license. Contributor rights and previously granted licenses remain unchanged.
 
 See [LICENSE](LICENSE) and [third-party notices](THIRD_PARTY_NOTICES.md). This notice covers protected materials, not the general app idea.
+
+## Owner access
+
+The Directory stays public. Only the account listed in the server-side owner and administrator tables may sign in to manage employees. Use [Owner sign in](https://siromidahmadi.github.io/employee-directory-app/admin.html#login-title) with the owner's existing email and password. Passwords are not stored in this repository.
+
+The shared intern account is disabled, its administrator membership and sessions were revoked, and shared-account provisioning is retired. The former external chat/calendar integrations are disconnected; legacy login links lead to the owner login.

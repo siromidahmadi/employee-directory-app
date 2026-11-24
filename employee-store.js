@@ -59,22 +59,23 @@
         async setHeroVisibility(enabled) {
             return check(await client.from('directory_site_features').update({ enabled: Boolean(enabled) }).eq('key', 'search_hero').select('enabled').single()).enabled;
         },
-        async createSharedInternLogin(password, action = 'create') {
-            const result = await client.functions.invoke('provision-shared-intern', { body: { password, action } });
-            const data = check(result);
-            if (!data?.created && !data?.reset) throw new Error(data?.error || 'Shared account setup failed.');
-            return data;
-        },
         async getAdmin() {
             const { data, error } = await client.auth.getUser();
             if (error || !data.user) return null;
             const rows = check(await client.from('directory_admins').select('user_id').eq('user_id', data.user.id));
-            return rows.length ? data.user : null;
+            const owners = check(await client.from('directory_site_owners').select('user_id').eq('user_id', data.user.id));
+            return rows.length === 1 && owners.length === 1 ? data.user : null;
         },
         async signIn(identifier, password) {
             const login = String(identifier || '').trim();
-            const email = login.toUpperCase() === 'THE-PEOPLE' ? 'interns.thepeople@example.com' : login;
-            return check(await client.auth.signInWithPassword({ email, password }));
+            const email = login.toLowerCase();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('Use your owner email address.');
+            const result = check(await client.auth.signInWithPassword({ email, password }));
+            if (!await window.EmployeeStore.getAdmin()) {
+                await client.auth.signOut();
+                throw new Error('Owner access required.');
+            }
+            return result;
         },
         async signOut() { return check(await client.auth.signOut()); },
         onAuthChange(callback) {

@@ -90,10 +90,10 @@
             if (!admin) {
                 activeAdminId = null;
                 employees = []; clearEditor();
-                message('Sign in to manage employees. Only approved admin accounts can make changes.');
+                message('Sign in to manage employees. Only the site owner can make changes.');
                 return;
             }
-            $('signed-in-as').textContent = 'Signed in as ' + (admin.email === 'interns.thepeople@example.com' ? 'THE-PEOPLE (shared intern account)' : admin.email);
+            $('signed-in-as').textContent = 'Signed in as owner · ' + admin.email;
             if (activeAdminId !== admin.id) {
                 clearEditor();
                 await reloadEmployees();
@@ -223,7 +223,7 @@
             const admin = await store.getAdmin();
             if (!admin) {
                 await store.signOut();
-                message('This account is not approved to manage employees. Contact the project owner.', true);
+                message('Only the site owner can manage employees.', true);
             } else await refreshSession();
         } catch { message('Sign-in failed. Check your email and password, then try again.', true); }
         finally { setBusy(false); }
