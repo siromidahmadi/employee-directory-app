@@ -34,17 +34,10 @@
         return svg;
     }
     const entries = [
-        { label: 'Add teammate', description: 'Open the teammate workspace · admin sign-in required', href: '#teammate-workspace', icon: 'person', keywords: 'new create add form login sign in' },
-        { label: 'Directory', description: 'Find people, roles, departments, and skills', href: 'index.html#directory', icon: 'grid', keywords: 'search employees colleagues people' },
-        { label: 'Departments', description: 'Explore departments and teams', href: 'index.html#Departments', icon: 'teams', keywords: 'division team' },
-        { label: 'About', description: 'Learn about The People', href: 'index.html#About', icon: 'globe', keywords: 'project information' },
-        { label: 'Contact', description: 'Visit the contact page', href: 'index.html#Contact', icon: 'mail', keywords: 'email help' },
-        { label: 'Basic identity & contact', description: 'Full name, public email, and profile photo', href: '#identity-heading', focus: 'employee-name', icon: 'person', keywords: 'upload image picture identity' },
-        { label: 'Role & department', description: 'Job title, department, and joining date', href: '#role-heading', focus: 'employee-title', icon: 'teams', keywords: 'job start work' },
-        { label: 'Location & time zone', description: 'City, state or province, country, and local time zone', href: '#role-heading', focus: 'employee-location', icon: 'globe', keywords: 'timezone worldwide location region canada vancouver' },
-        { label: 'Bio & skills', description: 'Biography, skills, and expertise', href: '#skills-heading', focus: 'employee-bio', icon: 'search', keywords: 'experience html css javascript' },
-        { label: 'Professional links', description: 'LinkedIn, GitHub, and portfolio', href: '#links-heading', focus: 'employee-linkedin', icon: 'link', keywords: 'social website profile' },
-        { label: 'Manage teammates', description: 'Search the roster and edit existing profiles', href: '#roster-heading', focus: 'admin-search', icon: 'teams', keywords: 'employees list edit delete remove roster' }
+        { label: 'Directory', description: 'Browse the full team', href: '#directory-results', icon: 'grid' },
+        { label: 'Departments', description: 'Explore departments and teams', href: 'index.html#Departments', icon: 'teams' },
+        { label: 'About', description: 'Learn about Pictionary', href: 'index.html#About', icon: 'globe' },
+        { label: 'Contact', description: 'Visit the contact page', href: 'index.html#Contact', icon: 'mail' }
     ];
     const searchPrompts = ['Search by name', 'Search by role', 'Search by skill', 'Search by department', 'Search by location'];
     let currentPrompt = searchPrompts[0];
@@ -95,7 +88,7 @@
         link.addEventListener('click', event => goToSection(event, entry));
         return link;
     }
-    [entries[0], entries[1], entries[2], entries[4]].forEach(entry => shortcuts.append(makeLink(entry, true)));
+    entries.forEach(entry => shortcuts.append(makeLink(entry, true)));
     const suggestions = document.createElement('nav');
     suggestions.className = 'spotlight-suggestions';
     suggestions.setAttribute('aria-label', 'Ways to find people');
@@ -277,13 +270,14 @@
         else status.textContent = `${matches.length} matching ${matches.length === 1 ? 'person' : 'people'}. Choose a result to open their profile.`;
     }
     input.addEventListener('input', render);
+    input.addEventListener('directory-search-sync', render);
     root.addEventListener('keydown', event => {
         if (event.key === 'Escape') {
             event.preventDefault();
             input.value = '';
             skillPanel.hidden = true;
             browse.setAttribute('aria-expanded', 'false');
-            render();
+            input.dispatchEvent(new Event('input', { bubbles: true }));
             input.focus({ preventScroll: true });
             return;
         }
@@ -353,7 +347,7 @@
                 if (!transcript) return;
                 heard = true;
                 input.value = transcript.slice(0, input.maxLength);
-                render();
+                input.dispatchEvent(new Event('input', { bubbles: true }));
                 input.focus({ preventScroll: true });
                 voiceStatus.textContent = `Searching for “${input.value}”.`;
                 stopVoice();

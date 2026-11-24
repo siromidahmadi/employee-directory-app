@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="liquid-navigation.css?v=liquid-nav-15">
   <link rel="stylesheet" href="departments-page.css?v=1">
   <link rel="stylesheet" href="directory-chat.css?v=1">
+  <link rel="stylesheet" href="search-hero.css?v=landing-1">
+  <link rel="stylesheet" href="apple-spotlight.css?v=landing-1">
 </head>
 
 <body class="directory-page">
@@ -24,13 +26,6 @@
       <a class="logo people-logo" href="#directory" aria-label="The People directory"><img src="img/logo/PICTIONARY_long.png"
           alt="The People" width="1960" height="816"></a>
       <div class="directory-header-tools" data-page="directory">
-      <div class="header-search">
-        <label for="header-search-input" class="visually-hidden">
-          Search employees
-        </label>
-
-        <input type="search" id="header-search-input" placeholder="Search people...." autoComplete="off">
-      </div>
       <a class="add-teammate header-quick-invite" href="admin.html" hidden>
         + Quick Invite
       </a>
@@ -38,12 +33,6 @@
 
       </div>
       <div class="department-header-tools" hidden>
-        <form id="header-directory-form" role="search" aria-label="Search the People Directory">
-          <label class="visually-hidden" for="header-directory-search">Search people, skills, roles, or locations</label>
-          <input id="header-directory-search" type="search" placeholder="Search people, skills, or titles…" maxlength="200" autocomplete="off" aria-controls="header-directory-results" aria-expanded="false">
-          <button type="submit" aria-label="Search Directory"><span class="material-symbols-outlined" aria-hidden="true">search</span></button>
-          <div id="header-directory-results" hidden></div>
-        </form>
         <a class="department-quick-invite" href="admin.html" hidden>+ Quick Invite</a>
       </div>
       <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="primary-navigation"
@@ -78,16 +67,35 @@
 
     </div>
   </header>
-  <main class="page-shell" id="page-content">
-    <section data-page="directory" class="hero-section" aria-labelledby="page-title">
-      <div>
-        <p class="hero-label">PICTIONARY · OUR TEAM</p>
-        <h1 id="page-title">People Directory</h1>
-        <p class="hero-description">Discover our team, explore departments, and find the right person to connect with.
-        </p>
+    <section id="directory" data-page="directory" class="people-hero hero-section" aria-labelledby="people-hero-title">
+      <canvas id="people-particles" aria-hidden="true"></canvas>
+      <div class="people-hero-content">
+        <p class="people-hero-eyebrow">PICTIONARY · BETTER TOGETHER</p>
+        <h1 id="people-hero-title">Great teams start<br>with <span>great people.</span></h1>
+        <p class="people-hero-description">Every teammate brings something different. Give them a place to share it.</p>
+        <a class="people-hero-action" href="#directory-results">Browse directory <span aria-hidden="true">↓</span></a>
+        <div class="apple-spotlight" id="teammate-spotlight" data-size="compact" style="--spotlight-width:1024px;--spotlight-opacity:.88">
+          <div class="spotlight-row">
+            <div class="spotlight-panel">
+              <div class="spotlight-input-row">
+                <svg class="spotlight-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.8"/><path d="m16.5 16.5 4.5 4.5"/></svg>
+                <div class="spotlight-input-wrap"><label class="visually-hidden" for="spotlight-search">Search the People Directory by name, skill, role, or location</label><span class="spotlight-placeholder" aria-hidden="true">Search by name</span><input id="spotlight-search" type="search" autocomplete="off" maxlength="200" aria-controls="spotlight-results" aria-expanded="false"></div>
+                <button id="spotlight-voice" class="spotlight-voice" type="button" aria-label="Search by voice" aria-pressed="false" aria-describedby="spotlight-voice-status" title="Search by voice">
+                  <svg class="voice-waveform" viewBox="0 0 32 28" aria-hidden="true"><defs><linearGradient id="voice-wave-gradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset=".5" stop-color="#7c5cff"/><stop offset="1" stop-color="#7c5cff"/></linearGradient></defs><g fill="url(#voice-wave-gradient)"><rect x="2" y="10" width="3" height="8" rx="1.5"/><rect x="8" y="6" width="3" height="16" rx="1.5"/><rect x="14" y="2" width="3" height="24" rx="1.5"/><rect x="20" y="7" width="3" height="14" rx="1.5"/><rect x="26" y="11" width="3" height="6" rx="1.5"/></g></svg>
+                </button>
+              </div>
+              <div id="spotlight-results" class="spotlight-results" hidden></div>
+            </div>
+            <nav class="spotlight-shortcuts" aria-label="Quick shortcuts"></nav>
+          </div>
+          <p id="spotlight-voice-status" class="spotlight-voice-status" role="status" aria-live="polite"></p>
+          <p id="spotlight-status" class="visually-hidden" role="status" aria-live="polite"></p>
+        </div>
+        <p class="people-hero-note">A face. A story. A new connection.</p>
       </div>
-      <a class="hero-link" href="#Departments">Explore departments <span aria-hidden="true">→</span></a>
+      <button id="people-particles-toggle" class="people-hero-motion" type="button" aria-pressed="false" hidden>Pause animation</button>
     </section>
+  <main class="page-shell" id="page-content">
     <section data-page="directory" class="statistics-section" aria-label="Employee statistics">
       <article class="stat-card">
         <div>
@@ -115,7 +123,7 @@
             class="material-symbols-outlined">person_add</span></span>
       </article>
     </section>
-    <section data-page="directory" id="directory" class="directory-section">
+    <section data-page="directory" id="directory-results" class="directory-section" tabindex="-1">
       <div class="section-heading">
         <div>
           <h2>Team Members</h2>
@@ -136,11 +144,6 @@
       <p id="directory-status" role="status" aria-live="polite" hidden></p>
       <section class="filter-panel" aria-label="Find employees">
         <div class="search-container">
-          <div class="search-field"><label for="search">Search employees</label>
-            <div class="input-wrap"><span class="search-icon material-symbols-outlined"
-                aria-hidden="true">search</span><input id="search" type="search"
-                placeholder="Search name, role, email, or skill…" aria-keyshortcuts="/"><kbd aria-hidden="true">/</kbd>
-            </div>
           </div>
           <div class="filter-field"><label for="department-filter">Department</label><select id="department-filter">
               <option value="all">All Departments</option>
@@ -343,8 +346,11 @@
   <script src="supabase-config.js"></script>
   <script src="employee-store.js?v=owner-only-1"></script>
   <script src="card-local-time.js?v=world-location-17"></script>
-  <script src="departments-page.js?v=1"></script>
-  <script src="directory.js?v=owner-only-1"></script>
+  <script src="departments-page.js?v=landing-1"></script>
+  <script src="directory.js?v=landing-1"></script>
+  <script src="apple-spotlight.js?v=landing-1"></script>
+  <script src="search-hero-particles.js?v=landing-1"></script>
+  <script src="admin-hero-motion.js?v=hero-owner-1"></script>
   <script src="directory-auth.js?v=owner-only-1"></script>
   <script src="kinetic-text.js?v=kinetic-sentence-14"></script>
   <script src="liquid-navigation.js?v=liquid-nav-15"></script>

@@ -1,5 +1,4 @@
-const searchInput = document.querySelector('#search');
-const headerSearchInput = document.querySelector('#header-search-input');
+const searchInput = document.querySelector('#spotlight-search');
 const departmentFilter = document.querySelector('#department-filter');
 
 const teamSearchInput =
@@ -1323,7 +1322,7 @@ function openProfile(employee) {
 }
 
 function renderEmployees() {
-    if (headerSearchInput) headerSearchInput.value = searchInput.value;
+    searchInput.dispatchEvent(new Event('directory-search-sync'));
     const query =
         searchInput.value.trim().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
@@ -1410,18 +1409,6 @@ searchInput.addEventListener(
     'input',
     renderEmployees
 );
-
-if (headerSearchInput) {
-    headerSearchInput.addEventListener('input', () => {
-        searchInput.value = headerSearchInput.value;
-
-        if (window.location.hash !== '#directory') {
-            window.location.hash = '#directory';
-        }
-
-        renderEmployees();
-    });
-}
 
 departmentFilter.addEventListener(
     'change',
@@ -1581,6 +1568,7 @@ if (menuButton && navigation) {
 
         document.querySelectorAll('[data-page]').forEach(section => {
             section.hidden = section.dataset.page !== page;
+            if (section.classList.contains('people-hero')) section.dispatchEvent(new Event('hero-visibility-change'));
         });
         const titles = {
             directory: 'Employee Directory',

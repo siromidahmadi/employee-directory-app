@@ -11,13 +11,13 @@ async function directory(url='https://example.com/index.html#directory'){
  const w=dom.window;w.matchMedia=()=>({matches:true,addEventListener(){}});w.scrollTo=()=>{};
  w.EmployeeStore={list:async()=>[person]};w.eval(read('directory.js'));await tick();return w;
 }
-test('Jessie header search works with existing filters and Clear all resets both search fields',async()=>{
+test('the hero search combines with department filtering and Clear all resets it',async()=>{
  const w=await directory();try{
- const d=w.document,h=d.querySelector('#header-search-input');h.value='Nobody';h.dispatchEvent(new w.Event('input'));
+ const d=w.document,h=d.querySelector('#spotlight-search');h.value='Nobody';h.dispatchEvent(new w.Event('input'));
  assert.equal(d.querySelectorAll('.employee-card').length,0);
  d.querySelector('#clearSearch').click();assert.equal(h.value,'');assert.equal(d.querySelectorAll('.employee-card').length,1);
- h.value='engineer';h.dispatchEvent(new w.Event('input'));assert.equal(d.querySelector('#search').value,'engineer');assert.equal(d.querySelectorAll('.employee-card').length,1);
- assert.match(d.querySelector('.header-quick-invite').href,/admin.html$/);
+ h.value='ENGINEER';h.dispatchEvent(new w.Event('input'));assert.equal(d.querySelectorAll('.employee-card').length,1);
+ assert.equal(d.querySelector('#header-search-input'),null);
  }finally{w.close()}
 });
 test('shared links open the current full profile, copy its ID, and print after shared messaging is retired',async()=>{

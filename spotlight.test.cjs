@@ -8,8 +8,8 @@ const people = [
     { id: 'person-2', name: 'Alex Sample', title: 'Designer', department: 'Design', email: 'alex@example.com', location: 'Los Angeles, California, United States', country: 'United States', skills: ['Figma'], bio: '' }
 ];
 function setup(list = async () => people) {
-    const dom = new JSDOM(fs.readFileSync('admin.html', 'utf8'), {
-        runScripts: 'outside-only', url: 'https://example.com/admin.html'
+    const dom = new JSDOM(fs.readFileSync('index.html', 'utf8'), {
+        runScripts: 'outside-only', url: 'https://example.com/index.html'
     });
     const w = dom.window;
     if (w.document.querySelector('.people-hero')) w.document.querySelector('.people-hero').hidden = false;
@@ -123,7 +123,7 @@ test('voice search starts only on click, uses speech for profile results, and st
     const w = setup();
     try {
         // Recreate the page with SpeechRecognition present before script initialization.
-        const dom = new JSDOM(fs.readFileSync('admin.html', 'utf8'), { runScripts: 'outside-only', url: 'https://example.com/admin.html' });
+        const dom = new JSDOM(fs.readFileSync('index.html', 'utf8'), { runScripts: 'outside-only', url: 'https://example.com/index.html' });
         const v = dom.window;
         try {
             v.matchMedia = () => ({ matches: true });
@@ -175,7 +175,7 @@ test('reduced-motion hero keeps complete accessible copy and does not start anim
 });
 
 test('prompts rotate once in order with equal timing and swap only while faded', async () => {
-    const dom = new JSDOM(fs.readFileSync('admin.html', 'utf8'), { runScripts: 'outside-only', url: 'https://example.com/admin.html', pretendToBeVisual: true });
+    const dom = new JSDOM(fs.readFileSync('index.html', 'utf8'), { runScripts: 'outside-only', url: 'https://example.com/index.html', pretendToBeVisual: true });
     const w = dom.window;
     if (w.document.querySelector('.people-hero')) w.document.querySelector('.people-hero').hidden = false;
     try {

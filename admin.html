@@ -7,41 +7,13 @@
   <title>Add Teammate | The People</title>
   <link rel="icon" type="image/png" href="the-people-logo.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="admin.css?v=owner-only-1">
+  <link rel="stylesheet" href="admin.css?v=landing-1">
   <link rel="stylesheet" href="theme-changer.css?v=theme-11">
 <link rel="stylesheet" href="location-picker.css?v=world-location-17">
-  <link rel="stylesheet" href="apple-spotlight.css?v=spotlight-9">
 </head>
 <body class="admin-page">
   <a class="skip-link" href="#page-content">Skip to main content</a>
-    <section class="people-hero" hidden aria-labelledby="people-hero-title">
-      <canvas id="people-particles" aria-hidden="true"></canvas>
-      <div class="people-hero-content">
-        <p class="people-hero-eyebrow">THE PEOPLE · BETTER TOGETHER</p>
-        <h1 id="people-hero-title">Great teams start<br>with <span>great people.</span></h1>
-        <p class="people-hero-description">Every teammate brings something different. Give them a place to share it.</p>
-        <a class="people-hero-action" href="#teammate-workspace">Add a teammate <span aria-hidden="true">↓</span></a>
-        <div class="apple-spotlight" id="teammate-spotlight" data-size="compact" style="--spotlight-width:1024px;--spotlight-opacity:.88">
-          <div class="spotlight-row">
-            <div class="spotlight-panel">
-              <div class="spotlight-input-row">
-                <svg class="spotlight-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.8"/><path d="m16.5 16.5 4.5 4.5"/></svg>
-                <div class="spotlight-input-wrap"><label class="visually-hidden" for="spotlight-search">Search the People Directory by name, skill, role, or location</label><span class="spotlight-placeholder" aria-hidden="true">Search by name</span><input id="spotlight-search" type="search" autocomplete="off" maxlength="200" aria-controls="spotlight-results" aria-expanded="false"></div>
-                <button id="spotlight-voice" class="spotlight-voice" type="button" aria-label="Search by voice" aria-pressed="false" aria-describedby="spotlight-voice-status" title="Search by voice">
-                  <svg class="voice-waveform" viewBox="0 0 32 28" aria-hidden="true"><defs><linearGradient id="voice-wave-gradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset=".5" stop-color="#7c5cff"/><stop offset="1" stop-color="#7c5cff"/></linearGradient></defs><g fill="url(#voice-wave-gradient)"><rect x="2" y="10" width="3" height="8" rx="1.5"/><rect x="8" y="6" width="3" height="16" rx="1.5"/><rect x="14" y="2" width="3" height="24" rx="1.5"/><rect x="20" y="7" width="3" height="14" rx="1.5"/><rect x="26" y="11" width="3" height="6" rx="1.5"/></g></svg>
-                </button>
-              </div>
-              <div id="spotlight-results" class="spotlight-results" hidden></div>
-            </div>
-            <nav class="spotlight-shortcuts" aria-label="Quick shortcuts"></nav>
-          </div>
-          <p id="spotlight-voice-status" class="spotlight-voice-status" role="status" aria-live="polite"></p>
-          <p id="spotlight-status" class="visually-hidden" role="status" aria-live="polite"></p>
-        </div>
-        <p class="people-hero-note">A face. A story. A new connection.</p>
-      </div>
-      <button id="people-particles-toggle" class="people-hero-motion" type="button" aria-pressed="false" hidden>Pause animation</button>
-    </section>
+
   <header class="admin-header">
     <a class="admin-brand" href="index.html#directory" aria-label="The People directory"><img src="the-people-logo.png" alt="The People" width="1960" height="816"></a>
     <nav aria-label="Main navigation"><a href="index.html#directory">Directory</a><a href="index.html#Departments">Departments</a><a href="index.html#About">About</a><a href="index.html#Contact">Contact</a></nav>
@@ -51,12 +23,6 @@
     <div id="teammate-workspace" tabindex="-1">
     <div class="breadcrumb"><a href="index.html#directory">Directory</a><span aria-hidden="true">/</span><span>Add Teammate</span></div>
     <div class="admin-intro"><div><p class="admin-eyebrow">THE PEOPLE · TEAM MANAGEMENT</p><h2>Add New Teammate</h2><p>Introduce someone new to the team. Build their profile and preview it as you go.</p></div><a class="back-link" href="index.html#directory">← Back to directory</a></div>
-    <section id="hero-owner-controls" class="admin-panel" hidden aria-labelledby="hero-owner-title">
-      <h2 id="hero-owner-title">Final reveal</h2>
-      <p>Only your owner account can change the search hero's public visibility.</p>
-      <button id="hero-visibility-toggle" type="button" role="switch" aria-checked="false" disabled>Show search hero</button>
-      <p id="hero-visibility-status" role="status" aria-live="polite"></p>
-    </section>
     <p id="admin-status" class="admin-status" role="status" aria-live="polite">Connecting…</p>
     <section id="login-panel" class="admin-panel login-panel" hidden aria-labelledby="login-title">
       <div class="section-icon" aria-hidden="true">↗</div><h2 id="login-title">Owner login</h2><p>Only the site owner can sign in to add or manage teammates.</p>
@@ -103,140 +69,7 @@
     <footer>The People © 2026</footer>
   </main>
   <dialog id="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-description"><h2 id="delete-title">Remove employee?</h2><p id="delete-description"></p><div class="admin-actions"><button id="cancel-delete" type="button" autofocus>Cancel</button><button id="confirm-delete" class="admin-danger" type="button">Remove employee</button></div></dialog>
-  <script>
-(function () {
-    'use strict';
-    const hero = document.querySelector('.people-hero');
-    if (!hero) return;
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    hero.querySelector('.people-hero-action').addEventListener('click', event => {
-        const target = document.getElementById('teammate-workspace');
-        if (!target) return;
-        event.preventDefault();
-        target.focus({ preventScroll: true });
-        target.scrollIntoView({ behavior: motion.matches ? 'auto' : 'smooth', block: 'start' });
-    });
 
-    const canvas = document.getElementById('people-particles');
-    const context = canvas && canvas.getContext('2d');
-    if (!context) return;
-    const toggle = document.getElementById('people-particles-toggle');
-    const mouse = { x: 0, y: 0, active: false, radius: 200 };
-    let width = 1, height = 1, particles = [], frame = null, previousTime = null;
-    let paused = motion.matches, visible = true;
-
-    function draw() {
-        context.fillStyle = 'black';
-        context.fillRect(0, 0, width, height);
-        for (const particle of particles) {
-            context.beginPath();
-            context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-            context.fillStyle = 'rgba(191,128,255,0.8)';
-            context.fill();
-        }
-        const linkDistance = Math.min(142, Math.sqrt(width * height / 49));
-        for (let a = 0; a < particles.length; a++) {
-            for (let b = a + 1; b < particles.length; b++) {
-                const p = particles[a], q = particles[b];
-                const distance = Math.hypot(p.x - q.x, p.y - q.y);
-                if (distance >= linkDistance) continue;
-                const opacity = Math.max(0, 1 - distance * distance / 20000);
-                const nearMouse = mouse.active && Math.hypot(p.x - mouse.x, p.y - mouse.y) < mouse.radius;
-                context.strokeStyle = nearMouse ? `rgba(255,255,255,${opacity})` : `rgba(200,150,255,${opacity})`;
-                context.lineWidth = 1;
-                context.beginPath();
-                context.moveTo(p.x, p.y);
-                context.lineTo(q.x, q.y);
-                context.stroke();
-            }
-        }
-    }
-    function animate(time) {
-        const step = previousTime === null ? 0 : Math.min((time - previousTime) / 16.67, 2);
-        previousTime = time;
-        for (const particle of particles) {
-            if (mouse.active) {
-                let dx = mouse.x - particle.x, dy = mouse.y - particle.y;
-                let distance = Math.hypot(dx, dy);
-                if (distance < mouse.radius) {
-                    // The original divides by zero when the cursor lands on a particle.
-                    if (distance < 0.01) { dx = 1; dy = 0; distance = 1; }
-                    const force = (mouse.radius - distance) / mouse.radius * 5 * step;
-                    particle.x -= dx / distance * force;
-                    particle.y -= dy / distance * force;
-                }
-            }
-            particle.x += particle.vx * step;
-            particle.y += particle.vy * step;
-            if (particle.x < 0 || particle.x > width) {
-                particle.vx *= -1;
-                particle.x = Math.max(0, Math.min(width, particle.x));
-            }
-            if (particle.y < 0 || particle.y > height) {
-                particle.vy *= -1;
-                particle.y = Math.max(0, Math.min(height, particle.y));
-            }
-        }
-        draw();
-        frame = requestAnimationFrame(animate);
-    }
-    function updateToggle() {
-        toggle.hidden = false;
-        toggle.textContent = paused ? 'Play animation' : 'Pause animation';
-        toggle.setAttribute('aria-pressed', String(paused));
-    }
-    function syncAnimation() {
-        if (frame !== null) cancelAnimationFrame(frame);
-        frame = null;
-        previousTime = null;
-        if (!paused && !document.hidden && visible && !hero.hidden) frame = requestAnimationFrame(animate);
-        else draw();
-        updateToggle();
-    }
-    function resize() {
-        width = Math.max(1, hero.clientWidth);
-        height = Math.max(1, hero.clientHeight);
-        const ratio = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.round(width * ratio);
-        canvas.height = Math.round(height * ratio);
-        context.setTransform(ratio, 0, 0, ratio, 0, 0);
-        particles = Array.from({ length: Math.min(180, Math.max(30, Math.ceil(width * height / 9000))) }, () => ({
-            x: Math.random() * width, y: Math.random() * height,
-            vx: Math.random() * 0.4 - 0.2, vy: Math.random() * 0.4 - 0.2,
-            radius: Math.random() * 2 + 1
-        }));
-        draw();
-    }
-    hero.addEventListener('pointermove', event => {
-        const bounds = hero.getBoundingClientRect();
-        mouse.x = event.clientX - bounds.left;
-        mouse.y = event.clientY - bounds.top;
-        mouse.active = true;
-    });
-    function releasePointer() { mouse.active = false; }
-    hero.addEventListener('pointerleave', releasePointer);
-    hero.addEventListener('pointercancel', releasePointer);
-    hero.addEventListener('pointerup', event => {
-        if (event.pointerType !== 'mouse') releasePointer();
-    });
-    window.addEventListener('blur', releasePointer);
-    toggle.addEventListener('click', () => { paused = !paused; syncAnimation(); });
-    motion.addEventListener('change', () => { paused = motion.matches; syncAnimation(); });
-    document.addEventListener('visibilitychange', syncAnimation);
-    hero.addEventListener('hero-visibility-change', () => { resize(); syncAnimation(); });
-    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(hero);
-    else window.addEventListener('resize', resize);
-    if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
-        visible = entries[0].isIntersecting;
-        syncAnimation();
-    }).observe(hero);
-    resize();
-    syncAnimation();
-})();
-  </script>
   <script src="supabase-2.118.0.js"></script><script src="supabase-config.js"></script><script src="employee-store.js?v=owner-only-1"></script><script src="location-picker.js?v=world-location-17"></script><script src="admin.js?v=owner-only-1"></script>
-  <script src="apple-spotlight.js?v=hero-owner-1"></script>
-  <script src="admin-hero-motion.js?v=hero-owner-1"></script>
-  <script src="hero-visibility.js?v=1"></script>
 </body>
 </html>
