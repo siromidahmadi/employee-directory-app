@@ -439,3 +439,6 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
         box-sizing: border-box;
     }
 }
+/* Keep portrait photos inside the same square avatar bounds as every teammate. */
+.employee-avatar,.account-avatar{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+.employee-avatar img,.account-avatar img{display:block;min-width:0;min-height:0;width:100%;height:100%;object-fit:cover;object-position:center}
