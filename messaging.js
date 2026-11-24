@@ -92,8 +92,8 @@
    await populateRecipients();await ownerPanel();
    const params=new URLSearchParams(location.search),target=people.find(m=>m.active&&m.user_id!==user.id&&(m.user_id===params.get('recipient')||m.employee_id===params.get('employee')));
    if(target){select.value=target.user_id;await loadChat();}
-   else if(params.has('employee')||params.has('recipient'))messageStatus.textContent='This person has not been invited to chat. The owner can invite them below.';
-   else if(people.filter(m=>m.active).length===1)messageStatus.textContent=owner?'Invite a teammate below to start chatting and scheduling.':'No other chat participants are available yet.';
+   else if(params.has('employee')||params.has('recipient'))messageStatus.textContent='This person has not been invited to chat. The owner can invite them using Chat invitations.';
+   else if(people.filter(m=>m.active).length===1)messageStatus.textContent=owner?'Use Chat invitations to invite a teammate and start chatting or scheduling.':'No other chat participants are available yet.';
   }catch{if(request===authVersion){byId('chat-workspace').hidden=false;messageStatus.textContent='Chat could not load. Reload the page to retry.';}}
  }
  controls(false);window.EmployeeStore?.onAuthChange(()=>{if(document.visibilityState!=='hidden')initialize();});
