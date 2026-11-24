@@ -34,10 +34,10 @@
         return svg;
     }
     const entries = [
-        { label: 'Directory', description: 'Browse the full team', href: '#directory-results', icon: 'grid' },
-        { label: 'Departments', description: 'Explore departments and teams', href: 'index.html#Departments', icon: 'teams' },
-        { label: 'About', description: 'Learn about Pictionary', href: 'index.html#About', icon: 'globe' },
-        { label: 'Contact', description: 'Visit the contact page', href: 'index.html#Contact', icon: 'mail' }
+        { label: 'Directory', description: 'Browse the full team', href: 'directory.html#directory', icon: 'grid' },
+        { label: 'Departments', description: 'Explore departments and teams', href: 'directory.html#Departments', icon: 'teams' },
+        { label: 'About', description: 'Learn about Pictionary', href: 'directory.html#About', icon: 'globe' },
+        { label: 'Contact', description: 'Visit the contact page', href: 'directory.html#Contact', icon: 'mail' }
     ];
     const searchPrompts = ['Search by name', 'Search by role', 'Search by skill', 'Search by department', 'Search by location'];
     let currentPrompt = searchPrompts[0];
@@ -102,7 +102,7 @@
     browse.setAttribute('aria-expanded', 'false');
     browse.setAttribute('aria-controls', 'spotlight-skills');
     const departments = document.createElement('a');
-    departments.href = 'index.html#Departments';
+    departments.href = 'directory.html#Departments';
     departments.textContent = 'Explore departments';
     suggestions.append(find, browse, departments);
     const skillPanel = document.createElement('div');
@@ -225,7 +225,7 @@
                 description: [employee.title, employee.department, employee.location,
                     employee.country && !String(employee.location || '').includes(employee.country) ? employee.country : '']
                     .filter(Boolean).join(' · ') || 'View directory profile',
-                href: `index.html?employee=${encodeURIComponent(employee.id)}#directory`,
+                href: `directory.html?employee=${encodeURIComponent(employee.id)}#directory`,
                 icon: 'person'
             };
             const link = makeLink(entry);

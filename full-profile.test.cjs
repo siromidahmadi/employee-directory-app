@@ -5,7 +5,7 @@ const { JSDOM } = require('jsdom');
 const tick = () => new Promise(resolve => setImmediate(resolve));
 const person = { id: 'demo-1', name: 'Alex Example', title: 'Engineer', department: 'Engineering', email: 'alex@example.com', skills: ['HTML','CSS','JavaScript','SQL'], bio: 'Builds useful tools.', location: 'Vancouver, British Columbia, Canada', timeZone: 'America/Vancouver', joiningDate: '2026-10-01', projects: ['Search improvements','TBD',' '], linkedin: 'https://www.linkedin.com/in/example', github: 'javascript:alert(1)', image: '' };
 async function setup(employee = person) {
-    const dom = new JSDOM(fs.readFileSync('index.html', 'utf8'), { runScripts:'outside-only', url:'https://example.com/index.html#directory', pretendToBeVisual:true });
+    const dom = new JSDOM(fs.readFileSync('directory.html', 'utf8'), { runScripts:'outside-only', url:'https://example.com/directory.html#directory', pretendToBeVisual:true });
     const w = dom.window;
     w.matchMedia = () => ({ matches:true, addEventListener() {} });
     w.EmployeeStore = { list:async () => [employee] };

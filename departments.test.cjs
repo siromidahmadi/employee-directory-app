@@ -14,9 +14,9 @@ const sample = [
 ];
 
 async function setup(list = sample) {
-  const dom = new JSDOM(fs.readFileSync('index.html', 'utf8'), {
+  const dom = new JSDOM(fs.readFileSync('directory.html', 'utf8'), {
     runScripts: 'outside-only',
-    url: 'https://example.com/index.html',
+    url: 'https://example.com/directory.html',
     pretendToBeVisual: true
   });
   const w = dom.window;
@@ -207,13 +207,13 @@ test('D3: View Directory opens the directory filtered to that department', async
   const w = await setup();
   try {
     const d = w.document;
-    d.querySelector('#spotlight-search').value = 'leftover search';
+    d.querySelector('#search').value = 'leftover search';
     const links = [...d.querySelectorAll('.department-directory-link')];
     assert.equal(links.length, 2);
     links.find(l => /Marketing/.test(l.getAttribute('aria-label'))).click();
     assert.equal(w.location.hash, '#directory');
     assert.equal(d.querySelector('#department-filter').value, 'marketing');
-    assert.equal(d.querySelector('#spotlight-search').value, '');
+    assert.equal(d.querySelector('#search').value, '');
     const cards = d.querySelectorAll('#employee-list .employee-card');
     assert.equal(cards.length, 1);
     assert.match(cards[0].textContent, /Don Draper/);

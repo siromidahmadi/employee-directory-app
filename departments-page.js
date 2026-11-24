@@ -7,6 +7,8 @@
     if (!page || !grid) return;
     const byId = id => document.getElementById(id);
     const header = document.querySelector('.department-header-tools');
+    const input = byId('header-directory-search');
+    const results = byId('header-directory-results');
     const dialog = byId('department-openings-dialog');
     let people = [], departments = [], openings = Object.create(null), openingsState = 'loading';
     let view = 'grid';
@@ -102,12 +104,74 @@
         departments = [...groups.values()].sort((a, b) => a.name.localeCompare(b.name));
         updateSummary();
         decorateTiles();
+        renderHeaderResults();
     });
     function syncHeader() {
         header.hidden = !['#Departments', '#Groups'].includes(window.location.hash);
+        if (header.hidden) { results.hidden = true; input.setAttribute('aria-expanded', 'false'); }
     }
     window.addEventListener('hashchange', syncHeader);
     syncHeader();
+    function showDirectory() {
+        const search = byId('search');
+        search.value = input.value.trim();
+        byId('department-filter').value = 'all';
+        search.dispatchEvent(new Event('input', { bubbles: true }));
+        window.addEventListener('hashchange', () => search.focus({ preventScroll: true }), { once: true });
+        window.location.hash = '#directory';
+        syncHeader();
+        results.hidden = true;
+        input.setAttribute('aria-expanded', 'false');
+    }
+    function renderHeaderResults() {
+        const query = normalize(input.value);
+        results.replaceChildren();
+        results.hidden = !query || header.hidden;
+        input.setAttribute('aria-expanded', String(!results.hidden));
+        if (results.hidden) return;
+        const words = query.split(/\s+/);
+        const matches = people.filter(person => {
+            const text = normalize([person.name, person.title, person.department, person.email, person.location, person.region, person.country, ...(Array.isArray(person.skills) ? person.skills : [])].join(' '));
+            return words.every(word => text.includes(word));
+        });
+        matches.slice(0, 6).forEach(person => {
+            const link = document.createElement('a');
+            link.href = `directory.html?employee=${encodeURIComponent(person.id)}#directory`;
+            const name = document.createElement('strong');
+            name.textContent = person.name || 'Teammate';
+            const role = document.createElement('small');
+            role.textContent = [person.title, person.department].filter(Boolean).join(' · ');
+            link.append(name, role);
+            results.append(link);
+        });
+        if (!matches.length) {
+            const note = document.createElement('p');
+            note.textContent = 'No matches. Try a name, skill, role, or location.';
+            results.append(note);
+        }
+    }
+    input.addEventListener('input', renderHeaderResults);
+    input.addEventListener('focus', renderHeaderResults);
+    byId('header-directory-form').addEventListener('submit', event => { event.preventDefault(); showDirectory(); });
+    header.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            results.hidden = true;
+            input.setAttribute('aria-expanded', 'false');
+            input.focus();
+        }
+        if (!['ArrowDown', 'ArrowUp'].includes(event.key) || results.hidden) return;
+        const links = [...results.querySelectorAll('a')];
+        if (!links.length) return;
+        const index = links.indexOf(document.activeElement);
+        if (document.activeElement !== input && index < 0) return;
+        event.preventDefault();
+        if (event.key === 'ArrowUp' && index === 0) input.focus();
+        else if (index < 0) links[event.key === 'ArrowDown' ? 0 : links.length - 1].focus();
+        else links[(index + (event.key === 'ArrowDown' ? 1 : links.length - 1)) % links.length].focus();
+    });
+    document.addEventListener('click', event => {
+        if (!header.contains(event.target)) { results.hidden = true; input.setAttribute('aria-expanded', 'false'); }
+    });
     fetch('department-openings.json').then(response => {
         if (!response.ok) throw new Error('Openings unavailable');
         return response.json();

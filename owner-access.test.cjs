@@ -28,18 +28,18 @@ test('valid non-owner credentials are signed out and denied management',async()=
  const s=setup({owner:false});try{await assert.rejects(s.w.EmployeeStore.signIn('former@example.com','test-only'),/Owner access/);assert.equal(s.signedOut,true)}finally{s.w.close()}
 });
 test('public visitors stay on Directory; only owner sees management and sign out hides it again',async()=>{
- const w=new JSDOM(read('index.html'),{runScripts:'outside-only',url:'https://example.com/index.html#directory'}).window;
+ const w=new JSDOM(read('directory.html'),{runScripts:'outside-only',url:'https://example.com/directory.html#directory'}).window;
  let current=null,onAuth;
  w.EmployeeStore={getAdmin:async()=>current,onAuthChange:fn=>{onAuth=fn},signOut:async()=>{current=null}};
  try{
   w.eval(read('directory-auth.js'));await tick();const d=w.document,login=d.getElementById('admin-login-link'),logout=d.getElementById('logout-button');
-  assert.equal(w.location.pathname,'/index.html');assert.equal(login.hidden,false);assert.equal(logout.hidden,true);assert.ok([...d.querySelectorAll('a[href="admin.html"]')].every(a=>a.hidden));
+  assert.equal(w.location.pathname,'/directory.html');assert.equal(login.hidden,false);assert.equal(logout.hidden,true);assert.ok([...d.querySelectorAll('a[href="admin.html"]')].every(a=>a.hidden));
   current={id:'owner'};onAuth();await tick();assert.equal(login.hidden,true);assert.equal(logout.hidden,false);assert.ok([...d.querySelectorAll('a[href="admin.html"]')].every(a=>!a.hidden));
   logout.click();await tick();assert.equal(logout.hidden,true);assert.equal(login.hidden,false);
  }finally{w.close()}
 });
 test('restored collaboration never loads former external databases or shared intern provisioning',()=>{
- for(const page of ['index.html','admin.html','chat-login.html','messaging.html']){
+ for(const page of ['directory.html','admin.html','chat-login.html','messaging.html']){
   const html=read(page);assert.doesNotMatch(html,/src="(?:miguel-supabase-config|veraSupabaseConfig|shared-intern-setup)\.js/);assert.doesNotMatch(html,/shared-intern-form/);
  }
  const dom=new JSDOM(read('chat-login.html'));assert.ok(dom.window.document.querySelector('#chat-login-form'));assert.equal(dom.window.document.querySelector('meta[http-equiv="refresh"]'),null);dom.window.close();

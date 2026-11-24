@@ -11,9 +11,8 @@
 @media(max-width:520px){.people-hero{padding:48px 24px 88px}.people-hero h1{letter-spacing:-1.2px}.people-hero-eyebrow{font-size:10px;letter-spacing:1.4px}.people-hero-motion{right:16px;bottom:14px}}
 
 .people-hero[hidden]{display:none!important}
-.people-hero.hero-section{justify-content:center;background:#000;min-height:calc(100svh - 112px)}
 .people-hero .people-hero-motion{padding:8px 14px;border:1px solid #536580;border-radius:8px}
 .people-hero .people-hero-action{margin-top:24px}
 .people-hero .people-hero-content{padding-bottom:24px}
-.directory-header-tools:has(>a[hidden]),.department-header-tools:has(>a[hidden]){display:none}
-@media(max-width:520px){.people-hero.hero-section{min-height:calc(100svh - 80px)}}
+
+html:has(.hero-page){scroll-padding-top:0}.hero-page{margin:0;background:#000;color:#fff}.hero-page>.people-hero{min-height:100vh;min-height:100svh}

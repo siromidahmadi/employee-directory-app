@@ -33,7 +33,7 @@ test('Spotlight finds directory profiles by name, skill, country, role, email an
             search(w, query); await tick();
             assert.equal(d.querySelectorAll('.spotlight-result').length, 1, query);
             assert.match(d.querySelector('.spotlight-result').textContent, /Zoë Example/);
-            assert.match(d.querySelector('.spotlight-result').href, /index.html\?employee=person-1#directory$/);
+            assert.match(d.querySelector('.spotlight-result').href, /directory.html\?employee=person-1#directory$/);
         }
         search(w, 'xyz-no-such-person');
         assert.equal(d.querySelectorAll('.spotlight-result').length, 0);
@@ -84,7 +84,7 @@ test('default appearance is small, long width and lightly glassy at 0 percent', 
     } finally { w.close(); }
 });
 async function directory(url) {
-    const dom = new JSDOM(fs.readFileSync('index.html', 'utf8'), { runScripts: 'outside-only', url, pretendToBeVisual: true });
+    const dom = new JSDOM(fs.readFileSync('directory.html', 'utf8'), { runScripts: 'outside-only', url, pretendToBeVisual: true });
     const w = dom.window;
     if (w.document.querySelector('.people-hero')) w.document.querySelector('.people-hero').hidden = false;
     w.matchMedia = () => ({ matches: true, addEventListener() {} });
@@ -95,7 +95,7 @@ async function directory(url) {
     return w;
 }
 test('selecting a Spotlight profile opens the matching existing directory modal', async () => {
-    const w = await directory('https://example.com/index.html?employee=person-1#directory');
+    const w = await directory('https://example.com/directory.html?employee=person-1#directory');
     try {
         assert.equal(w.document.querySelector('#employee-profile-name').textContent, 'Zoë Example');
         assert.equal(w.document.querySelector('.profile-modal').getAttribute('role'), 'dialog');
@@ -105,7 +105,7 @@ test('selecting a Spotlight profile opens the matching existing directory modal'
     } finally { w.close(); }
 });
 test('a removed profile link keeps the directory usable and explains the missing profile', async () => {
-    const w = await directory('https://example.com/index.html?employee=removed#directory');
+    const w = await directory('https://example.com/directory.html?employee=removed#directory');
     try {
         assert.equal(w.document.querySelector('.profile-modal'), null);
         assert.match(w.document.querySelector('#directory-status').textContent, /no longer available/);

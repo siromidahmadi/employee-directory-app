@@ -3,14 +3,6 @@
     const hero = document.querySelector('.people-hero');
     if (!hero) return;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    hero.querySelector('.people-hero-action').addEventListener('click', event => {
-        const target = document.getElementById('directory-results');
-        if (!target) return;
-        event.preventDefault();
-        target.focus({ preventScroll: true });
-        target.scrollIntoView({ behavior: motion.matches ? 'auto' : 'smooth', block: 'start' });
-    });
-
     const canvas = document.getElementById('people-particles');
     const context = canvas && canvas.getContext('2d');
     if (!context) return;

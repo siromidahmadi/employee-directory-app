@@ -1,4 +1,5 @@
-const searchInput = document.querySelector('#spotlight-search');
+const searchInput = document.querySelector('#search');
+const headerSearchInput = document.querySelector('#header-search-input');
 const departmentFilter = document.querySelector('#department-filter');
 
 const teamSearchInput =
@@ -1326,7 +1327,7 @@ function openProfile(employee) {
 }
 
 function renderEmployees() {
-    searchInput.dispatchEvent(new Event('directory-search-sync'));
+    if (headerSearchInput) headerSearchInput.value = searchInput.value;
     const query =
         searchInput.value.trim().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
@@ -1413,6 +1414,18 @@ searchInput.addEventListener(
     'input',
     renderEmployees
 );
+
+if (headerSearchInput) {
+    headerSearchInput.addEventListener('input', () => {
+        searchInput.value = headerSearchInput.value;
+
+        if (window.location.hash !== '#directory') {
+            window.location.hash = '#directory';
+        }
+
+        renderEmployees();
+    });
+}
 
 departmentFilter.addEventListener(
     'change',

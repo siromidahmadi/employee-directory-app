@@ -205,3 +205,7 @@ Adapted from [Miguel Arias’s chat PR #104](https://github.com/siromidahmadi/em
 - Only the owner can invite or revoke members. Invitations never grant employee editing, GitHub, or Supabase dashboard access. Public account registration stays disabled.
 - `collaboration.sql` defines the tables, row policies, private membership helper, and Realtime publication. `invite-chat-member` is the owner-checked server function; its secret credentials never reach the browser. Set the permitted Auth redirect to `https://siromidahmadi.github.io/employee-directory-app/chat-login.html?setup=1`.
 - The page loads the latest 100 messages; unread counts show up to 20+. Realtime subscriptions are removed on navigation/sign-out.
+
+## Search home and Directory pages
+
+The root `index.html` is only the full-screen particle search hero. **Browse directory** and search results open `directory.html`, which contains the Directory, Departments, About, Contact, and Messages navigation. The Directory header search and main search/filter controls are restored, and Departments has its original header search. The logo returns to the search home. Previously shared `index.html?employee=…#directory` and tab links redirect to their matching Directory page.

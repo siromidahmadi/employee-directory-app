@@ -9,7 +9,7 @@ const people = [
   { id:'3', name:'No Department', title:'Intern', department:'', email:'intern@example.com', skills:[] }
 ];
 async function setup(openings = {}) {
-  const w = new JSDOM(fs.readFileSync('index.html','utf8'), { runScripts:'outside-only', url:'https://example.com/index.html#Departments', pretendToBeVisual:true }).window;
+  const w = new JSDOM(fs.readFileSync('directory.html','utf8'), { runScripts:'outside-only', url:'https://example.com/directory.html#Departments', pretendToBeVisual:true }).window;
   w.matchMedia = () => ({matches:true,addEventListener(){}});
   w.HTMLElement.prototype.scrollIntoView = function() {};
   w.HTMLDialogElement.prototype.showModal = function() { this.open = true; };
@@ -57,4 +57,22 @@ test('openings distinguish known zero, partial totals, and safe role text',async
   const v=await setup({Engineering:[],Design:[]});
   try {assert.equal(v.document.getElementById('department-summary-openings').textContent,'0 Roles');}
   finally {v.close();}
+});
+test('header search opens matching profiles and submits location and multiword queries to Directory',async()=>{
+  const w=await setup();
+  try {
+    const d=w.document, input=d.getElementById('header-directory-search');
+    input.value='ZOE Canada';
+    input.dispatchEvent(new w.Event('input'));
+    assert.equal(d.querySelectorAll('#header-directory-results a').length,1);
+    assert.match(d.querySelector('#header-directory-results a').href,/employee=1#directory$/);
+    input.focus();
+    input.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true}));
+    assert.equal(d.activeElement,d.querySelector('#header-directory-results a'));
+    d.getElementById('header-directory-form').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
+    await tick();
+    assert.equal(w.location.hash,'#directory');
+    assert.equal(d.querySelectorAll('#employee-list .employee-card').length,1);
+    assert.equal(d.querySelector('.department-header-tools').hidden,true);
+  } finally {w.close();}
 });
