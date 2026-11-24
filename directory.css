@@ -475,3 +475,11 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
 #Departments #department-grid:not([data-layout="list"]){grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
 @media(max-width:500px){#Departments #department-grid:not([data-layout="list"]){grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:380px){#Departments #department-grid:not([data-layout="list"]){grid-template-columns:minmax(0,1fr)}}
+
+/* Expanded employee profiles use the entire viewport. */
+.profile-modal.profile-fullscreen{display:block;padding:0;background:var(--panel)}
+.profile-fullscreen .profile-modal-content.full-profile{width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:clamp(16px,2vw,32px);border:0;border-radius:0;box-shadow:none;overflow-y:auto;overflow-x:hidden}
+.profile-fullscreen .full-profile .profile-header{display:flex;align-items:center;gap:24px;margin:0 0 16px;padding:28px 64px 28px 24px;border-radius:12px}
+.profile-fullscreen .full-profile .modal-close{position:fixed;top:16px;right:20px;z-index:5;box-shadow:var(--shadow);border:1px solid var(--line)}
+.profile-fullscreen .full-profile .profile-message-card{margin-bottom:24px}
+@media(max-width:640px){.profile-fullscreen .full-profile .profile-header{gap:14px;padding:22px 44px 22px 16px}.profile-fullscreen .full-profile .modal-close{top:12px;right:12px}}
