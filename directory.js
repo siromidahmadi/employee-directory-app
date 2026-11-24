@@ -767,7 +767,7 @@ function setupBackToTopButton() {
 setupBackToTopButton();
 
 const socialIcons = {
-    linkedin: 'img/logo/linkedInLogo.png',
+    linkedin: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Crect%20width%3D%2216%22%20height%3D%2216%22%20rx%3D%222%22%20fill%3D%22%230A66C2%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M4.943%2012.5H2.542V5.1h2.401zM3.742%204.1a1.392%201.392%200%201%201%200-2.784%201.392%201.392%200%200%201%200%202.784M13.5%2012.5h-2.395V8.9c0-.86-.016-1.966-1.198-1.966-1.198%200-1.382.937-1.382%201.904V12.5H6.13V5.1h2.3v1.01h.033c.32-.606%201.102-1.245%202.267-1.245%202.426%200%202.77%201.597%202.77%203.675z%22%2F%3E%3C%2Fsvg%3E',
     github: 'img/logo/gitHubLogo.png',
     portfolio: 'img/logo/websiteLogo.png'
 };
@@ -852,6 +852,8 @@ function makeSocialLinks(employee) {
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
         link.setAttribute('aria-label', profile.name);
+        link.title = profile.name;
+        link.classList.add('social-logo-link');
 
         const icon = document.createElement('img');
 
@@ -1250,18 +1252,7 @@ function openProfile(employee) {
         empty.textContent = 'Email not listed.';
         contact.append(empty);
     }
-    const links = document.createElement('div');
-    links.className = 'social-links';
-    for (const [label, url] of [['LinkedIn',employee.linkedin],['GitHub',employee.github],['Portfolio',employee.portfolio]]) {
-        if (!isSafeExternalUrl(url)) continue;
-        const link = document.createElement('a');
-        link.href = url;
-        link.textContent = label;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        links.append(link);
-    }
-    contact.append(links);
+    contact.append(makeSocialLinks(employee));
     const skillsSection = section('Skills', 'skills');
     const skills = makeSkillBadges(Array.isArray(employee.skills) ? employee.skills.filter(skill => typeof skill === 'string' && skill.trim()) : []);
     skills.classList.add('profile-skills');
