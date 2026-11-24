@@ -1,0 +1,13 @@
+.account-menu{position:relative;flex-shrink:0;z-index:5}
+.account-menu[hidden]{display:none!important}
+.account-avatar{display:grid;place-items:center;width:40px;height:40px;list-style:none;cursor:pointer;border-radius:50%;overflow:hidden;background:#e9e2fa;color:#45316a;border:2px solid #b8a4e7;font:600 13px/1 Inter,sans-serif;box-sizing:border-box}
+.account-avatar::-webkit-details-marker{display:none}
+.account-avatar img{width:100%;height:100%;object-fit:cover}
+.account-avatar:focus-visible{outline:3px solid #9276f5;outline-offset:3px}
+.account-panel{position:absolute;right:0;top:calc(100% + 12px);width:240px;max-width:calc(100vw - 48px);padding:16px;box-sizing:border-box;display:grid;gap:8px;background:var(--panel,#fff);color:var(--ink,#182136);border:1px solid #9a8caf55;border-radius:14px;box-shadow:0 12px 36px #0003;text-align:left}
+.account-panel strong,.account-panel>span{overflow-wrap:anywhere;font-size:14px;line-height:1.5}
+.account-panel>span{font-size:12px;opacity:.75}
+#primary-navigation .account-panel .logout-button{width:100%;min-height:44px;margin:4px 0 0;padding:10px 14px;border:1px solid #9a8caf55;border-radius:8px;background:transparent;color:inherit;font:500 14px/1.4 Inter,sans-serif;text-align:left;cursor:pointer}
+#primary-navigation .account-panel .logout-button:hover{background:#9276f51a}
+body.darkMode .account-panel{background:#202332;color:#f1eff8}
+@media(max-width:760px){.account-panel{right:auto;left:0}}
