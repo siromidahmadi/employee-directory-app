@@ -476,10 +476,10 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
 @media(max-width:500px){#Departments #department-grid:not([data-layout="list"]){grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:380px){#Departments #department-grid:not([data-layout="list"]){grid-template-columns:minmax(0,1fr)}}
 
-/* Expanded employee profiles use the entire viewport. */
-.profile-modal.profile-fullscreen{display:block;padding:0;background:var(--panel)}
-.profile-fullscreen .profile-modal-content.full-profile{width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:clamp(16px,2vw,32px);border:0;border-radius:0;box-shadow:none;overflow-y:auto;overflow-x:hidden}
-.profile-fullscreen .full-profile .profile-header{display:flex;align-items:center;gap:24px;margin:0 0 16px;padding:28px 64px 28px 24px;border-radius:12px}
-.profile-fullscreen .full-profile .modal-close{position:fixed;top:16px;right:20px;z-index:5;box-shadow:var(--shadow);border:1px solid var(--line)}
-.profile-fullscreen .full-profile .profile-message-card{margin-bottom:24px}
-@media(max-width:640px){.profile-fullscreen .full-profile .profile-header{gap:14px;padding:22px 44px 22px 16px}.profile-fullscreen .full-profile .modal-close{top:12px;right:12px}}
+/* A larger centered profile popup keeps the directory visible around it. */
+.profile-modal.profile-fullscreen{display:grid;place-items:center;padding:20px;background:rgba(6,13,30,.62)}
+.profile-fullscreen .profile-modal-content.full-profile{width:min(1200px,100%);height:auto;max-width:1200px;max-height:94vh;max-height:94svh;margin:0;padding:clamp(18px,2vw,32px);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 80px rgba(0,0,0,.28);overflow-y:auto;overflow-x:hidden}
+.profile-fullscreen .full-profile .profile-header{display:flex;align-items:center;gap:24px;margin:0 0 16px;padding:28px 52px 28px 24px;border-radius:12px}
+.profile-fullscreen .full-profile .modal-close{position:absolute;top:16px;right:16px;z-index:5;box-shadow:var(--shadow);border:1px solid var(--line)}
+.profile-fullscreen .full-profile .profile-message-card{margin-bottom:8px}
+@media(max-width:640px){.profile-modal.profile-fullscreen{padding:12px}.profile-fullscreen .profile-modal-content.full-profile{max-height:calc(100svh - 24px);border-radius:14px}.profile-fullscreen .full-profile .profile-header{gap:14px;padding:22px 38px 22px 16px}.profile-fullscreen .full-profile .modal-close{top:10px;right:10px}}
