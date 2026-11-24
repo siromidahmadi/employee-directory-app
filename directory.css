@@ -314,16 +314,23 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
 /* Jessie: profile actions and quick invite (PR #105). */
 .profile-actions {
   display: flex;
-  gap: 10px;
-  margin: 20px 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0;
 }
 
-.profile-actions button {
-  padding: 10px 16px;
-  border: none;
+.profile-actions :is(button, .profile-message-button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 10px;
+  line-height: 1.4;
+  border: 1px solid var(--line);
   border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
@@ -339,7 +346,7 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
   color: var(--ink);
 }
 
-.profile-actions button:hover {
+.profile-actions :is(button, .profile-message-button):hover {
   opacity: 0.85;
   filter: brightness(0.95);
 }
@@ -350,7 +357,7 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
 
 @media (max-width: 480px) {
   .profile-actions {
-    flex-direction: column;
+    flex-direction: row;
   }
 }
 
