@@ -468,3 +468,10 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
 #Contact .contact-linkedin-logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;padding:6px;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:8px}
 #Contact .contact-linkedin-logo svg{width:24px;height:24px;display:block}
 #Contact .contact-linkedin-logo:hover{background:var(--primary-soft)}
+
+/* Directory and Departments fill the screen with a comfortable outer gutter. */
+.directory-page .header-container{width:100%;max-width:none;padding-inline:clamp(16px,2vw,32px)}
+.directory-page .page-shell:has(> #directory:not([hidden]),> #Departments:not([hidden])){width:100%;max-width:none;padding-inline:clamp(16px,2vw,32px)}
+#Departments #department-grid:not([data-layout="list"]){grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+@media(max-width:500px){#Departments #department-grid:not([data-layout="list"]){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:380px){#Departments #department-grid:not([data-layout="list"]){grid-template-columns:minmax(0,1fr)}}
