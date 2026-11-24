@@ -459,3 +459,12 @@ body.darkMode .employee-card{background:var(--panel);color:var(--ink)}body.darkM
 .full-profile .social-links .social-logo-link{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;min-width:36px;min-height:36px;padding:6px;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:8px}
 .social-logo-link img,.full-profile .social-logo-link img{display:block;width:24px;height:24px;object-fit:contain}
 @media(max-width:600px){.full-profile .profile-actions{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}}
+
+/* Contact details use the same branded logo treatment as employee profiles. */
+#Contact .contact-detail{display:inline-flex;align-items:center;gap:10px;max-width:100%;overflow-wrap:anywhere}
+#Contact .contact-detail span{min-width:0}
+#Contact .contact-symbol{width:22px;height:22px;flex:0 0 22px}
+#Contact .contact-mail{color:#2563eb}#Contact .contact-location{color:#e05252}
+#Contact .contact-linkedin-logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;padding:6px;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:8px}
+#Contact .contact-linkedin-logo svg{width:24px;height:24px;display:block}
+#Contact .contact-linkedin-logo:hover{background:var(--primary-soft)}
