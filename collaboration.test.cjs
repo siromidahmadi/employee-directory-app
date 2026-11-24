@@ -33,7 +33,7 @@ test('send failures preserve the message and switching conversations removes old
  const s=await setup({sendFails:true});try{const d=s.w.document;
  d.querySelector('#message-composer').value='Keep this draft';d.querySelector('#message-form').dispatchEvent(new s.w.Event('submit',{cancelable:true}));await tick();
  assert.equal(d.querySelector('#message-composer').value,'Keep this draft');assert.equal(d.querySelector('#message-form button').disabled,false);
- d.querySelector('#chat-recipient').value=third;d.querySelector('#chat-recipient').dispatchEvent(new s.w.Event('change'));await tick();assert.ok(s.unsubscribed>=2);
+ d.querySelector('#chat-recipient').value=third;d.querySelector('#chat-recipient').dispatchEvent(new s.w.Event('change'));await tick();assert.ok(s.unsubscribed>=2);assert.equal(d.querySelector('#message-composer').value,'');
  }finally{s.w.close()}
 });
 test('Vera scheduling preserves minutes, rejects past dates and shows server errors',async()=>{

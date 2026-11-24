@@ -10,7 +10,7 @@
  const seen=new Set();
  function controls(ready){chatReady=ready;sendButton.disabled=!ready;messageComposer.disabled=!ready;meetingButton.disabled=!ready;document.querySelectorAll('[data-prompt]').forEach(b=>b.disabled=!ready);}
  function clearInvite(){byId('chat-invite-link').value='';byId('invite-link-panel').hidden=true;}
- function cleanup(){version++;stops.forEach(stop=>stop());stops=[];controls(false);conversation.replaceChildren();byId('meeting-list').replaceChildren();seen.clear();clearInvite();}
+ function cleanup(){version++;stops.forEach(stop=>stop());stops=[];controls(false);conversation.replaceChildren();messageComposer.value='';dateInput.value='';timeInput.value='';byId('meeting-list').replaceChildren();seen.clear();clearInvite();}
  function displayMessage(message){
   if(seen.has(message.id))return;seen.add(message.id);
   const p=document.createElement('p');p.textContent=message.body;p.className=message.sender_id===currentUser.id?'sent-message':'received-message';p.dataset.messageId=message.id;p.dataset.createdAt=message.created_at;const later=[...conversation.children].find(node=>node.dataset.createdAt>message.created_at);conversation.insertBefore(p,later||null);conversation.scrollTop=conversation.scrollHeight;
@@ -71,8 +71,8 @@
   people.forEach(m=>{const li=document.createElement('li');li.textContent=(m.employee?.name||'Teammate')+(m.active?' · Chat enabled':' · Access revoked');if(m.user_id!==currentUser.id&&m.active){const b=document.createElement('button');b.type='button';b.textContent='Revoke chat access';b.addEventListener('click',async()=>{b.disabled=true;try{await store.revoke(m.user_id);await initialize();}catch{byId('invite-status').textContent='Access could not be revoked.';b.disabled=false;}});li.append(' ',b);}list.append(li);});
  }
  byId('create-chat-invite').addEventListener('click',async()=>{
-  const b=byId('create-chat-invite'),status=byId('invite-status');b.disabled=true;clearInvite();status.textContent='Creating a private invitation…';
-  try{const result=await store.invite(byId('invite-employee').value);people=await store.members();await ownerPanel();byId('chat-invite-link').value=result.inviteLink;byId('invite-link-panel').hidden=false;status.textContent='Share this single-use sign-in link privately with '+result.email+'. No email has been sent.';await populateRecipients();}catch(e){status.textContent=e.message||'Invite could not be created.';}finally{b.disabled=!byId('invite-employee').options.length;}
+  const run=authVersion,b=byId('create-chat-invite'),status=byId('invite-status');b.disabled=true;clearInvite();status.textContent='Creating a private invitation…';
+  try{const result=await store.invite(byId('invite-employee').value);if(run!==authVersion)return;people=await store.members();if(run!==authVersion)return;await ownerPanel();if(run!==authVersion)return;byId('chat-invite-link').value=result.inviteLink;byId('invite-link-panel').hidden=false;status.textContent='Share this single-use sign-in link privately with '+result.email+'. No email has been sent.';await populateRecipients();}catch(e){if(run===authVersion)status.textContent=e.message||'Invite could not be created.';}finally{if(run===authVersion)b.disabled=!byId('invite-employee').options.length;}
  });
  byId('copy-chat-invite').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(byId('chat-invite-link').value);byId('invite-status').textContent='Private invite link copied.';}catch{byId('invite-status').textContent='Select and copy the private link below.';byId('chat-invite-link').select();}});
  byId('clear-chat-invite').addEventListener('click',clearInvite);
