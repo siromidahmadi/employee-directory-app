@@ -6,9 +6,9 @@ An employee directory built by LA Tech Rising interns with project guidance from
 
 ## Directory preview
 
-Searching for **engineer** and filtering by **Engineering** narrows the directory to four matching profiles.
+A fresh capture of the live Pictionary Directory, showing the current branding, search, filters, statistics, and demo profiles.
 
-![Employee Directory showing search and the Engineering department filter](docs/directory-search-preview.jpg)
+![Current Pictionary Directory with search, filters, statistics, and demo employee cards](docs/directory-preview.png)
 
 ## Pages
 
