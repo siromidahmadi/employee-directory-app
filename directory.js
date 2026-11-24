@@ -1675,6 +1675,7 @@ window.addEventListener('keydown', event => {
 });
 
 function populateDivisionFilter() {
+    if (!divisionFilter) return;
     const divisions = [
         ...new Set(
             employees
@@ -1708,17 +1709,17 @@ function populateDivisionFilter() {
     });
 }
 
-teamSearchInput.addEventListener(
+teamSearchInput?.addEventListener(
     'input',
     renderDepartments
 );
 
-divisionFilter.addEventListener(
+divisionFilter?.addEventListener(
     'change',
     renderDepartments
 );
 
-clearAllTeams.addEventListener(
+clearAllTeams?.addEventListener(
     'click',
     () => {
         teamSearchInput.value = '';
