@@ -1114,7 +1114,7 @@ function openProfile(employee) {
     document.querySelector('.profile-modal .modal-close')?.click();
     const previousFocus = document.activeElement;
     const modal = document.createElement('div');
-    modal.className = 'profile-modal';
+    modal.className = 'profile-modal profile-fullscreen';
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
     modal.setAttribute('aria-labelledby', 'employee-profile-name');
