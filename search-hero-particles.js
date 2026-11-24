@@ -67,6 +67,7 @@
         frame = requestAnimationFrame(animate);
     }
     function updateToggle() {
+        if (!toggle) return;
         toggle.hidden = false;
         toggle.textContent = paused ? 'Play animation' : 'Pause animation';
         toggle.setAttribute('aria-pressed', String(paused));
@@ -106,7 +107,7 @@
         if (event.pointerType !== 'mouse') releasePointer();
     });
     window.addEventListener('blur', releasePointer);
-    toggle.addEventListener('click', () => { paused = !paused; syncAnimation(); });
+    toggle?.addEventListener('click', () => { paused = !paused; syncAnimation(); });
     motion.addEventListener('change', () => { paused = motion.matches; syncAnimation(); });
     document.addEventListener('visibilitychange', syncAnimation);
     hero.addEventListener('hero-visibility-change', () => { resize(); syncAnimation(); });
