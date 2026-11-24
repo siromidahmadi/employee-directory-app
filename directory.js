@@ -1278,6 +1278,7 @@ function openProfile(employee) {
     messageLink.href = 'messaging.html?employee=' + encodeURIComponent(employee.id);
     profileActions.append(shareButton, printButton, returnButton, messageLink);
     content.append(closeButton, header, profileActions, grid);
+    if (window.ProfileMessageComposer) content.append(window.ProfileMessageComposer.create(employee));
 
     modal.appendChild(content);
     document.body.appendChild(modal);
@@ -1303,7 +1304,7 @@ function openProfile(employee) {
             closeProfile();
         }
         if (event.key === 'Tab') {
-            const focusable = [...content.querySelectorAll('button,a[href],[tabindex="0"]')].filter(el => !el.closest('[hidden]') && !el.disabled && el.tabIndex >= 0);
+            const focusable = [...content.querySelectorAll('button,a[href],input,textarea,select,[tabindex="0"]')].filter(el => !el.closest('[hidden]') && !el.disabled && el.tabIndex >= 0);
             const first = focusable[0], last = focusable[focusable.length - 1];
             if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
             else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
