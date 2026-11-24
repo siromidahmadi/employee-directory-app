@@ -819,7 +819,8 @@ function makeCopyButton(employee, iconOnly = false) {
     return copyButton;
 }
 
-function makeSocialLinks(employee) {
+function makeSocialLinks(employee, showDemoLogos = false) {
+    const isDemo = showDemoLogos && (/\(demo\)/i.test(employee.name || '') || /^demo[._+-]/i.test(employee.email || '') || employee.isDemo === true);
     const socialLinks = document.createElement('div');
     socialLinks.className = 'social-links';
 
@@ -842,15 +843,17 @@ function makeSocialLinks(employee) {
     ];
 
     socialProfiles.forEach(profile => {
-        if (!isSafeExternalUrl(profile.url)) {
-            return;
+        const hasLink = isSafeExternalUrl(profile.url);
+        if (!hasLink && !(isDemo && ['LinkedIn', 'GitHub'].includes(profile.name))) return;
+
+        const link = document.createElement(hasLink ? 'a' : 'span');
+        if (hasLink) {
+            link.href = profile.url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+        } else {
+            link.classList.add('social-logo-placeholder');
         }
-
-        const link = document.createElement('a');
-
-        link.href = profile.url;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
         link.setAttribute('aria-label', profile.name);
         link.title = profile.name;
         link.classList.add('social-logo-link');
@@ -1252,7 +1255,7 @@ function openProfile(employee) {
         empty.textContent = 'Email not listed.';
         contact.append(empty);
     }
-    contact.append(makeSocialLinks(employee));
+    contact.append(makeSocialLinks(employee, true));
     const skillsSection = section('Skills', 'skills');
     const skills = makeSkillBadges(Array.isArray(employee.skills) ? employee.skills.filter(skill => typeof skill === 'string' && skill.trim()) : []);
     skills.classList.add('profile-skills');
