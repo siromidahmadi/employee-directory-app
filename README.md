@@ -183,3 +183,8 @@ The detailed Week 6 Departments & Teams design remains an implementation target.
 
 GitHub Pages deployment success confirms publishing completed; it does not replace functional or visual testing.
 
+## Ownership and reuse
+
+Maintained by Omid Ahmadi. Reuse of materials he owns requires written permission unless otherwise permitted by law or an applicable license. Contributor rights and previously granted licenses remain unchanged.
+
+See [LICENSE](LICENSE) and [third-party notices](THIRD_PARTY_NOTICES.md). This notice covers protected materials, not the general app idea.
