@@ -193,4 +193,15 @@ See [LICENSE](LICENSE) and [third-party notices](THIRD_PARTY_NOTICES.md). This n
 
 The Directory stays public. Only the account listed in the server-side owner and administrator tables may sign in to manage employees. Use [Owner sign in](https://siromidahmadi.github.io/employee-directory-app/admin.html#login-title) with the owner's existing email and password. Passwords are not stored in this repository.
 
-The shared intern account is disabled, its administrator membership and sessions were revoked, and shared-account provisioning is retired. The former external chat/calendar integrations are disconnected; legacy login links lead to the owner login.
+The shared intern account is disabled, its administrator membership and sessions were revoked, and shared-account provisioning is retired. The former external chat/calendar databases remain disconnected. Chat and meetings now use this project with separate invitation-only permissions. Only the owner can edit the Directory.
+
+## Messaging and meetings
+
+Adapted from [Miguel Arias’s chat PR #104](https://github.com/siromidahmadi/employee-directory-app/pull/104), his notification/mobile updates [#112](https://github.com/siromidahmadi/employee-directory-app/pull/112), and [Kassandra Vera’s scheduling PR #111](https://github.com/siromidahmadi/employee-directory-app/pull/111). The original quick prompts, conversation layout, profile entry point, live updates, and one-hour meetings are retained and connected to the owner’s database. Minute selections are preserved; meeting lists are limited to the actual participant pair.
+
+- Public Directory visitors can open **Messages** or **Message & meet** from a profile, then sign in if invited.
+- The owner opens Messages and creates a **private, single-use invite link** for an employee. Share the link privately with that person; the app does not send email. They can choose a password after accepting the invitation. No former intern is automatically invited again.
+- Invited members can message other active members and schedule one-hour meetings. Messages and meetings are private to their participants. Only the organizer can cancel a meeting. Dates use the browser’s local time zone and are stored as UTC. Scheduling does not send an email or add to Google/Outlook calendars.
+- Only the owner can invite or revoke members. Invitations never grant employee editing, GitHub, or Supabase dashboard access. Public account registration stays disabled.
+- `collaboration.sql` defines the tables, row policies, private membership helper, and Realtime publication. `invite-chat-member` is the owner-checked server function; its secret credentials never reach the browser. Set the permitted Auth redirect to `https://siromidahmadi.github.io/employee-directory-app/chat-login.html?setup=1`.
+- The page loads the latest 100 messages; unread counts show up to 20+. Realtime subscriptions are removed on navigation/sign-out.

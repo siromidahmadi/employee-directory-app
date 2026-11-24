@@ -1,0 +1,3 @@
+.profile-message-button{display:inline-flex;align-items:center;text-decoration:none}
+#chat-unread-count{display:inline-flex;justify-content:center;min-width:20px;padding:1px 5px;border-radius:12px;background:#2563eb;color:#fff;font-size:11px}
+.message-notification a{display:inline-block;padding:10px 14px;border-radius:8px;background:#1769ff;color:#fff;text-decoration:none}

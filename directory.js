@@ -1280,7 +1280,11 @@ function openProfile(employee) {
         projectList.append(item);
     }
     projectsSection.append(projectList);
-    profileActions.append(shareButton, printButton, returnButton);
+    const messageLink = document.createElement('a');
+    messageLink.className = 'profile-message-button';
+    messageLink.textContent = 'Message & meet';
+    messageLink.href = 'messaging.html?employee=' + encodeURIComponent(employee.id);
+    profileActions.append(shareButton, printButton, returnButton, messageLink);
     content.append(closeButton, header, profileActions, grid);
 
     modal.appendChild(content);

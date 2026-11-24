@@ -44,6 +44,7 @@
     }
 
     window.EmployeeStore = Object.freeze({
+        getClient() { return client; },
         async list() {
             return check(await client.from('employees').select(columns).order('name')).map(mapEmployee);
         },

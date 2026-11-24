@@ -1,1 +1,15 @@
-body{ box-sizing: border-box;padding: 20px;}
+/* Miguel's conversation layout and Vera's meeting form, adapted to Pictionary. */
+.chat-page{background:var(--page);color:var(--ink)}
+.chat-page .messaging-page{width:min(820px,calc(100% - 32px));margin:32px auto;padding:28px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:20px;min-height:70vh}
+.chat-page h1{margin:24px 0 12px}.chat-page h2{margin:24px 0 12px;font-size:20px}.chat-page p{line-height:1.6;margin:12px 0}
+.chat-page label{display:block;margin:16px 0 6px;font-weight:600}
+.chat-page input,.chat-page select,.chat-page textarea{width:100%;max-width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);font:inherit;min-height:44px}
+.chat-page button{padding:10px 16px;border:1px solid var(--line);border-radius:10px;background:var(--primary);color:#fff;min-height:44px;margin:8px 4px 8px 0}.chat-page button:disabled{opacity:.5;cursor:default}
+.chat-page #conversation{display:flex;flex-direction:column;gap:10px;min-height:220px;max-height:440px;overflow:auto;padding:18px;background:var(--soft);border-radius:14px}
+.chat-page #conversation p{margin:0;max-width:85%;padding:12px 16px;overflow-wrap:anywhere;white-space:pre-wrap;border-radius:16px}
+.chat-page .sent-message{align-self:flex-end;background:#1769ff;color:#fff}.chat-page .received-message{align-self:flex-start;background:var(--panel);color:var(--ink)}
+.chat-page .meeting-tools,.chat-page #chat-owner-panel{padding:20px;border:1px solid var(--line);border-radius:14px;margin-top:24px}
+.chat-page #message-composer{min-height:100px}.chat-page #meeting-list,.chat-page #chat-member-list{padding-left:20px}.chat-page li{padding:8px 0;overflow-wrap:anywhere}
+.chat-page #invite-link-panel{padding:16px;background:var(--soft);border-radius:12px}.chat-page #chat-access-note{font-size:13px;color:var(--muted)}
+.profile-message-button{display:inline-flex;text-decoration:none;align-items:center}
+@media(max-width:600px){.chat-page .messaging-page{width:100%;margin:0;border:0;border-radius:0;padding:20px 16px}.chat-page .quick-prompts button{width:100%}.chat-page .meeting-tools,.chat-page #chat-owner-panel{padding:14px}.chat-page #conversation p{max-width:95%}}

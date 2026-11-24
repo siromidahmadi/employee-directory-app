@@ -38,11 +38,11 @@ test('public visitors stay on Directory; only owner sees management and sign out
   logout.click();await tick();assert.equal(logout.hidden,true);assert.equal(login.hidden,false);
  }finally{w.close()}
 });
-test('legacy pages no longer load intern authentication and messaging services',()=>{
+test('restored collaboration never loads former external databases or shared intern provisioning',()=>{
  for(const page of ['index.html','admin.html','chat-login.html','messaging.html']){
-  const html=read(page);assert.doesNotMatch(html,/src="(?:miguel-supabase-config|veraSupabaseConfig|messaging|notifications|shared-intern-setup)\.js/);assert.doesNotMatch(html,/shared-intern-form/);
+  const html=read(page);assert.doesNotMatch(html,/src="(?:miguel-supabase-config|veraSupabaseConfig|shared-intern-setup)\.js/);assert.doesNotMatch(html,/shared-intern-form/);
  }
- const dom=new JSDOM(read('chat-login.html'));assert.match(dom.window.document.querySelector('meta[http-equiv="refresh"]').content,/admin.html#login-title/);dom.window.close();
+ const dom=new JSDOM(read('chat-login.html'));assert.ok(dom.window.document.querySelector('#chat-login-form'));assert.equal(dom.window.document.querySelector('meta[http-equiv="refresh"]'),null);dom.window.close();
 });
 test('retired provisioning endpoint cannot create or reset accounts',async()=>{
  let handler;

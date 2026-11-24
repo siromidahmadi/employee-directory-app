@@ -1,3 +1,112 @@
+
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Messaging | Pictionary</title><link rel="stylesheet" href="directory.css"></head>
-<body><main class="messaging-page"><h1>Messaging is unavailable</h1><p>The previous team messaging service has been retired.</p><p><a href="index.html#directory">Return to Directory</a></p><p><a href="admin.html#login-title">Owner sign in</a></p></main></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Messages | Employee Directory</title>
+    <link rel="icon" type="image/png" href="img/logo/pictionary.png">
+
+
+    <link rel="stylesheet" href="directory.css?v=chat-profile-actions-20">
+    <link rel="stylesheet" href="messaging.css?v=collaboration-1">
+</head>
+
+<body class="chat-page">
+    <!-- Adapted from Miguel Arias PR #104 and Kassandra Vera PR #111. -->
+    <main class="messaging-page" id="chat-workspace" hidden>
+        <a href="index.html#directory">
+            ← Back to Directory
+        </a>
+
+        <h1>Messages &amp; meetings</h1>
+        <p id="chat-session"></p><button id="chat-sign-out" type="button">Sign out</button>
+        <label for="chat-recipient">Chat with</label><select id="chat-recipient"><option value="">Choose an invited teammate</option></select>
+        <h2 id="recipient-name">Choose a teammate</h2>
+        <p id="chat-access-note">Only people invited by the owner can use chat. Directory editing remains owner-only.</p>
+
+        <section id="chat-owner-panel" hidden aria-labelledby="chat-owner-heading">
+          <h2 id="chat-owner-heading">Chat invitations</h2>
+          <p>Create a private sign-in link and share it directly with the person. It grants chat access only.</p>
+          <label for="invite-employee">Employee to invite</label><select id="invite-employee"></select>
+          <button id="create-chat-invite" type="button">Create private invite link</button>
+          <p id="invite-status" role="status"></p>
+          <div id="invite-link-panel" hidden><label for="chat-invite-link">Private, single-use link</label><input id="chat-invite-link" readonly autocomplete="off"><button id="copy-chat-invite" type="button">Copy link</button><button id="clear-chat-invite" type="button">Hide link</button></div>
+          <ul id="chat-member-list" aria-label="Chat access"></ul>
+        </section>
+        <p id="message-status" aria-live="polite"></p>
+
+        <section
+            id="conversation"
+            aria-live="polite"
+            aria-label="Message conversation"
+        >
+            <!-- Messages will appear here -->
+        </section>
+
+        <section class="quick-prompts" aria-labelledby="quick-prompts-heading">
+            <h2 id="quick-prompts-heading">Quick Messages</h2>
+
+            <button
+                type="button"
+                data-prompt="Hi, I wanted to introduce myself."
+            >
+                Introduce yourself
+            </button>
+
+            <button
+                type="button"
+                data-prompt="Hi, would you be available for a quick chat?"
+            >
+                Request a chat
+            </button>
+        </section>
+
+        <form id="message-form">
+            <label for="message-composer">
+                Message
+            </label>
+
+            <textarea
+                id="message-composer"
+                maxlength="500"
+                placeholder="Write a message..."
+                required
+            ></textarea>
+
+            <button type="submit">
+                Send Message
+            </button>
+        </form>
+
+        <div>
+            <section class="meeting-tools">
+                 <h2>Schedule a 1:1</h2>
+
+                <label for="meeting-date">Date</label>
+                <input id="meeting-date" type="date">
+
+                <label for="meeting-time">Time</label>
+                <input id="meeting-time" type="time">
+                <p id="meeting-timezone"></p>
+
+                <button id="schedule-button" type="button">
+                    Schedule 1:1
+                </button>
+
+                <p id="meeting-message" role="status"></p>
+                <h3>Meetings with this person</h3>
+                <ul id="meeting-list"></ul>
+            </section>
+        </div>
+    </main>
+
+    <script src="supabase-2.118.0.js"></script>
+    <script src="supabase-config.js"></script>
+    <script src="employee-store.js?v=collaboration-1"></script>
+    <script src="chat-store.js?v=collaboration-1"></script>
+    <script src="messaging.js?v=collaboration-1"></script>
+    
+</body>
+</html>

@@ -20,11 +20,11 @@ test('the hero search combines with department filtering and Clear all resets it
  assert.equal(d.querySelector('#header-search-input'),null);
  }finally{w.close()}
 });
-test('shared links open the current full profile, copy its ID, and print after shared messaging is retired',async()=>{
+test('shared links open the current full profile, copy its ID, and print alongside the restored chat entry point',async()=>{
  const w=await directory('https://example.com/index.html?employee=demo#directory');try{
  const d=w.document;let copied='',printed=0;Object.defineProperty(w.navigator,'clipboard',{value:{writeText:async t=>{copied=t}}});w.print=()=>printed++;
  assert.equal(d.querySelectorAll('.full-profile-section').length,4);
- assert.equal(d.querySelector('.profile-message-button'),null);
+ assert.match(d.querySelector('.profile-message-button').href,/messaging.html\?employee=demo$/);
  d.querySelector('.share-profile-button').click();await tick();assert.equal(new URL(copied).searchParams.get('employee'),'demo');
  d.querySelector('.print-profile-button').click();assert.equal(printed,1);
  d.querySelector('.modal-close').click();assert.equal(d.querySelector('.profile-modal'),null);

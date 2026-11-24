@@ -6,3 +6,5 @@
 - **Contributors:** their rights remain unchanged unless covered by a valid ownership or licensing agreement.
 
 The repository's [LICENSE](LICENSE) applies only to materials covered by that notice. Preserve applicable third-party notices when distributing permitted components.
+
+- **Restored chat and scheduling:** adapted from Miguel Arias (PRs #104, #112) and Kassandra Vera (PR #111). Their contributor rights remain unchanged.

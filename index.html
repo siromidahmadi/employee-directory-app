@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="liquid-navigation.css?v=liquid-nav-15">
   <link rel="stylesheet" href="departments-page.css?v=1">
   <link rel="stylesheet" href="directory-chat.css?v=1">
+  <link rel="stylesheet" href="collaboration-actions.css?v=1">
   <link rel="stylesheet" href="search-hero.css?v=landing-1">
   <link rel="stylesheet" href="apple-spotlight.css?v=landing-1">
 </head>
@@ -50,6 +51,7 @@
         <a href="#Departments">Departments</a>
         <a href="#About">About</a>
         <a href="#Contact">Contact</a>
+        <a href="messaging.html">Messages <span id="chat-unread-count" hidden></span></a>
         <a id="admin-login-link" href="admin.html#login-title">Owner sign in</a>
         <button id="logout-button" class="logout-button" type="button" hidden>Sign out</button>
         <span class="liquid-divider" aria-hidden="true"></span>
@@ -144,7 +146,6 @@
       <p id="directory-status" role="status" aria-live="polite" hidden></p>
       <section class="filter-panel" aria-label="Find employees">
         <div class="search-container">
-          </div>
           <div class="filter-field"><label for="department-filter">Department</label><select id="department-filter">
               <option value="all">All Departments</option>
             </select></div>
@@ -344,13 +345,16 @@
   <!-- Keep this order: library, configuration, shared store, directory UI. -->
   <script src="supabase-2.118.0.js"></script>
   <script src="supabase-config.js"></script>
-  <script src="employee-store.js?v=owner-only-1"></script>
+  <script src="employee-store.js?v=collaboration-1"></script>
   <script src="card-local-time.js?v=world-location-17"></script>
   <script src="departments-page.js?v=landing-1"></script>
-  <script src="directory.js?v=landing-1"></script>
+  <script src="directory.js?v=collaboration-1"></script>
   <script src="apple-spotlight.js?v=landing-1"></script>
   <script src="search-hero-particles.js?v=landing-1"></script>
   <script src="admin-hero-motion.js?v=hero-owner-1"></script>
+  <div id="message-notification-root" aria-live="polite"></div>
+  <script src="chat-store.js?v=collaboration-1"></script>
+  <script src="notifications.js?v=collaboration-1"></script>
   <script src="directory-auth.js?v=owner-only-1"></script>
   <script src="kinetic-text.js?v=kinetic-sentence-14"></script>
   <script src="liquid-navigation.js?v=liquid-nav-15"></script>
